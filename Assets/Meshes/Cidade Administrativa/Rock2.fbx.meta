@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: ddc59a4b26ef2ef439051e0b00b74472
+guid: 712efb72f93ae8242ae5a4340911d487
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
@@ -7,13 +7,8 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: Bark_Temp
-    second: {fileID: 2100000, guid: 97766c29f15dcfb46aaf9af7f46ca7a3, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Leaves_Temp
-    second: {fileID: 2100000, guid: 113ec681be7547c46a1607786adb2080, type: 2}
+      name: Rock
+    second: {fileID: 2100000, guid: d7a1ce70579d5714094d1290546c724e, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -24,7 +19,7 @@ ModelImporter:
     bakeSimulation: 0
     resampleCurves: 1
     optimizeGameObjects: 0
-    removeConstantScaleCurves: 1
+    removeConstantScaleCurves: 0
     motionNodeName: 
     rigImportErrors: 
     rigImportWarnings: 
@@ -44,13 +39,10 @@ ModelImporter:
     clipAnimations: []
     isReadable: 0
   meshes:
-    lODScreenPercentages:
-    - 0.9518369
-    - 0.3493284
-    - 0.048382718
-    globalScale: 1
+    lODScreenPercentages: []
+    globalScale: 0.5
     meshCompression: 0
-    addColliders: 0
+    addColliders: 1
     useSRGBMaterialColor: 1
     sortHierarchyByName: 1
     importPhysicalCameras: 1
@@ -103,7 +95,7 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
-    globalScale: 1
+    globalScale: 0.5
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0
@@ -114,7 +106,7 @@ ModelImporter:
   humanoidOversampling: 1
   avatarSetup: 0
   addHumanoidExtraRootOnlyWhenUsingAvatar: 1
-  importBlendShapeDeformPercent: 0
+  importBlendShapeDeformPercent: 1
   remapMaterialsIfMaterialImportModeIsNone: 0
   additionalBone: 0
   userData: 

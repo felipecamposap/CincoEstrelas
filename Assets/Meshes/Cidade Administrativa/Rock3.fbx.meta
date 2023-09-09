@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 712efb72f93ae8242ae5a4340911d487
+guid: ca7d1c4df167bfc45957fd6d668cbd6f
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
@@ -8,7 +8,7 @@ ModelImporter:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Rock
-    second: {fileID: 2100000, guid: 6adb23bf0d34dac4480b198684000ed9, type: 2}
+    second: {fileID: 2100000, guid: d7a1ce70579d5714094d1290546c724e, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -40,7 +40,7 @@ ModelImporter:
     isReadable: 0
   meshes:
     lODScreenPercentages: []
-    globalScale: 0.5
+    globalScale: 0.25
     meshCompression: 0
     addColliders: 1
     useSRGBMaterialColor: 1
@@ -95,7 +95,7 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
-    globalScale: 0.5
+    globalScale: 0.25
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0
