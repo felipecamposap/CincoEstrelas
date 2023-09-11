@@ -1,10 +1,29 @@
 using UnityEngine;
-using static UnityEditor.PlayerSettings;
+using UnityEngine.UI;
 
 public class ClientsSpawner : MonoBehaviour
 {
+    
     [SerializeField] private Transform[] locations;
     [SerializeField] private GameObject[] client;
+    [SerializeField] private Animator CellPhoneUI;
+    [SerializeField] private string[] clientNames;
+    [SerializeField] private Text currentClient;
+    [SerializeField] private Slider clientRate;
+
+
+
+    public void ClientSpecifications()
+    {
+        clientRate.value = Random.Range(1, 11);
+        currentClient.text = clientNames[Random.Range(0, clientNames.Length)];
+        CellPhoneUI.SetBool("Activate", true);
+    }
+
+    public void CloseCellPhone()
+    {
+        CellPhoneUI.SetBool("Activate", false);
+    }
 
     public void ShowClient(){
         Vector3 pos;
@@ -30,7 +49,6 @@ public class ClientsSpawner : MonoBehaviour
         //Debug.Log("After: " + pos);
         Instantiate(client[0], pos, Quaternion.identity);
 
-
     }
 
     public void ShowClientDestination(int loc, int ind)
@@ -53,5 +71,7 @@ public class ClientsSpawner : MonoBehaviour
             Debug.Log("posZ: " + pos.z);
         }
         Instantiate(client[1], pos, Quaternion.identity);
+        CloseCellPhone();
     }
+
 }

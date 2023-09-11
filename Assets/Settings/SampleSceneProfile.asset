@@ -73,7 +73,7 @@ MonoBehaviour:
     m_OverrideState: 1
     m_Value: 0.14
   rounded:
-    m_OverrideState: 0
+    m_OverrideState: 1
     m_Value: 0
 --- !u!114 &-3171213606367340780
 MonoBehaviour:
@@ -93,7 +93,7 @@ MonoBehaviour:
     m_Value: 0
   intensity:
     m_OverrideState: 1
-    m_Value: 0.35
+    m_Value: 0.4
   response:
     m_OverrideState: 0
     m_Value: 0.8
@@ -173,7 +173,7 @@ MonoBehaviour:
   active: 1
   postExposure:
     m_OverrideState: 1
-    m_Value: 0.2
+    m_Value: 0.5
   contrast:
     m_OverrideState: 0
     m_Value: 0
@@ -181,8 +181,8 @@ MonoBehaviour:
     m_OverrideState: 1
     m_Value: {r: 0.98333335, g: 0.95, b: 1, a: 1}
   hueShift:
-    m_OverrideState: 0
-    m_Value: 0
+    m_OverrideState: 1
+    m_Value: -4
   saturation:
     m_OverrideState: 1
     m_Value: 5
