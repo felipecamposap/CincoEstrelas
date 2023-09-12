@@ -17,6 +17,8 @@ public class Player : MonoBehaviour
     float speed;
     public AnimationCurve steeringCurve;
 
+    [SerializeField] public float fuel;
+
     void Update(){
         speed = rb.velocity.magnitude;
         ApplyWheelPos();
@@ -26,8 +28,16 @@ public class Player : MonoBehaviour
         ApplyBreak();
     }
 
-    void CheckInput(){
+    void CheckInput()
+    {
         gasInput = Input.GetAxis("Vertical");
+        if (Input.GetAxis("Vertical") > 0){
+            if(fuel <= 0){
+                gasInput = 0;
+            }else{
+                fuel -= 0.1f;
+            }
+        }
         steeringInput = Input.GetAxis("Horizontal");
         slipAngle = Vector3.SignedAngle(transform.forward, rb.velocity - transform.forward, Vector3.up);
         if (slipAngle < 120f){
