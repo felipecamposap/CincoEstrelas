@@ -8,6 +8,12 @@ public class Client : MonoBehaviour
     [SerializeField] private Transform target;
     [SerializeField] private float speed;
     [SerializeField] private Collider coll;
+    private GameController gc;
+
+    private void Awake()
+    {
+        gc = FindObjectOfType<GameController>();
+    }
 
     private void Update()
     {
@@ -37,6 +43,7 @@ public class Client : MonoBehaviour
             touchPlayer++;
             
         }else if (touchPlayer == 2 && other.CompareTag("Destination")){
+            gc.GetPaid(5f);
             transform.parent = null;
             target = other.transform;
             touchPlayer++;
