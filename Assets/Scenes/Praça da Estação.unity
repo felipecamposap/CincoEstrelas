@@ -1175,7 +1175,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerFuel: 55
-  fuelBurnMultiplier: 0.05
+  fuelBurnMultiplier: 0.2
   playerMoney: 100
   player: {fileID: 964890104}
   txtGas: {fileID: 403497340}
