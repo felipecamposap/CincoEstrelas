@@ -15338,6 +15338,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2188913322937851649, guid: 644d755d59a8a1940a48a5751a3ade7c,
         type: 3}
+      propertyPath: motorPower
+      value: 200000
+      objectReference: {fileID: 0}
+    - target: {fileID: 2188913322937851649, guid: 644d755d59a8a1940a48a5751a3ade7c,
+        type: 3}
       propertyPath: fuelMultiplier
       value: 0.5
       objectReference: {fileID: 0}

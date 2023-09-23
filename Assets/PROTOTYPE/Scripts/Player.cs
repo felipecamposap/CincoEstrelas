@@ -7,9 +7,9 @@ public class Player : MonoBehaviour
     [SerializeField] Rigidbody rb;
     public WheelColliders colliders;
     public WheelMeshes wheelMeshes;
-    [SerializeField] public float gasInput;
-    [SerializeField] float breakInput;
-    [SerializeField] float steeringInput;
+    public float gasInput;
+    float breakInput;
+    float steeringInput;
 
     [SerializeField] float motorPower;
     [SerializeField] float breakPower;
