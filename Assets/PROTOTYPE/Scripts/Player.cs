@@ -10,6 +10,7 @@ public class Player : MonoBehaviour
     public float gasInput;
     float brakeInput;
     float steeringInput;
+    float maxSteeringAngle = 60;
 
     [SerializeField] float motorPower = 3000.0f; // Adjust the value as needed
     [SerializeField] float brakePower = 2000.0f; // Adjust the value as needed
@@ -46,8 +47,7 @@ public class Player : MonoBehaviour
         {
             if (gasInput < 0)
             {
-                brakeInput = Mathf.Abs(gasInput);
-                gasInput = 0;
+                brakeInput = -gasInput;
             }
         }
         else
@@ -61,7 +61,7 @@ public class Player : MonoBehaviour
         }
         else
         {
-            rb.drag = 0.5f; // Adjust the value as needed
+            rb.drag = 1f; // Adjust the value as needed
         }
     }
 
@@ -81,19 +81,14 @@ public class Player : MonoBehaviour
         colliders.BLWheel.motorTorque = motorPower * gasInput * 0.9f; // Adjust the value as needed
     }
 
-void ApplySteering()
-{
-    float maxSteeringAngle = 30.0f; // Adjust the maximum steering angle as needed
-    float steeringSensitivity = 2.0f; // Adjust the value as needed
-    float steeringAngle = steeringSensitivity * steeringInput * steeringCurve.Evaluate(speed);
-
-    // Clamp the steering angle to the maximum value
-    steeringAngle = Mathf.Clamp(steeringAngle, -maxSteeringAngle, maxSteeringAngle);
-
-    colliders.FRWheel.steerAngle = steeringAngle;
-    colliders.FLWheel.steerAngle = steeringAngle;
-}
-
+    void ApplySteering()
+    {
+        float steeringSensitivity = 2.0f; // Adjust the value as needed
+        float steeringAngle = steeringSensitivity * steeringInput * steeringCurve.Evaluate(speed);
+        steeringAngle = Mathf.Clamp(steeringAngle, -maxSteeringAngle, maxSteeringAngle);
+        colliders.FRWheel.steerAngle = steeringAngle;
+        colliders.FLWheel.steerAngle = steeringAngle;
+    }
 
     void ApplyWheelPos()
     {
