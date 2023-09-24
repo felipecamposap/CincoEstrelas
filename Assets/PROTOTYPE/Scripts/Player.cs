@@ -7,9 +7,9 @@ public class Player : MonoBehaviour
     [SerializeField] Rigidbody rb;
     public WheelColliders colliders;
     public WheelMeshes wheelMeshes;
-    [SerializeField] float gasInput;
-    [SerializeField] float breakInput;
-    [SerializeField] float steeringInput;
+    public float gasInput;
+    float breakInput;
+    float steeringInput;
 
     [SerializeField] float motorPower;
     [SerializeField] float breakPower;
@@ -17,9 +17,10 @@ public class Player : MonoBehaviour
     float speed;
     public AnimationCurve steeringCurve;
 
-    [SerializeField] public float fuel;
+    [SerializeField] GameController gc;
 
-    void Update(){
+    void Update()
+    {
         speed = rb.velocity.magnitude;
         ApplyWheelPos();
         CheckInput();
@@ -28,24 +29,29 @@ public class Player : MonoBehaviour
         ApplyBreak();
     }
 
+    private void FixedUpdate()
+    {
+        if (Input.GetAxis("Vertical") != 0 && gc.PlayerFuel > 0)
+        {
+            gc.BurnFuel(gasInput);
+        }
+    }
+
     void CheckInput()
     {
         gasInput = Input.GetAxis("Vertical");
-        if (Input.GetAxis("Vertical") > 0){
-            if(fuel <= 0){
-                gasInput = 0;
-            }else{
-                fuel -= 0.1f;
-            }
-        }
         steeringInput = Input.GetAxis("Horizontal");
         slipAngle = Vector3.SignedAngle(transform.forward, rb.velocity - transform.forward, Vector3.up);
-        if (slipAngle < 120f){
-            if (gasInput < 0){
+        if (slipAngle < 120f)
+        {
+            if (gasInput < 0)
+            {
                 breakInput = Mathf.Abs(gasInput);
                 gasInput = 0;
             }
-        } else {
+        }
+        else
+        {
             breakInput = 0;
         }
 
@@ -58,32 +64,37 @@ public class Player : MonoBehaviour
         }*/
     }
 
-    void ApplyBreak(){
+    void ApplyBreak()
+    {
         colliders.FRWheel.brakeTorque = breakInput * breakPower * 0.7f;
         colliders.FLWheel.brakeTorque = breakInput * breakPower * 0.7f;
         colliders.BRWheel.brakeTorque = breakInput * breakPower * 0.3f;
         colliders.BLWheel.brakeTorque = breakInput * breakPower * 0.3f;
     }
 
-    void ApplyMotor(){
+    void ApplyMotor()
+    {
         colliders.FRWheel.motorTorque = motorPower * gasInput;
         colliders.FLWheel.motorTorque = motorPower * gasInput;
     }
 
-    void ApplySteering(){
+    void ApplySteering()
+    {
         float steeringAngle = steeringInput * steeringCurve.Evaluate(speed);
         colliders.FRWheel.steerAngle = steeringAngle;
         colliders.FLWheel.steerAngle = steeringAngle;
     }
 
-    void ApplyWheelPos(){
+    void ApplyWheelPos()
+    {
         UpdateWheel(colliders.FRWheel, wheelMeshes.FRWheel);
         UpdateWheel(colliders.FLWheel, wheelMeshes.FLWheel);
         UpdateWheel(colliders.BRWheel, wheelMeshes.BRWheel);
         UpdateWheel(colliders.BLWheel, wheelMeshes.BLWheel);
     }
 
-    void UpdateWheel(WheelCollider coll, MeshRenderer wheelMesh){
+    void UpdateWheel(WheelCollider coll, MeshRenderer wheelMesh)
+    {
         Quaternion rot;
         Vector3 pos;
         coll.GetWorldPose(out pos, out rot);
@@ -93,14 +104,16 @@ public class Player : MonoBehaviour
 
 }
 [System.Serializable]
-public class WheelColliders{
+public class WheelColliders
+{
     public WheelCollider FRWheel;
     public WheelCollider FLWheel;
     public WheelCollider BRWheel;
     public WheelCollider BLWheel;
 }
 [System.Serializable]
-public class WheelMeshes{
+public class WheelMeshes
+{
     public MeshRenderer FRWheel;
     public MeshRenderer FLWheel;
     public MeshRenderer BRWheel;
