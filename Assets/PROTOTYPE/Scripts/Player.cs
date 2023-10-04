@@ -8,11 +8,12 @@ public class Player : MonoBehaviour
     public WheelColliders colliders;
     public WheelMeshes wheelMeshes;
     public float gasInput;
-    float breakInput;
+    float brakeInput;
     float steeringInput;
+    float maxSteeringAngle = 60;
 
-    [SerializeField] float motorPower;
-    [SerializeField] float breakPower;
+    [SerializeField] float motorPower = 3000.0f; // Adjust the value as needed
+    [SerializeField] float brakePower = 2000.0f; // Adjust the value as needed
     float slipAngle;
     float speed;
     public AnimationCurve steeringCurve;
@@ -26,7 +27,7 @@ public class Player : MonoBehaviour
         CheckInput();
         ApplyMotor();
         ApplySteering();
-        ApplyBreak();
+        ApplyBrake();
     }
 
     private void FixedUpdate()
@@ -46,41 +47,45 @@ public class Player : MonoBehaviour
         {
             if (gasInput < 0)
             {
-                breakInput = Mathf.Abs(gasInput);
-                gasInput = 0;
+                brakeInput = -gasInput;
             }
         }
         else
         {
-            breakInput = 0;
+            brakeInput = 0;
         }
 
-        /*if (gasInput > 0){
-            breakInput = 0;
-            rb.drag = 0.2f;
+        if (gasInput > 0)
+        {
+            rb.drag = 0.1f; // Adjust the value as needed
         }
-        else{
-            rb.drag = 0.8f;
-        }*/
+        else
+        {
+            rb.drag = 1f; // Adjust the value as needed
+        }
     }
 
-    void ApplyBreak()
+    void ApplyBrake()
     {
-        colliders.FRWheel.brakeTorque = breakInput * breakPower * 0.7f;
-        colliders.FLWheel.brakeTorque = breakInput * breakPower * 0.7f;
-        colliders.BRWheel.brakeTorque = breakInput * breakPower * 0.3f;
-        colliders.BLWheel.brakeTorque = breakInput * breakPower * 0.3f;
+        colliders.FRWheel.brakeTorque = brakeInput * brakePower * 0.6f; // Adjust the value as needed
+        colliders.FLWheel.brakeTorque = brakeInput * brakePower * 0.6f; // Adjust the value as needed
+        colliders.BRWheel.brakeTorque = brakeInput * brakePower * 0.4f; // Adjust the value as needed
+        colliders.BLWheel.brakeTorque = brakeInput * brakePower * 0.4f; // Adjust the value as needed
     }
 
     void ApplyMotor()
     {
         colliders.FRWheel.motorTorque = motorPower * gasInput;
         colliders.FLWheel.motorTorque = motorPower * gasInput;
+        colliders.BRWheel.motorTorque = motorPower * gasInput * 0.9f; // Adjust the value as needed
+        colliders.BLWheel.motorTorque = motorPower * gasInput * 0.9f; // Adjust the value as needed
     }
 
     void ApplySteering()
     {
-        float steeringAngle = steeringInput * steeringCurve.Evaluate(speed);
+        float steeringSensitivity = 2.0f; // Adjust the value as needed
+        float steeringAngle = steeringSensitivity * steeringInput * steeringCurve.Evaluate(speed);
+        steeringAngle = Mathf.Clamp(steeringAngle, -maxSteeringAngle, maxSteeringAngle);
         colliders.FRWheel.steerAngle = steeringAngle;
         colliders.FLWheel.steerAngle = steeringAngle;
     }
@@ -101,8 +106,8 @@ public class Player : MonoBehaviour
         wheelMesh.transform.position = pos;
         wheelMesh.transform.rotation = rot;
     }
-
 }
+
 [System.Serializable]
 public class WheelColliders
 {
@@ -111,6 +116,7 @@ public class WheelColliders
     public WheelCollider BRWheel;
     public WheelCollider BLWheel;
 }
+
 [System.Serializable]
 public class WheelMeshes
 {

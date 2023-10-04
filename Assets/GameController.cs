@@ -31,6 +31,7 @@ public class GameController : MonoBehaviour
     [SerializeField] private Player player;
     [SerializeField] private Text txtGas;
     [SerializeField] private Text txtMoney;
+    [SerializeField] private GameObject pauseWidget;
 
     public float PlayerFuel
     {
@@ -93,6 +94,23 @@ public class GameController : MonoBehaviour
     {
         playerMoney += pay;
         txtMoney.text = $"{playerMoney:F2}";
+    }
+
+    void Update()
+    {
+        if (Input.GetButtonDown("Pause"))
+        {
+            if (Time.timeScale == 0)
+            {
+                pauseWidget.SetActive(false);
+                Time.timeScale = 1;
+            }
+            else
+            {
+                pauseWidget.SetActive(true);
+                Time.timeScale = 0;
+            }
+        }
     }
 
 
