@@ -1,6 +1,4 @@
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class Player : MonoBehaviour
 {
@@ -106,6 +104,12 @@ public class Player : MonoBehaviour
         wheelMesh.transform.position = pos;
         wheelMesh.transform.rotation = rot;
     }
+
+    public void OnCollisionEnter(Collision collision)
+    {
+        GameController.controller.carIntegrityCurrent -= (rb.velocity.magnitude * 8f);
+    }
+
 }
 
 [System.Serializable]
