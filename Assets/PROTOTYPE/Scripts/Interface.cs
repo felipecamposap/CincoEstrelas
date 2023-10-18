@@ -7,8 +7,9 @@ public class Interface : MonoBehaviour
     [SerializeField] private Text gasText;
     [SerializeField] private Text money;
     public GameObject pauseUI;
+    [SerializeField] private GameObject gameOverObj;
     [SerializeField] private Text gameOverText;
-    [SerializeField] private GameObject gameOver;
+
 
     private void Start()
     {
@@ -25,19 +26,21 @@ public class Interface : MonoBehaviour
         
     }
 
-    public void GameOver(int index)
+    public void GameOver(int _value) // 0 - Hp do carro zerado | 1 - Dinheiro zerado
     {
-        switch (index) // 0 - Carro estragado | 1 - Gasolina acabou
+        switch (_value)
         {
             case 0:
-                gameOverText.text = "Seu carro está muito danificado!";
+                gameOverText.text = "O seu carro está muito danificado!";
                 break;
 
             case 1:
-                gameOverText.text = "A sua gasolina esgotou!";
+                gameOverText.text = "A gasolina do seu carro acabou!";
                 break;
+
         }
-        gameOver.SetActive(true);
+        gameOverObj.SetActive(true);
+
     }
 
 }
