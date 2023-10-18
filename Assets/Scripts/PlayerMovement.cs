@@ -25,7 +25,7 @@ public class PlayerMovement : MonoBehaviour
         speed = rb.velocity.magnitude;
         ApplyWheelPos();
         CheckInput();
-        AdjustMovement();
+        ApplyMovement();
         ApplyMotor();
         ApplySteering();
         ApplyBrake();
@@ -46,32 +46,26 @@ public class PlayerMovement : MonoBehaviour
         steeringInput = Input.GetAxis("Horizontal");
     }
 
-    void AdjustMovement()
+    void ApplyMovement()
     {
-
-        if (localVelocity.z > 0 && gasInput < 0)
+        if ((localVelocity.z > 0.3f && gasInput < 0f) || (localVelocity.z < -0.3 && gasInput > 0)) //FRENAGEM
         {
-            brakeInput = -gasInput;
+            brakeInput = 1;
+            rb.drag = brakeDrag;
         }
-        else if (localVelocity.z < 0 && gasInput > 0)
-        {
-            brakeInput = gasInput;
-        }
-        else
+        else if (gasInput != 0) //ACELERACAO/RE
         {
             brakeInput = 0;
+            rb.drag = gasDrag;
         }
-
-        if (gasInput > 0 && localVelocity.z >= 0)
+        else if (steeringInput != 0)
         {
-            rb.drag = gasDrag; // Adjust the value as needed
-        }
-        else if (gasInput < 0 && localVelocity.z >= 0)
-        {
-            rb.drag = brakeDrag; // Adjust the value as needed
+            brakeInput = 0.01f;
+            rb.drag = gasDrag;
         }
         else
         {
+            brakeInput = 0.1f;
             rb.drag = idleDrag;
         }
 
