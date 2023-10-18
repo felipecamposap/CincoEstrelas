@@ -28,11 +28,14 @@ public class GameController : MonoBehaviour
         get { return playerMoney; }
     }
 
+<<<<<<< Updated upstream
     [SerializeField] private Player player;
     [SerializeField] private Text txtGas;
     [SerializeField] private Text txtMoney;
     [SerializeField] private GameObject pauseWidget;
 
+=======
+>>>>>>> Stashed changes
     public float PlayerFuel
     {
         get { return playerFuel; }
@@ -50,15 +53,44 @@ public class GameController : MonoBehaviour
 
     private void Start()
     {
+<<<<<<< Updated upstream
         txtMoney.text = $"{playerMoney:F2}";
+=======
+        if (controller == null)
+            controller = this;
+        else
+            Destroy(gameObject);
+        DontDestroyOnLoad(this);
+    }
+
+    void Update()
+    {
+        if (Input.GetButtonDown("Pause"))
+        {
+            if (Time.timeScale == 0)
+            {
+                uiController.pauseUI.SetActive(false);
+                Time.timeScale = 1;
+            }else{
+                uiController.pauseUI.SetActive(true);
+                Time.timeScale = 0;
+            }
+
+        }
+
+>>>>>>> Stashed changes
     }
 
     public void FuelCar(float gasoline)
     {
         playerFuel += gasoline;
         playerMoney -= gasoline * literPrice;
+<<<<<<< Updated upstream
         txtMoney.text = $"{playerMoney:F2}";
         txtGas.text = playerFuel.ToString();
+=======
+        uiController.ATTUI();
+>>>>>>> Stashed changes
     }
 
     public void BurnFuel(float gasInput)
@@ -68,6 +100,8 @@ public class GameController : MonoBehaviour
             txtGas.text = $"{playerFuel:F2}";
             playerFuel -= fuelBurn * fuelBurnMultiplier;
         }
+        if (playerFuel <= 0)
+            uiController.GameOver(1);
     }
 
     private void NewRating(int rating)
@@ -96,8 +130,9 @@ public class GameController : MonoBehaviour
         txtMoney.text = $"{playerMoney:F2}";
     }
 
-    void Update()
+    public void Damage(float _value)
     {
+<<<<<<< Updated upstream
         if (Input.GetButtonDown("Pause"))
         {
             if (Time.timeScale == 0)
@@ -111,7 +146,12 @@ public class GameController : MonoBehaviour
                 Time.timeScale = 0;
             }
         }
+=======
+        Debug.Log(_value);
+        carIntegrityCurrent -= _value;
+        if (carIntegrityCurrent <= 0)
+            uiController.GameOver(0);
+>>>>>>> Stashed changes
     }
-
 
 }

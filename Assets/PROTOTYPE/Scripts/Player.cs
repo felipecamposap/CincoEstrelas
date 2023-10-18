@@ -106,6 +106,16 @@ public class Player : MonoBehaviour
         wheelMesh.transform.position = pos;
         wheelMesh.transform.rotation = rot;
     }
+<<<<<<< Updated upstream
+=======
+
+    public void OnCollisionEnter(Collision collision)
+    {
+        if(collision.gameObject.CompareTag("Damagable"))
+            GameController.controller.Damage((rb.velocity.magnitude * 8f));
+    }
+
+>>>>>>> Stashed changes
 }
 
 [System.Serializable]
