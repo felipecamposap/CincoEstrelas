@@ -7,6 +7,9 @@ public class Interface : MonoBehaviour
     [SerializeField] private Text gasText;
     [SerializeField] private Text money;
     public GameObject pauseUI;
+    [SerializeField] private GameObject gameOverObj;
+    [SerializeField] private Text gameOverText;
+
 
     private void Start()
     {
@@ -21,6 +24,23 @@ public class Interface : MonoBehaviour
         gasText.text = "Gasolina: " + GameController.controller.PlayerFuel;
         money.text = "R$ " + GameController.controller.PlayerMoney;
         
+    }
+
+    public void GameOver(int _value) // 0 - Hp do carro zerado | 1 - Dinheiro zerado
+    {
+        switch (_value)
+        {
+            case 0:
+                gameOverText.text = "O seu carro está muito danificado!";
+                break;
+
+            case 1:
+                gameOverText.text = "A gasolina do seu carro acabou!";
+                break;
+
+        }
+        gameOverObj.SetActive(true);
+
     }
 
 }

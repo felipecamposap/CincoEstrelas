@@ -70,6 +70,7 @@ public class GameController : MonoBehaviour
         //txtMoney.text = $"{playerMoney:F2}";
         //txtGas.text = playerFuel.ToString();
         uiController.ATTUI();
+        
     }
 
     public void BurnFuel(float gasInput)
@@ -80,6 +81,8 @@ public class GameController : MonoBehaviour
             playerFuel -= fuelBurn * fuelBurnMultiplier;
             uiController.ATTUI();
         }
+        if (playerFuel <= 0)
+            uiController.GameOver(1);
     }
 
     private void NewRating(int rating)
@@ -109,7 +112,7 @@ public class GameController : MonoBehaviour
         uiController.ATTUI();
     }
 
-    void Update()
+    private void Update()
     {
         if (Input.GetButtonDown("Pause"))
         {
@@ -126,5 +129,11 @@ public class GameController : MonoBehaviour
         }
     }
 
+    public void Damage(float _value)
+    {
+        carIntegrityCurrent -= _value;
+        if (carIntegrityCurrent <= 0)
+            uiController.GameOver(0);
+    }
 
 }

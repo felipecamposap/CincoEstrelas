@@ -107,7 +107,9 @@ public class Player : MonoBehaviour
 
     public void OnCollisionEnter(Collision collision)
     {
-        GameController.controller.carIntegrityCurrent -= (rb.velocity.magnitude * 8f);
+        if (collision.gameObject.CompareTag("Damagable"))
+            GameController.controller.Damage((rb.velocity.magnitude * 8f));
+        
     }
 
 }
