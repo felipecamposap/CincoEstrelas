@@ -21,8 +21,8 @@ public class Interface : MonoBehaviour
     {
         carIntegritySlider.maxValue = GameController.controller.carIntegrityMax; // Declarando o maximo da integridade do carro possivel no slider
         carIntegritySlider.value = GameController.controller.carIntegrityCurrent; // Declarando o valor atual da integridade do carro possivel no slider
-        gasText.text = "Gasolina: " + GameController.controller.PlayerFuel;
-        money.text = "R$ " + GameController.controller.PlayerMoney;
+        gasText.text = $"Gasolina: {GameController.controller.PlayerFuel:F2}L";
+        money.text = $"R${GameController.controller.PlayerMoney:F2}";
         
     }
 
@@ -31,7 +31,7 @@ public class Interface : MonoBehaviour
         switch (_value)
         {
             case 0:
-                gameOverText.text = "O seu carro está muito danificado!";
+                gameOverText.text = "O seu carro estï¿½ muito danificado!";
                 break;
 
             case 1:

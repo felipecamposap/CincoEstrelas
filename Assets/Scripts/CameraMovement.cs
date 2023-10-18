@@ -4,7 +4,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Animations;
 
-public class CameraMoviment : MonoBehaviour
+public class CameraMovement : MonoBehaviour
 {
     [SerializeField] private float posSpeed;
     [SerializeField] private float rotSpeed;

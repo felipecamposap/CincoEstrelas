@@ -1182,7 +1182,7 @@ MonoBehaviour:
   uiController: {fileID: 275289665}
   carIntegrityMax: 100
   carIntegrityCurrent: 100
-  playerFuel: 0.01
+  playerFuel: 55
   fuelBurnMultiplier: 0.2
   totalClients: 0
   playerMoney: 100
@@ -16242,7 +16242,7 @@ LightingSettings:
   m_PrefabAsset: {fileID: 0}
   m_Name: 
   serializedVersion: 6
-  m_GIWorkflowMode: 0
+  m_GIWorkflowMode: 1
   m_EnableBakedLightmaps: 1
   m_EnableRealtimeLightmaps: 0
   m_RealtimeEnvironmentLighting: 1
@@ -16957,13 +16957,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2188913322937851649, guid: 644d755d59a8a1940a48a5751a3ade7c,
         type: 3}
+      propertyPath: idleDrag
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 2188913322937851649, guid: 644d755d59a8a1940a48a5751a3ade7c,
+        type: 3}
+      propertyPath: brakeDrag
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2188913322937851649, guid: 644d755d59a8a1940a48a5751a3ade7c,
+        type: 3}
       propertyPath: brakePower
-      value: 25000
+      value: 20000
       objectReference: {fileID: 0}
     - target: {fileID: 2188913322937851649, guid: 644d755d59a8a1940a48a5751a3ade7c,
         type: 3}
       propertyPath: motorPower
-      value: 30000
+      value: 20000
       objectReference: {fileID: 0}
     - target: {fileID: 2188913322937851649, guid: 644d755d59a8a1940a48a5751a3ade7c,
         type: 3}
@@ -17018,7 +17028,7 @@ PrefabInstance:
     - target: {fileID: 3117597291404309150, guid: 644d755d59a8a1940a48a5751a3ade7c,
         type: 3}
       propertyPath: m_Mass
-      value: 3000
+      value: 1000
       objectReference: {fileID: 0}
     - target: {fileID: 4724636211249423219, guid: 644d755d59a8a1940a48a5751a3ade7c,
         type: 3}
@@ -17049,6 +17059,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Enabled
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5338257085323185227, guid: 644d755d59a8a1940a48a5751a3ade7c,
+        type: 3}
+      propertyPath: m_Center.y
+      value: 0.75
       objectReference: {fileID: 0}
     - target: {fileID: 5689848461362911719, guid: 644d755d59a8a1940a48a5751a3ade7c,
         type: 3}

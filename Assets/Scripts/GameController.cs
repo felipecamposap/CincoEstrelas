@@ -70,7 +70,6 @@ public class GameController : MonoBehaviour
         //txtMoney.text = $"{playerMoney:F2}";
         //txtGas.text = playerFuel.ToString();
         uiController.ATTUI();
-        
     }
 
     public void BurnFuel(float gasInput)

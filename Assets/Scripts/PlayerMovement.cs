@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] Rigidbody rb;
     public WheelColliders colliders;
@@ -8,24 +8,28 @@ public class Player : MonoBehaviour
     public float gasInput;
     float brakeInput;
     float steeringInput;
-    float maxSteeringAngle = 60;
-
+    [SerializeField] float maxSteeringAngle = 30;
     [SerializeField] float motorPower = 3000.0f; // Adjust the value as needed
     [SerializeField] float brakePower = 2000.0f; // Adjust the value as needed
+    [SerializeField] float gasDrag = 0.2f, idleDrag = 0.5f, brakeDrag = 1f;
     float slipAngle;
     float speed;
     public AnimationCurve steeringCurve;
+    private Vector3 localVelocity;
 
     [SerializeField] GameController gc;
 
     void Update()
     {
+        localVelocity = transform.InverseTransformDirection(rb.velocity);
         speed = rb.velocity.magnitude;
         ApplyWheelPos();
         CheckInput();
+        AdjustMovement();
         ApplyMotor();
         ApplySteering();
         ApplyBrake();
+        Debug.Log(brakeInput);
     }
 
     private void FixedUpdate()
@@ -40,48 +44,56 @@ public class Player : MonoBehaviour
     {
         gasInput = Input.GetAxis("Vertical");
         steeringInput = Input.GetAxis("Horizontal");
-        slipAngle = Vector3.SignedAngle(transform.forward, rb.velocity - transform.forward, Vector3.up);
-        if (slipAngle < 120f)
+    }
+
+    void AdjustMovement()
+    {
+
+        if (localVelocity.z > 0 && gasInput < 0)
         {
-            if (gasInput < 0)
-            {
-                brakeInput = -gasInput;
-            }
+            brakeInput = -gasInput;
+        }
+        else if (localVelocity.z < 0 && gasInput > 0)
+        {
+            brakeInput = gasInput;
         }
         else
         {
             brakeInput = 0;
         }
 
-        if (gasInput > 0)
+        if (gasInput > 0 && localVelocity.z >= 0)
         {
-            rb.drag = 0.1f; // Adjust the value as needed
+            rb.drag = gasDrag; // Adjust the value as needed
+        }
+        else if (gasInput < 0 && localVelocity.z >= 0)
+        {
+            rb.drag = brakeDrag; // Adjust the value as needed
         }
         else
         {
-            rb.drag = 1f; // Adjust the value as needed
+            rb.drag = idleDrag;
         }
+
     }
 
     void ApplyBrake()
     {
-        colliders.FRWheel.brakeTorque = brakeInput * brakePower * 0.6f; // Adjust the value as needed
-        colliders.FLWheel.brakeTorque = brakeInput * brakePower * 0.6f; // Adjust the value as needed
-        colliders.BRWheel.brakeTorque = brakeInput * brakePower * 0.4f; // Adjust the value as needed
-        colliders.BLWheel.brakeTorque = brakeInput * brakePower * 0.4f; // Adjust the value as needed
+        colliders.FRWheel.brakeTorque = brakeInput * brakePower; // Adjust the value as needed
+        colliders.FLWheel.brakeTorque = brakeInput * brakePower; // Adjust the value as needed
+        colliders.BRWheel.brakeTorque = brakeInput * brakePower; // Adjust the value as needed
+        colliders.BLWheel.brakeTorque = brakeInput * brakePower; // Adjust the value as needed
     }
 
     void ApplyMotor()
     {
-        colliders.FRWheel.motorTorque = motorPower * gasInput;
-        colliders.FLWheel.motorTorque = motorPower * gasInput;
-        colliders.BRWheel.motorTorque = motorPower * gasInput * 0.9f; // Adjust the value as needed
-        colliders.BLWheel.motorTorque = motorPower * gasInput * 0.9f; // Adjust the value as needed
+        colliders.BRWheel.motorTorque = motorPower * gasInput; // Adjust the value as needed
+        colliders.BLWheel.motorTorque = motorPower * gasInput; // Adjust the value as needed
     }
 
     void ApplySteering()
     {
-        float steeringSensitivity = 2.0f; // Adjust the value as needed
+        float steeringSensitivity = 0.5f; // Adjust the value as needed
         float steeringAngle = steeringSensitivity * steeringInput * steeringCurve.Evaluate(speed);
         steeringAngle = Mathf.Clamp(steeringAngle, -maxSteeringAngle, maxSteeringAngle);
         colliders.FRWheel.steerAngle = steeringAngle;
@@ -109,7 +121,7 @@ public class Player : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Damagable"))
             GameController.controller.Damage((rb.velocity.magnitude * 8f));
-        
+
     }
 
 }
