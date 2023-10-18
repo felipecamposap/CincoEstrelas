@@ -60,12 +60,18 @@ public class PlayerMovement : MonoBehaviour
         }
         else if (steeringInput != 0)
         {
-            brakeInput = 0.01f;
+            if(rb.velocity.z > 0)
+                rb.velocity -= new Vector3(0, 0, 3) * Time.deltaTime;
+            else
+                rb.velocity += new Vector3(0, 0, 3) * Time.deltaTime;
             rb.drag = gasDrag;
         }
         else
         {
-            brakeInput = 0.1f;
+            if (rb.velocity.z > 0)
+                rb.velocity -= new Vector3(0, 0, 3) * Time.deltaTime;
+            else
+                rb.velocity += new Vector3(0, 0, 3) * Time.deltaTime;
             rb.drag = idleDrag;
         }
 
@@ -109,6 +115,7 @@ public class PlayerMovement : MonoBehaviour
         coll.GetWorldPose(out pos, out rot);
         wheelMesh.transform.position = pos;
         wheelMesh.transform.rotation = rot;
+        
     }
 
     public void OnCollisionEnter(Collision collision)
