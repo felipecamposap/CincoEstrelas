@@ -29,7 +29,7 @@ public class PlayerMovement : MonoBehaviour
         ApplyMotor();
         ApplySteering();
         ApplyBrake();
-        Debug.Log(brakeInput);
+        //Debug.Log(brakeInput);
     }
 
     private void FixedUpdate()

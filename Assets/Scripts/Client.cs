@@ -47,6 +47,7 @@ public class Client : MonoBehaviour
             transform.parent = null;
             target = other.transform;
             touchPlayer++;
+            GameController.controller.uiController.CellPhoneAnimation(8);
         }
     }
 }

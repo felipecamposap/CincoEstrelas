@@ -9,6 +9,7 @@ public class Interface : MonoBehaviour
     public GameObject pauseUI;
     [SerializeField] private GameObject gameOverObj;
     [SerializeField] private Text gameOverText;
+    [SerializeField] private Animator cellPhoneAnimator;
 
 
     private void Start()
@@ -41,6 +42,58 @@ public class Interface : MonoBehaviour
         }
         gameOverObj.SetActive(true);
 
+    }
+
+
+    //Animações:
+    // 0 - Levantar celular
+    // 1 - CincoEstrela abrir aplicativo home
+    // 2 - CincoEstrela Menu inicial começar
+    // 3 - Começar corrida
+    // 4 - Cliente encontrado
+    // 5 - Aceitar corrida
+    // 6 - Rejeitar corrida
+    // ?? - Sair Aplicativo Cinco Estrelas
+    public void CellPhoneAnimation(int _value)// 
+    {
+        switch (_value)
+        {
+            case 0:
+                cellPhoneAnimator.Play("LiftCellPhone");
+                break;
+
+            case 1:
+                cellPhoneAnimator.Play("CincoEstrelaTransition");
+                break;
+
+            case 2:
+                cellPhoneAnimator.Play("CincoEstrelaHomeStart");
+                break;
+
+            case 3:
+                cellPhoneAnimator.Play("CincoEstrelasStartJob");
+                break;
+
+            case 4:
+                cellPhoneAnimator.Play("CincoEstrelasClientStart");
+                break;
+
+            case 5:
+                //cellPhoneAnimator.Play("CincoEstrelasClientStart");
+                break;
+
+            case 6:
+                cellPhoneAnimator.Play("CincoEstrelasRejectClient");
+                break;
+
+            case 7:
+                cellPhoneAnimator.Play("CincoEstrelasLowerCellphoneAceptJob");
+                break;
+
+            case 8:
+                cellPhoneAnimator.Play("CincoEstrelasLiftCellPhoneAceptJob");
+                break;
+        }
     }
 
 }
