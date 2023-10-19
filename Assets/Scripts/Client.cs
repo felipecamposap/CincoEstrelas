@@ -8,6 +8,7 @@ public class Client : MonoBehaviour
     [SerializeField] private Transform target;
     [SerializeField] private float speed;
     [SerializeField] private Collider coll;
+    public float payment;
     private GameController gc;
 
     private void Awake()
@@ -43,11 +44,15 @@ public class Client : MonoBehaviour
             touchPlayer++;
             
         }else if (touchPlayer == 2 && other.CompareTag("Destination")){
-            gc.GetPaid(5f);
+            gc.GetPaid(payment);
+            gc.NewRating(Random.Range(1, 6) * 2);
             transform.parent = null;
             target = other.transform;
             touchPlayer++;
             GameController.controller.uiController.CellPhoneAnimation(8);
+            {
+                
+            }
         }
     }
 }

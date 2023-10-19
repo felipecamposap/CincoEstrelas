@@ -5,20 +5,23 @@ public class ClientsSpawner : MonoBehaviour
 {
     
     [SerializeField] private Transform[] locations;
-    [SerializeField] private GameObject[] client;
-    //[SerializeField] private Animator CellPhoneUI;
+    [SerializeField] private GameObject client;
+    [SerializeField] private GameObject clientDestination;
+    [SerializeField] private Animator CellPhoneUI;
     [SerializeField] private string[] clientNames;
-    [SerializeField] private Text currentClient;
-    [SerializeField] private Slider clientRate;
-
-
+    [SerializeField] private Text txtClient;
+    [SerializeField] private Slider clientRating;
+    [SerializeField] private Text txtClientPay;
+    float currentClientPay = 0;
 
     public void ClientSpecifications()
     {
-        clientRate.value = Random.Range(1, 11);
-        currentClient.text = clientNames[Random.Range(0, clientNames.Length)];
+        txtClient.text = clientNames[Random.Range(0, clientNames.Length)];
+        int currentClientRating = Random.Range(2, 6);
+        clientRating.value = currentClientRating;
+        currentClientPay = Random.Range(5f, 10f) + (currentClientRating - 2);
+        txtClientPay.text = $"R${currentClientPay:F2}";
         //CellPhoneUI.SetBool("Activate", true);
-        
     }
 
     public void CloseCellPhone()
@@ -48,7 +51,8 @@ public class ClientsSpawner : MonoBehaviour
             ShowClientDestination(1, i);
         }
         //Debug.Log("After: " + pos);
-        Instantiate(client[0], pos, Quaternion.identity);
+        GameObject clone = Instantiate(client, pos, Quaternion.identity);
+        clone.GetComponentInChildren<Client>().payment = currentClientPay;
         GameController.controller.uiController.CellPhoneAnimation(7);
     }
 
@@ -71,7 +75,7 @@ public class ClientsSpawner : MonoBehaviour
             Debug.Log("posX: " + pos.x);
             Debug.Log("posZ: " + pos.z);
         }
-        Instantiate(client[1], pos, Quaternion.identity);
+        Instantiate(clientDestination, pos, Quaternion.identity);
         //CloseCellPhone();
     }
 

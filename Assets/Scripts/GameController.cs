@@ -17,8 +17,6 @@ public class GameController : MonoBehaviour
 
     [SerializeField] public readonly float literPrice = 5.86f;
     private float ratingSum = 0;
-    
-
     private bool isGamePaused = false;
 
     public float AvgRating
@@ -53,6 +51,20 @@ public class GameController : MonoBehaviour
         get { return (playerMoney / literPrice); }
     }
 
+    public void ToggleCursor(bool value)
+    {
+        if(value)
+        {
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+        }
+        else
+        {
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
+        }
+    }
+
     private void Start()
     {
         if (controller == null)
@@ -84,10 +96,11 @@ public class GameController : MonoBehaviour
             uiController.GameOver(1);
     }
 
-    private void NewRating(int rating)
+    public void NewRating(int rating)
     {
-        ratingSum += rating;
+        ratingSum += rating / 2;
         totalClients++;
+        uiController.ATTUI();
     }
 
     public void SetGamePaused(bool value)

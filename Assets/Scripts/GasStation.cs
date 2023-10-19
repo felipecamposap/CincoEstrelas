@@ -19,13 +19,14 @@ public class GasStation : MonoBehaviour
         {
             if(gc.PlayerMoney > 0)
             {
+                gc.ToggleCursor(true);
                 gc.SetGamePaused(true);
                 sldGas.maxValue = gc.AvailableFuelSpace < gc.BuyableLiters ? gc.AvailableFuelSpace : gc.BuyableLiters;
                 gasUI.SetActive(true);
             }
             else
             {
-                throw new System.Exception("Não há dinheiro suficiente para abastecer");
+                throw new System.Exception("Nï¿½o hï¿½ dinheiro suficiente para abastecer");
             }
         }
     }
@@ -40,6 +41,7 @@ public class GasStation : MonoBehaviour
 
     public void CloseUI()
     {
+        gc.ToggleCursor(false);
         gc.FuelCar(sldGas.value);
         gc.SetGamePaused(false);
         gasUI.SetActive(false);

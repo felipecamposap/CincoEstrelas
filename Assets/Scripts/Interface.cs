@@ -4,17 +4,20 @@ using UnityEngine.UI;
 public class Interface : MonoBehaviour
 {
     [SerializeField] private Slider carIntegritySlider;
+    [SerializeField] private Slider playerRatingSlider;
     [SerializeField] private Text gasText;
     [SerializeField] private Text money;
     public GameObject pauseUI;
     [SerializeField] private GameObject gameOverObj;
     [SerializeField] private Text gameOverText;
     [SerializeField] private Animator cellPhoneAnimator;
-
+    public bool working { get; set; }
 
     private void Start()
     {
+
         GameController.controller.uiController = this;
+        GameController.controller.ToggleCursor(false);
         ATTUI();
     }
 
@@ -24,7 +27,7 @@ public class Interface : MonoBehaviour
         carIntegritySlider.value = GameController.controller.carIntegrityCurrent; // Declarando o valor atual da integridade do carro possivel no slider
         gasText.text = $"Gasolina: {GameController.controller.PlayerFuel:F2}L";
         money.text = $"R${GameController.controller.PlayerMoney:F2}";
-        
+        playerRatingSlider.value = GameController.controller.AvgRating;
     }
 
     public void GameOver(int _value) // 0 - Hp do carro zerado | 1 - Dinheiro zerado
@@ -44,6 +47,13 @@ public class Interface : MonoBehaviour
 
     }
 
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.E) && !working)
+        {
+            CellPhoneAnimation(0);
+        }
+    }
 
     //Animações:
     // 0 - Levantar celular
@@ -59,6 +69,7 @@ public class Interface : MonoBehaviour
         switch (_value)
         {
             case 0:
+                GameController.controller.ToggleCursor(true);
                 cellPhoneAnimator.Play("LiftCellPhone");
                 break;
 
@@ -87,10 +98,12 @@ public class Interface : MonoBehaviour
                 break;
 
             case 7:
+                GameController.controller.ToggleCursor(false);
                 cellPhoneAnimator.Play("CincoEstrelasLowerCellphoneAceptJob");
                 break;
 
             case 8:
+                GameController.controller.ToggleCursor(true);
                 cellPhoneAnimator.Play("CincoEstrelasLiftCellPhoneAceptJob");
                 break;
         }

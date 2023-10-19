@@ -11,7 +11,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float maxSteeringAngle = 30;
     [SerializeField] float motorPower = 3000.0f; // Adjust the value as needed
     [SerializeField] float brakePower = 2000.0f; // Adjust the value as needed
-    [SerializeField] float gasDrag = 0.2f, idleDrag = 0.5f, brakeDrag = 1f;
+    [SerializeField] float gasDrag = 0.2f, idleDrag = 0.5f, brakeDrag = 1f, brakeThreshold = 2f;
     float slipAngle;
     float speed;
     public AnimationCurve steeringCurve;
@@ -48,7 +48,7 @@ public class PlayerMovement : MonoBehaviour
 
     void ApplyMovement()
     {
-        if ((localVelocity.z > 0.3f && gasInput < 0f) || (localVelocity.z < -0.3 && gasInput > 0)) //FRENAGEM
+        if ((localVelocity.z > brakeThreshold && gasInput < 0f) || (localVelocity.z < -brakeThreshold && gasInput > 0)) //FRENAGEM
         {
             brakeInput = 1;
             rb.drag = brakeDrag;
@@ -60,18 +60,12 @@ public class PlayerMovement : MonoBehaviour
         }
         else if (steeringInput != 0)
         {
-            if(rb.velocity.z > 0)
-                rb.velocity -= new Vector3(0, 0, 3) * Time.deltaTime;
-            else
-                rb.velocity += new Vector3(0, 0, 3) * Time.deltaTime;
+            brakeInput = 0.025f;
             rb.drag = gasDrag;
         }
         else
         {
-            if (rb.velocity.z > 0)
-                rb.velocity -= new Vector3(0, 0, 3) * Time.deltaTime;
-            else
-                rb.velocity += new Vector3(0, 0, 3) * Time.deltaTime;
+            brakeInput = 0.05f;
             rb.drag = idleDrag;
         }
 
@@ -93,7 +87,7 @@ public class PlayerMovement : MonoBehaviour
 
     void ApplySteering()
     {
-        float steeringSensitivity = 0.5f; // Adjust the value as needed
+        float steeringSensitivity = 1f; // Adjust the value as needed
         float steeringAngle = steeringSensitivity * steeringInput * steeringCurve.Evaluate(speed);
         steeringAngle = Mathf.Clamp(steeringAngle, -maxSteeringAngle, maxSteeringAngle);
         colliders.FRWheel.steerAngle = steeringAngle;
