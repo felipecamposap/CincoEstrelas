@@ -5,6 +5,7 @@ public class GameController : MonoBehaviour
     [Header("Variables statics")]
     public static GameController controller;
     public Interface uiController;
+    public ListClients listClients;
 
     [Header("Status jogador:")]
     public float carIntegrityMax; // Integridade do carro

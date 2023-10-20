@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Rendering;
 using UnityEngine.UI;
 
 public class ClientsSpawner : MonoBehaviour
@@ -14,9 +15,12 @@ public class ClientsSpawner : MonoBehaviour
     [SerializeField] private Text txtClientPay;
     float currentClientPay = 0;
 
+    private int indexName;
+
     public void ClientSpecifications()
     {
-        txtClient.text = clientNames[Random.Range(0, clientNames.Length)];
+        indexName = Random.Range(0, clientNames.Length);
+        txtClient.text = clientNames[indexName];
         int currentClientRating = Random.Range(2, 6);
         clientRating.value = currentClientRating;
         currentClientPay = Random.Range(5f, 10f) + (currentClientRating - 2);
@@ -52,7 +56,9 @@ public class ClientsSpawner : MonoBehaviour
         }
         //Debug.Log("After: " + pos);
         GameObject clone = Instantiate(client, pos, Quaternion.identity);
-        clone.GetComponentInChildren<Client>().payment = currentClientPay;
+        Client scriptClient = clone.GetComponentInChildren<Client>();
+        scriptClient.payment = currentClientPay;
+        scriptClient.clientName = clientNames[indexName];
         GameController.controller.uiController.CellPhoneAnimation(7);
     }
 

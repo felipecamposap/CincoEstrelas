@@ -8,12 +8,13 @@ public class Client : MonoBehaviour
     [SerializeField] private Transform target;
     [SerializeField] private float speed;
     [SerializeField] private Collider coll;
-    public float payment;
-    private GameController gc;
+    public string clientName { get; set; }
+    public float payment { get; set; }
+    //private GameController gc;
 
     private void Awake()
     {
-        gc = FindObjectOfType<GameController>();
+        //gc = FindObjectOfType<GameController>();
     }
 
     private void Update()
@@ -44,15 +45,16 @@ public class Client : MonoBehaviour
             touchPlayer++;
             
         }else if (touchPlayer == 2 && other.CompareTag("Destination")){
-            gc.GetPaid(payment);
-            gc.NewRating(Random.Range(1, 6) * 2);
+            GameController.controller.GetPaid(payment);
+            int rating = Random.Range(1, 6) * 2;
+            GameController.controller.NewRating(rating);
             transform.parent = null;
             target = other.transform;
             touchPlayer++;
             GameController.controller.uiController.CellPhoneAnimation(8);
-            {
-                
-            }
+            ClientsParameters client = new ClientsParameters(clientName, rating, payment);
+            GameController.controller.listClients.Insert(client);
+
         }
     }
 }

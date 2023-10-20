@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,11 +14,15 @@ public class Interface : MonoBehaviour
     [SerializeField] private Animator cellPhoneAnimator;
     public bool working { get; set; }
 
+    [SerializeField] private RectTransform panelHistoryClient;
+    [SerializeField] private RectTransform clientBeforeTransform;
+    [SerializeField] private GameObject clientHistoryObj;
+
     private void Start()
     {
 
         GameController.controller.uiController = this;
-        GameController.controller.ToggleCursor(false);
+        //GameController.controller.ToggleCursor(false);
         ATTUI();
     }
 
@@ -53,6 +58,19 @@ public class Interface : MonoBehaviour
         {
             CellPhoneAnimation(0);
         }
+    }
+
+    public void ShowHistoryClients()
+    {
+        panelHistoryClient.offsetMin = new Vector2(4.6f, MathF.Max(GameController.controller.listClients.totalClients - 4, 1) * 80);
+        for (int i = 1; i <= GameController.controller.listClients.totalClients; i++)
+        {
+            GameObject clone = Instantiate(clientHistoryObj, clientBeforeTransform.position, Quaternion.identity, panelHistoryClient);
+            ClientsParameters client = new ClientsParameters("", 0, 0f);
+            GameController.controller.listClients.GetClient(i, client);
+            clone.GetComponent<ClientsHud>().GetClientsInfo(client);
+        }
+
     }
 
     //Animações:
