@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class ClientsParameters : MonoBehaviour
+public class ClientsParameters
 {
     public ClientsParameters next { get; set; }
     public string clientName { get; set; }

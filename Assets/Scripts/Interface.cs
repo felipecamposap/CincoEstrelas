@@ -13,14 +13,27 @@ public class Interface : MonoBehaviour
     [SerializeField] private Text gameOverText;
     [SerializeField] private Animator cellPhoneAnimator;
     public bool working { get; set; }
-
     [SerializeField] private RectTransform panelHistoryClient;
-    [SerializeField] private RectTransform clientBeforeTransform;
+    [SerializeField] private Transform clientLogSpawn;
     [SerializeField] private GameObject clientHistoryObj;
+    private float clientLogHeight = 75;
 
     private void Start()
     {
-
+        ClientsParameters teste = new ClientsParameters("Felipe", 2, 5f);
+        ClientsParameters teste2 = new ClientsParameters("Gabriel", 2, 5f);
+        ClientsParameters teste3 = new ClientsParameters("Igor", 2, 5f);
+        ClientsParameters teste4 = new ClientsParameters("Gustavo", 2, 5f);
+        ClientsParameters teste5 = new ClientsParameters("Samuel", 2, 5f);
+        ClientsParameters teste6 = new ClientsParameters("Arthur", 2, 5f);
+        ClientsParameters teste7 = new ClientsParameters("Henrique", 2, 5f);
+        GameController.controller.listClients.Insert(teste);
+        GameController.controller.listClients.Insert(teste2);
+        GameController.controller.listClients.Insert(teste3);
+        GameController.controller.listClients.Insert(teste4);
+        GameController.controller.listClients.Insert(teste5);
+        GameController.controller.listClients.Insert(teste6);
+        GameController.controller.listClients.Insert(teste7);
         GameController.controller.uiController = this;
         //GameController.controller.ToggleCursor(false);
         ATTUI();
@@ -58,19 +71,29 @@ public class Interface : MonoBehaviour
         {
             CellPhoneAnimation(0);
         }
+
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            ShowHistoryClients();
+        }
     }
 
     public void ShowHistoryClients()
     {
-        panelHistoryClient.offsetMin = new Vector2(4.6f, MathF.Max(GameController.controller.listClients.totalClients - 4, 1) * 80);
-        for (int i = 1; i <= GameController.controller.listClients.totalClients; i++)
+        Debug.Log(GameController.controller.listClients.totalClients);
+        if (GameController.controller.listClients.totalClients > 6)
         {
-            GameObject clone = Instantiate(clientHistoryObj, clientBeforeTransform.position, Quaternion.identity, panelHistoryClient);
-            ClientsParameters client = new ClientsParameters("", 0, 0f);
-            GameController.controller.listClients.GetClient(i, client);
-            clone.GetComponent<ClientsHud>().GetClientsInfo(client);
+            panelHistoryClient.offsetMin = new Vector2(0f, panelHistoryClient.offsetMin.y - (75 * (GameController.controller.listClients.totalClients - 6)));
         }
 
+        for (int i = 1; i <= GameController.controller.listClients.totalClients; i++)
+        {
+            ClientsParameters client = new ClientsParameters("", 0, 0f);
+            GameController.controller.listClients.GetClient(i, out client);
+            GameObject clone = Instantiate(clientHistoryObj, clientLogSpawn.position, Quaternion.identity, panelHistoryClient);
+            clone.GetComponent<ClientsHud>().GetClientsInfo(client);
+            clientLogSpawn.position = new Vector3(clientLogSpawn.position.x, clientLogSpawn.position.y - clientLogHeight, clientLogSpawn.position.z);
+        }
     }
 
     //Animações:

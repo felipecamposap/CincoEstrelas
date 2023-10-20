@@ -12,8 +12,7 @@ public class ClientsHud : MonoBehaviour
     {
         this.nameText.text = _client.clientName;
         this.rating.value = _client.rating;
-        this.money.text = _client.paid.ToString();
-
+        this.money.text = $"R${_client.paid:F2}";
     }
 
 }
