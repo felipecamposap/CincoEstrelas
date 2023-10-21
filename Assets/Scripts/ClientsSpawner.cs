@@ -59,7 +59,7 @@ public class ClientsSpawner : MonoBehaviour
         Client scriptClient = clone.GetComponentInChildren<Client>();
         scriptClient.payment = currentClientPay;
         scriptClient.clientName = clientNames[indexName];
-        GameController.controller.uiController.CellPhoneAnimation(7);
+        GameController.controller.uiController.CellPhoneAnimation(1); // abaixar celular
     }
 
     public void ShowClientDestination(int loc, int ind)

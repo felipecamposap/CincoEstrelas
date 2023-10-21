@@ -18,6 +18,7 @@ public class Interface : MonoBehaviour
     [SerializeField] private GameObject clientHistoryObj;
     private float clientLogHeight = 75;
 
+
     private void Start()
     {
         ClientsParameters teste = new ClientsParameters("Felipe", 2, 5f);
@@ -69,6 +70,7 @@ public class Interface : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.E) && !working)
         {
+            
             CellPhoneAnimation(0);
         }
 
@@ -80,10 +82,9 @@ public class Interface : MonoBehaviour
 
     public void ShowHistoryClients()
     {
-        Debug.Log(GameController.controller.listClients.totalClients);
-        if (GameController.controller.listClients.totalClients > 6)
+        if (GameController.controller.listClients.totalClients > 5)
         {
-            panelHistoryClient.offsetMin = new Vector2(0f, panelHistoryClient.offsetMin.y - (75 * (GameController.controller.listClients.totalClients - 6)));
+            panelHistoryClient.offsetMin = new Vector2(0f, panelHistoryClient.offsetMin.y - (75 * (GameController.controller.listClients.totalClients - 5)));
         }
 
         for (int i = 1; i <= GameController.controller.listClients.totalClients; i++)
@@ -94,6 +95,8 @@ public class Interface : MonoBehaviour
             clone.GetComponent<ClientsHud>().GetClientsInfo(client);
             clientLogSpawn.position = new Vector3(clientLogSpawn.position.x, clientLogSpawn.position.y - clientLogHeight, clientLogSpawn.position.z);
         }
+        CellPhoneAnimation(8);
+        
     }
 
     //Animações:
@@ -109,43 +112,48 @@ public class Interface : MonoBehaviour
     {
         switch (_value)
         {
-            case 0:
+            case 0: // Levantar celular
                 GameController.controller.ToggleCursor(true);
                 cellPhoneAnimator.Play("LiftCellPhone");
                 break;
 
-            case 1:
-                cellPhoneAnimator.Play("CincoEstrelaTransition");
+            case 1: // abaixar celular
+                GameController.controller.ToggleCursor(false);
+                cellPhoneAnimator.Play("LowerCellPhone");
                 break;
 
             case 2:
-                cellPhoneAnimator.Play("CincoEstrelaHomeStart");
+                cellPhoneAnimator.Play("CincoEstrelaTransition");
                 break;
 
             case 3:
-                cellPhoneAnimator.Play("CincoEstrelasStartJob");
+                GameController.controller.ToggleCursor(true);
+                cellPhoneAnimator.Play("CincoEstrelaHomeStart");
                 break;
 
             case 4:
+                cellPhoneAnimator.Play("CincoEstrelasStartJob");
+                break;
+
+            case 5: // Mostrar Cliente
                 cellPhoneAnimator.Play("CincoEstrelasClientStart");
                 break;
 
-            case 5:
-                //cellPhoneAnimator.Play("CincoEstrelasClientStart");
-                break;
-
-            case 6:
-                cellPhoneAnimator.Play("CincoEstrelasRejectClient");
-                break;
-
-            case 7:
-                GameController.controller.ToggleCursor(false);
-                cellPhoneAnimator.Play("CincoEstrelasLowerCellphoneAceptJob");
-                break;
-
-            case 8:
+            case 6: // Password Hud
                 GameController.controller.ToggleCursor(true);
-                cellPhoneAnimator.Play("CincoEstrelasLiftCellPhoneAceptJob");
+                cellPhoneAnimator.Play("Password");
+                break;
+
+            case 7: // Corrida concluida
+                cellPhoneAnimator.Play("JobCompleted");
+                break;
+
+            case 8: // Fade in
+                cellPhoneAnimator.Play("CincoEstrelasHistoryClientsUp");
+                break;
+
+            case 9:
+                cellPhoneAnimator.Play("CincoEstrelasHistoryBack");
                 break;
         }
     }

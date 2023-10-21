@@ -20,6 +20,9 @@ public class GameController : MonoBehaviour
     private float ratingSum = 0;
     private bool isGamePaused = false;
 
+    public int passwordClient { get; set; }
+    [field: SerializeField] public bool passwordCorrect { get; set; }
+
     public float AvgRating
     {
         get { return (totalClients > 0 ? ratingSum / totalClients : 0); }
@@ -140,6 +143,11 @@ public class GameController : MonoBehaviour
                 Time.timeScale = 0;
             }
         }
+    }
+
+    public void PasswordClient()
+    {
+        passwordClient = Random.Range(1000, 9999);
     }
 
     public void Damage(float _value)

@@ -39,7 +39,7 @@ public class ListClients : MonoBehaviour
 
     public void GetClient(int _value, out ClientsParameters _client)
     {
-        Debug.Log(head.clientName);
+        //Debug.Log(head.clientName);
         ClientsParameters countClient = head;
         int count = 1;
         while (count != _value)
@@ -47,7 +47,7 @@ public class ListClients : MonoBehaviour
             countClient = countClient.next;
             count++;
         }
-        Debug.Log(countClient.clientName);
+        //Debug.Log(countClient.clientName);
         _client = countClient;
     }
 
