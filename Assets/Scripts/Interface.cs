@@ -17,6 +17,8 @@ public class Interface : MonoBehaviour
     [SerializeField] private Transform clientLogSpawn;
     [SerializeField] private GameObject clientHistoryObj;
     private float clientLogHeight = 75;
+    private int clientListLength = 1;
+
 
 
     private void Start()
@@ -70,7 +72,7 @@ public class Interface : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.E) && !working)
         {
-            
+
             CellPhoneAnimation(0);
         }
 
@@ -82,21 +84,22 @@ public class Interface : MonoBehaviour
 
     public void ShowHistoryClients()
     {
-        if (GameController.controller.listClients.totalClients > 5)
-        {
-            panelHistoryClient.offsetMin = new Vector2(0f, panelHistoryClient.offsetMin.y - (75 * (GameController.controller.listClients.totalClients - 5)));
-        }
 
-        for (int i = 1; i <= GameController.controller.listClients.totalClients; i++)
+        if (GameController.controller.listClients.totalClients > clientListLength - 1)
         {
-            ClientsParameters client = new ClientsParameters("", 0, 0f);
-            GameController.controller.listClients.GetClient(i, out client);
-            GameObject clone = Instantiate(clientHistoryObj, clientLogSpawn.position, Quaternion.identity, panelHistoryClient);
-            clone.GetComponent<ClientsHud>().GetClientsInfo(client);
-            clientLogSpawn.position = new Vector3(clientLogSpawn.position.x, clientLogSpawn.position.y - clientLogHeight, clientLogSpawn.position.z);
+            for (int i = clientListLength; i <= GameController.controller.listClients.totalClients; i++)
+            {
+                ClientsParameters client = new ClientsParameters("", 0, 0f);
+                GameController.controller.listClients.GetClient(i, out client);
+                GameObject clone = Instantiate(clientHistoryObj, clientLogSpawn.position, Quaternion.identity, panelHistoryClient);
+                clone.GetComponent<ClientsHud>().GetClientsInfo(client);
+                clientLogSpawn.position = new Vector3(clientLogSpawn.position.x, clientLogSpawn.position.y - clientLogHeight, clientLogSpawn.position.z);
+                clientListLength++;
+                panelHistoryClient.GetComponent<RectTransform>( ).SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, clientLogHeight * (clientListLength - 1));
+            }
         }
         CellPhoneAnimation(8);
-        
+
     }
 
     //Animações:
