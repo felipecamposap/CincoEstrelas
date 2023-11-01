@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
@@ -112,10 +113,13 @@ public class PlayerMovement : MonoBehaviour
         
     }
 
-    public void OnCollisionEnter(Collision collision)
+    public IEnumerator OnCollisionEnter(Collision collision)
     {
+        float damageValue = rb.velocity.magnitude;
+        yield return new WaitForSeconds(0.1f);
+        damageValue -= rb.velocity.magnitude;
         if (collision.gameObject.CompareTag("Damagable"))
-            GameController.controller.Damage((rb.velocity.magnitude * 8f));
+            GameController.controller.Damage((damageValue * 10f));
 
     }
 

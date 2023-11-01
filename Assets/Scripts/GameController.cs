@@ -7,6 +7,7 @@ public class GameController : MonoBehaviour
     public Interface uiController;
     public ListClients listClients;
 
+
     [Header("Status jogador:")]
     public float carIntegrityMax; // Integridade do carro
     public float carIntegrityCurrent; // Integridade do carro
@@ -155,6 +156,7 @@ public class GameController : MonoBehaviour
         carIntegrityCurrent -= _value;
         if (carIntegrityCurrent <= 0)
             uiController.GameOver(0);
+        uiController.DamageAnimation();
     }
 
 }

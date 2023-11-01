@@ -12,12 +12,15 @@ public class Interface : MonoBehaviour
     [SerializeField] private GameObject gameOverObj;
     [SerializeField] private Text gameOverText;
     [SerializeField] private Animator cellPhoneAnimator;
+    [SerializeField] private Animator damageAnimator;
     public bool working { get; set; }
     [SerializeField] private RectTransform panelHistoryClient;
     [SerializeField] private Transform clientLogSpawn;
     [SerializeField] private GameObject clientHistoryObj;
     private float clientLogHeight = 75;
     private int clientListLength = 1;
+
+    private bool cellphoneLift = false;
 
 
 
@@ -51,6 +54,11 @@ public class Interface : MonoBehaviour
         playerRatingSlider.value = GameController.controller.AvgRating;
     }
 
+    public void DamageAnimation()
+    {
+        damageAnimator.Play("Damage");
+    }
+
     public void GameOver(int _value) // 0 - Hp do carro zerado | 1 - Dinheiro zerado
     {
         switch (_value)
@@ -72,8 +80,10 @@ public class Interface : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.E) && !working)
         {
-
-            CellPhoneAnimation(0);
+            if (cellphoneLift)
+                CellPhoneAnimation(1);
+            else
+                CellPhoneAnimation(0);
         }
 
         if (Input.GetKeyDown(KeyCode.R))
@@ -85,7 +95,7 @@ public class Interface : MonoBehaviour
     public void ShowHistoryClients()
     {
 
-        if (GameController.controller.listClients.totalClients > clientListLength - 1)
+        if (GameController.controller.listClients.totalClients > clientListLength /*- 1*/)
         {
             for (int i = clientListLength; i <= GameController.controller.listClients.totalClients; i++)
             {
@@ -95,10 +105,10 @@ public class Interface : MonoBehaviour
                 clone.GetComponent<ClientsHud>().GetClientsInfo(client);
                 clientLogSpawn.position = new Vector3(clientLogSpawn.position.x, clientLogSpawn.position.y - clientLogHeight, clientLogSpawn.position.z);
                 clientListLength++;
-                panelHistoryClient.GetComponent<RectTransform>( ).SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, clientLogHeight * (clientListLength - 1));
+                panelHistoryClient.GetComponent<RectTransform>( ).SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, clientLogHeight * (clientListLength /*- 1*/));
             }
         }
-        CellPhoneAnimation(8);
+        CellPhoneAnimation(9);
 
     }
 
@@ -117,10 +127,12 @@ public class Interface : MonoBehaviour
         {
             case 0: // Levantar celular
                 GameController.controller.ToggleCursor(true);
+                cellphoneLift = true;
                 cellPhoneAnimator.Play("LiftCellPhone");
                 break;
 
             case 1: // abaixar celular
+                cellphoneLift = false;
                 GameController.controller.ToggleCursor(false);
                 cellPhoneAnimator.Play("LowerCellPhone");
                 break;
@@ -151,11 +163,15 @@ public class Interface : MonoBehaviour
                 cellPhoneAnimator.Play("JobCompleted");
                 break;
 
-            case 8: // Fade in
+            case 8: // Rejeitar corrida
+                cellPhoneAnimator.Play("CincoEstrelasRejectClient");
+                break;
+
+            case 9: // Fade in
                 cellPhoneAnimator.Play("CincoEstrelasHistoryClientsUp");
                 break;
 
-            case 9:
+            case 10:
                 cellPhoneAnimator.Play("CincoEstrelasHistoryBack");
                 break;
         }
