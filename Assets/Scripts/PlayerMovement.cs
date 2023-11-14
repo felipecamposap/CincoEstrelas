@@ -24,6 +24,7 @@ public class PlayerMovement : MonoBehaviour
     {
         localVelocity = transform.InverseTransformDirection(rb.velocity);
         speed = rb.velocity.magnitude;
+        GameController.controller.uiController.Velocity(speed / 20);
         ApplyWheelPos();
         CheckInput();
         ApplyMovement();

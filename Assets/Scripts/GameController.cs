@@ -96,6 +96,7 @@ public class GameController : MonoBehaviour
             //txtGas.text = $"{playerFuel:F2}";
             playerFuel -= fuelBurn * fuelBurnMultiplier;
             uiController.ATTUI();
+            uiController.Gasolina(playerFuel/maxPlayerFuel);
         }
         if (playerFuel <= 0)
             uiController.GameOver(1);

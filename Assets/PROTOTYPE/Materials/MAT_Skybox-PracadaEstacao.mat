@@ -77,6 +77,22 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _SampleTexture2D_89a607b6b35f4a97a5d8f5885662a957_Texture_1_Texture2D:
+        m_Texture: {fileID: 2800000, guid: 9825f151b04e98b4f868cddd3efc55ab, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SampleTexture2D_8cb5b1f72a4e482ab1d3db42f5d62317_Texture_1_Texture2D:
+        m_Texture: {fileID: 2800000, guid: 9825f151b04e98b4f868cddd3efc55ab, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SampleTexture2D_a1a0b68658cf4ad6b28e5676b4379643_Texture_1_Texture2D:
+        m_Texture: {fileID: 2800000, guid: 9825f151b04e98b4f868cddd3efc55ab, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SampleTexture2D_d368b1d0b9d84133b370bf4dcdffa63a_Texture_1_Texture2D:
+        m_Texture: {fileID: 2800000, guid: 9825f151b04e98b4f868cddd3efc55ab, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _SpecGlossMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -118,7 +134,7 @@ Material:
     - _QueueControl: 0
     - _QueueOffset: 0
     - _ReceiveShadows: 1
-    - _SizeDarknessDown: 0.5
+    - _SizeDarknessDown: 0.01
     - _SizeDarknessUp: 4.4
     - _SizeDown: 1.25
     - _SizeHorizon: 30
@@ -136,12 +152,16 @@ Material:
     - _ZWrite: 1
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
+    - _CloudColor: {r: 0, g: 0, b: 0, a: 0}
+    - _CloudSpeed: {r: 3, g: 3, b: 0, a: 0}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _ColorDown: {r: 0, g: 0.02352953, b: 1, a: 1}
     - _ColorHorizon: {r: 0.12203757, g: 0.99215686, b: 0, a: 1}
     - _ColorUp: {r: 1, g: 0, b: 0.9294119, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _OffsetCloud: {r: 2.15, g: 0, b: 0, a: 0}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
     - _StarColor: {r: 23.968615, g: 23.968615, b: 23.968615, a: 1}
+    - _TilingCloud: {r: 0.3, g: 0.3, b: 0, a: 0}
     - _tilingStar: {r: 1.2, g: 1.2, b: 0, a: 0}
   m_BuildTextureStacks: []

@@ -21,6 +21,8 @@ public class Interface : MonoBehaviour
     private int clientListLength = 1;
 
     private bool cellphoneLift = false;
+    [SerializeField] private RectTransform speedometerPointer;
+    [SerializeField] private RectTransform gasPointer;
 
 
 
@@ -49,9 +51,20 @@ public class Interface : MonoBehaviour
     {
         carIntegritySlider.maxValue = GameController.controller.carIntegrityMax; // Declarando o maximo da integridade do carro possivel no slider
         carIntegritySlider.value = GameController.controller.carIntegrityCurrent; // Declarando o valor atual da integridade do carro possivel no slider
-        gasText.text = $"Gasolina: {GameController.controller.PlayerFuel:F2}L";
         money.text = $"R${GameController.controller.PlayerMoney:F2}";
         playerRatingSlider.value = GameController.controller.AvgRating;
+        Gasolina(GameController.controller.PlayerFuel / GameController.controller.maxPlayerFuel);
+    }
+
+    public void Velocity(float _value)
+    {
+        //Debug.Log(_value + " - " + Vector3.Lerp(-251, -20, Math.Abs(_value));
+        speedometerPointer.eulerAngles = new Vector3(0, 0, Mathf.Lerp(4, -190, Math.Abs(_value)));
+    }
+
+    public void Gasolina(float _value)
+    {
+        gasPointer.eulerAngles = new Vector3(0, 0, Mathf.Lerp(28, -58, Math.Abs(_value)));
     }
 
     public void DamageAnimation()
