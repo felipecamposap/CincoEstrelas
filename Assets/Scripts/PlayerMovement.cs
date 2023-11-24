@@ -85,6 +85,8 @@ public class PlayerMovement : MonoBehaviour
     {
         colliders.BRWheel.motorTorque = motorPower * gasInput; // Adjust the value as needed
         colliders.BLWheel.motorTorque = motorPower * gasInput; // Adjust the value as needed
+        colliders.FLWheel.motorTorque = motorPower * gasInput;
+        colliders.FRWheel.motorTorque = motorPower * gasInput;
     }
 
     void ApplySteering()

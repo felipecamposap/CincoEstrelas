@@ -49,7 +49,7 @@ public class Interface : MonoBehaviour
 
     public void ATTUI()
     {
-        carIntegritySlider.maxValue = GameController.controller.carIntegrityMax; // Declarando o maximo da integridade do carro possivel no slider
+        carIntegritySlider.maxValue = GameController.controller.carIntegrityMax + GameController.controller.carIntegrityMax * 0.1f; // Declarando o maximo da integridade do carro possivel no slider
         carIntegritySlider.value = GameController.controller.carIntegrityCurrent; // Declarando o valor atual da integridade do carro possivel no slider
         money.text = $"R${GameController.controller.PlayerMoney:F2}";
         playerRatingSlider.value = GameController.controller.AvgRating;
