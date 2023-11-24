@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,21 +14,21 @@ public class Interface : MonoBehaviour
     [SerializeField] private Text gameOverText;
     [SerializeField] private Animator cellPhoneAnimator;
     [SerializeField] private Animator damageAnimator;
-    public bool working { get; set; }
     [SerializeField] private RectTransform panelHistoryClient;
     [SerializeField] private Transform clientLogSpawn;
     [SerializeField] private GameObject clientHistoryObj;
     private float clientLogHeight = 75;
-    private int clientListLength = 1;
-
     private bool cellphoneLift = false;
     [SerializeField] private RectTransform speedometerPointer;
     [SerializeField] private RectTransform gasPointer;
+    private Vector3 initialClientLogSpawn; //posicao inicial do ponteiro de spawnar cards de clientes
+    private List<GameObject> spawnedClientLogs; //lista de clientes já instanciados na lista
 
 
 
     private void Start()
     {
+        initialClientLogSpawn = clientLogSpawn.position;
         ClientsParameters teste = new ClientsParameters("Felipe", 2, 5f);
         ClientsParameters teste2 = new ClientsParameters("Gabriel", 2, 5f);
         ClientsParameters teste3 = new ClientsParameters("Igor", 2, 5f);
@@ -91,7 +92,7 @@ public class Interface : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.E) && !working)
+        if (Input.GetKeyDown(KeyCode.E))
         {
             if (cellphoneLift)
                 CellPhoneAnimation(1);
@@ -99,31 +100,73 @@ public class Interface : MonoBehaviour
                 CellPhoneAnimation(0);
         }
 
-        if (Input.GetKeyDown(KeyCode.R))
+        /*if (Input.GetKeyDown(KeyCode.R))
         {
             ShowHistoryClients();
-        }
+        }*/
     }
 
-    public void ShowHistoryClients()
+    public void ChangeListSort(byte sort)
     {
+    }
 
-        if (GameController.controller.listClients.totalClients > clientListLength /*- 1*/)
+    public void ShowHistoryClients(byte sort)
+    {
+        ListClients interfaceListClients = new ListClients();
+
+        if (spawnedClientLogs.Count > 0)
         {
-            for (int i = clientListLength; i <= GameController.controller.listClients.totalClients; i++)
-            {
-                ClientsParameters client = new ClientsParameters("", 0, 0f);
-                GameController.controller.listClients.GetClient(i, out client);
-                GameObject clone = Instantiate(clientHistoryObj, clientLogSpawn.position, Quaternion.identity, panelHistoryClient);
-                clone.GetComponent<ClientsHud>().GetClientsInfo(client);
-                clientLogSpawn.position = new Vector3(clientLogSpawn.position.x, clientLogSpawn.position.y - clientLogHeight, clientLogSpawn.position.z);
-                clientListLength++;
-                panelHistoryClient.GetComponent<RectTransform>( ).SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, clientLogHeight * (clientListLength /*- 1*/));
-            }
+            ResetHistoryClients();
+        }
+
+        for (int i = 0; i <= GameController.controller.listClients.totalClients; i++)
+        {
+            ClientsParameters client;
+            GameController.controller.listClients.GetClient(0, out client);
+            interfaceListClients.Insert(client);
+        }
+
+        switch (sort)
+        {
+            case 0:
+                break;
+            case 1:
+                interfaceListClients.Sort()
+                break;
+            case 2:
+                break;
+            case 3:
+                break;
         }
         CellPhoneAnimation(9);
 
     }
+
+    public void FillHistoryClients()
+    {
+        for (int i = 0; i <= GameController.controller.listClients.totalClients; i++)
+        {
+            ClientsParameters client; //ponteiro para receber valores de clientes
+            GameController.controller.listClients.GetClient(i, out client); //recebe valores da lista de clientes
+            GameObject clone = Instantiate(clientHistoryObj, clientLogSpawn.position, Quaternion.identity, panelHistoryClient); //salva e instancia gameobject no lugar correto
+            spawnedClientLogs.Add(clone); //salva referencia de objeto instanciado na em uma lista para deletar depois
+            clone.GetComponent<ClientsHud>().GetClientsInfo(client); //transfere informações do cliente para a instancia
+            clientLogSpawn.position = new Vector3(clientLogSpawn.position.x, clientLogSpawn.position.y - clientLogHeight, clientLogSpawn.position.z); //atualiza posição do ponteiro de spawn de cards
+            panelHistoryClient.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, clientLogHeight * interfaceListClients.totalClients); //atualiza o tamanho do painel baseado na quantidade de cards instanciados
+        }
+    }
+
+    public void ResetHistoryClients()
+    {
+        clientLogSpawn.position = initialClientLogSpawn;
+        foreach (GameObject entry in spawnedClientLogs)
+        {
+            Destroy(entry);
+        }
+        spawnedClientLogs.Clear();
+    }
+
+
 
     //Animações:
     // 0 - Levantar celular
