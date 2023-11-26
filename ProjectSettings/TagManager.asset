@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Destination
   - Gas
+  - Damagable
   layers:
   - Default
   - TransparentFX
