@@ -76,6 +76,7 @@ public class GameController : MonoBehaviour
             controller = this;
         else
             Destroy(gameObject);
+        listClients = new ListClients();
         DontDestroyOnLoad(this);
         //txtMoney.text = $"{playerMoney:F2}";
     }

@@ -15,27 +15,29 @@ public class Interface : MonoBehaviour
     [SerializeField] private Animator cellPhoneAnimator;
     [SerializeField] private Animator damageAnimator;
     [SerializeField] private RectTransform panelHistoryClient;
-    [SerializeField] private Transform clientLogSpawn;
     [SerializeField] private GameObject clientHistoryObj;
-    private float clientLogHeight = 75;
     private bool cellphoneLift = false;
     [SerializeField] private RectTransform speedometerPointer;
     [SerializeField] private RectTransform gasPointer;
-    private Vector3 initialClientLogSpawn; //posicao inicial do ponteiro de spawnar cards de clientes
-    private List<GameObject> spawnedClientLogs; //lista de clientes já instanciados na lista
+    public ListClients interfaceListClients = new ListClients(); // Lista de clientes customizada
 
 
 
     private void Start()
     {
-        initialClientLogSpawn = clientLogSpawn.position;
-        ClientsParameters teste = new ClientsParameters("Felipe", 2, 5f);
-        ClientsParameters teste2 = new ClientsParameters("Gabriel", 2, 5f);
-        ClientsParameters teste3 = new ClientsParameters("Igor", 2, 5f);
-        ClientsParameters teste4 = new ClientsParameters("Gustavo", 2, 5f);
+        ATTUI();
+        Invoke("AttList", 2);
+    }
+
+    public void AttList()
+    {
+        ClientsParameters teste = new ClientsParameters("Felipe", 5, 5f);
+        ClientsParameters teste2 = new ClientsParameters("Gabriel", 3, 5f);
+        ClientsParameters teste3 = new ClientsParameters("Igor", 1, 5f);
+        ClientsParameters teste4 = new ClientsParameters("Gustavo", 4, 5f);
         ClientsParameters teste5 = new ClientsParameters("Samuel", 2, 5f);
-        ClientsParameters teste6 = new ClientsParameters("Arthur", 2, 5f);
-        ClientsParameters teste7 = new ClientsParameters("Henrique", 2, 5f);
+        ClientsParameters teste6 = new ClientsParameters("Arthur", 3, 5f);
+        ClientsParameters teste7 = new ClientsParameters("Henrique", 1, 5f);
         GameController.controller.listClients.Insert(teste);
         GameController.controller.listClients.Insert(teste2);
         GameController.controller.listClients.Insert(teste3);
@@ -44,8 +46,6 @@ public class Interface : MonoBehaviour
         GameController.controller.listClients.Insert(teste6);
         GameController.controller.listClients.Insert(teste7);
         GameController.controller.uiController = this;
-        //GameController.controller.ToggleCursor(false);
-        ATTUI();
     }
 
     public void ATTUI()
@@ -59,7 +59,6 @@ public class Interface : MonoBehaviour
 
     public void Velocity(float _value)
     {
-        //Debug.Log(_value + " - " + Vector3.Lerp(-251, -20, Math.Abs(_value));
         speedometerPointer.eulerAngles = new Vector3(0, 0, Mathf.Lerp(4, -190, Math.Abs(_value)));
     }
 
@@ -78,7 +77,7 @@ public class Interface : MonoBehaviour
         switch (_value)
         {
             case 0:
-                gameOverText.text = "O seu carro est� muito danificado!";
+                gameOverText.text = "O seu carro está muito danificado!";
                 break;
 
             case 1:
@@ -99,71 +98,46 @@ public class Interface : MonoBehaviour
             else
                 CellPhoneAnimation(0);
         }
-
-        /*if (Input.GetKeyDown(KeyCode.R))
-        {
-            ShowHistoryClients();
-        }*/
     }
 
-    public void ChangeListSort(byte sort)
+    public void ShowHistoryClients(int sort)
     {
-    }
-
-    public void ShowHistoryClients(byte sort)
-    {
-        ListClients interfaceListClients = new ListClients();
-
-        if (spawnedClientLogs.Count > 0)
+        Debug.Log(panelHistoryClient.childCount);
+        if (panelHistoryClient.childCount > 0)
         {
             ResetHistoryClients();
         }
-
-        for (int i = 0; i <= GameController.controller.listClients.totalClients; i++)
+        interfaceListClients = new ListClients();
+        for (int i = 0; i < GameController.controller.listClients.totalClients; i++)
         {
             ClientsParameters client;
-            GameController.controller.listClients.GetClient(0, out client);
-            interfaceListClients.Insert(client);
+            GameController.controller.listClients.GetClient(i, out client);
+            interfaceListClients.Insert(client, sort);
         }
-
-        switch (sort)
-        {
-            case 0:
-                break;
-            case 1:
-                interfaceListClients.Sort()
-                break;
-            case 2:
-                break;
-            case 3:
-                break;
-        }
+        FillHistoryClients();
         CellPhoneAnimation(9);
 
     }
 
     public void FillHistoryClients()
     {
-        for (int i = 0; i <= GameController.controller.listClients.totalClients; i++)
+        Debug.Log("Fill");
+        for (int i = 0; i < interfaceListClients.totalClients; i++)
         {
             ClientsParameters client; //ponteiro para receber valores de clientes
-            GameController.controller.listClients.GetClient(i, out client); //recebe valores da lista de clientes
-            GameObject clone = Instantiate(clientHistoryObj, clientLogSpawn.position, Quaternion.identity, panelHistoryClient); //salva e instancia gameobject no lugar correto
-            spawnedClientLogs.Add(clone); //salva referencia de objeto instanciado na em uma lista para deletar depois
+            interfaceListClients.GetClient(i, out client); //recebe valores da lista de clientes
+            GameObject clone = Instantiate(clientHistoryObj, panelHistoryClient); //salva e instancia gameobject no lugar correto
             clone.GetComponent<ClientsHud>().GetClientsInfo(client); //transfere informações do cliente para a instancia
-            clientLogSpawn.position = new Vector3(clientLogSpawn.position.x, clientLogSpawn.position.y - clientLogHeight, clientLogSpawn.position.z); //atualiza posição do ponteiro de spawn de cards
-            panelHistoryClient.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, clientLogHeight * interfaceListClients.totalClients); //atualiza o tamanho do painel baseado na quantidade de cards instanciados
         }
     }
 
     public void ResetHistoryClients()
     {
-        clientLogSpawn.position = initialClientLogSpawn;
-        foreach (GameObject entry in spawnedClientLogs)
+        
+        for (int i = panelHistoryClient.childCount - 1; i >= 0; i--)
         {
-            Destroy(entry);
+            Destroy(panelHistoryClient.GetChild(i).gameObject);
         }
-        spawnedClientLogs.Clear();
     }
 
 
