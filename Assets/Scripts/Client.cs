@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -43,10 +44,12 @@ public class Client : MonoBehaviour
             {
                 if (target.CompareTag("Player"))
                 {
+                    GameController.controller.penalty = 0;
                     touchPlayer = 2;
                     transform.position = new Vector3(target.transform.position.x, target.transform.position.y, target.transform.position.z);
                     transform.rotation = target.transform.localRotation;
                     //transform.localRotation = new Quaternion(1, transform.localRotation.y, transform.localRotation.z, 1);
+                    GetComponent<BoxCollider>().size = new Vector3(2, 2, 2);
                     transform.parent = target.transform;
                 }
                 else
@@ -63,8 +66,10 @@ public class Client : MonoBehaviour
         if (touchPlayer == 2 && other.CompareTag("Destination"))
         {
             GameController.controller.GetPaid(payment);
-            int rating = Random.Range(1, 6) * 2;
+            int rating = Math.Clamp(10 - (GameController.controller.penalty * 2), 1, 10);
+            Debug.Log(rating);
             GameController.controller.NewRating(rating);
+            GameController.controller.penalty = 0; //remover depois???????
             transform.parent = null;
             target = other.transform;
             touchPlayer++;

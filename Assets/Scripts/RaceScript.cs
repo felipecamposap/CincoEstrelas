@@ -1,28 +1,46 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class RaceScript : MonoBehaviour
 {
     [SerializeField] private float speed;
     [SerializeField] private Transform[] pos;
+    [SerializeField] private GameObject[] wheels;
     [SerializeField] private int index = 0;
+    private NavMeshAgent nva;
 
-    [SerializeField] float volta;
-
-    // Start is called before the first frame update
     void Start()
     {
-        
+        nva = GetComponentInParent<NavMeshAgent>();
+        nva.SetDestination(pos[index].position);
     }
 
-    // Update is called once per frame
-    void FixedUpdate()
+    void OnTriggerEnter(Collider col)
     {
-        Vector3 dir = (pos[index].transform.position - transform.position);
-        if(dir.magnitude <= volta)
+        if(col.gameObject.CompareTag("Waypoint")) 
+        {
             index = (index + 1) % pos.Length;
-        transform.rotation = Quaternion.Euler(0, -90 * index, 0);
-        transform.position += dir.normalized * speed * Time.fixedDeltaTime;
+            nva.SetDestination(pos[index].position);
+        }
+    }
+
+    void OnCollisionEnter(Collision col)
+    {
+        if(col.collider.gameObject.CompareTag("Player") || col.collider.gameObject.CompareTag("NPC"))
+        {
+            nva.isStopped = true;
+            Invoke("Resume", 5f);
+        }
+    }
+
+    void Resume()
+    {
+        Rigidbody rb = GetComponent<Rigidbody>();
+        rb.velocity = Vector3.zero;
+        rb.angularVelocity = Vector3.zero;
+        nva.isStopped = false;
     }
 }
