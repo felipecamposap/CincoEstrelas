@@ -29,6 +29,8 @@ public class GameController : MonoBehaviour
         get { return (totalClients > 0 ? ratingSum / totalClients : 0); }
     }
 
+    public int penalty = 0;
+
     [SerializeField] private float playerMoney = 100f;
 
     public float PlayerMoney

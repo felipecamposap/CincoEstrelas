@@ -7,14 +7,17 @@ TagManager:
   - Destination
   - Gas
   - Damagable
+  - Waypoint
+  - NPC
+  - Calcada
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Road
   - Water
   - UI
-  - 
+  - Minimap
   - 
   - 
   - 
