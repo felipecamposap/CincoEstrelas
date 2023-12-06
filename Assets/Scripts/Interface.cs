@@ -31,7 +31,7 @@ public class Interface : MonoBehaviour
 
     public void AttList()
     {
-        ClientsParameters teste = new ClientsParameters("Felipe", 5, 5f);
+        /*ClientsParameters teste = new ClientsParameters("Felipe", 5, 5f);
         ClientsParameters teste2 = new ClientsParameters("Gabriel", 3, 5f);
         ClientsParameters teste3 = new ClientsParameters("Igor", 1, 5f);
         ClientsParameters teste4 = new ClientsParameters("Gustavo", 4, 5f);
@@ -44,7 +44,7 @@ public class Interface : MonoBehaviour
         GameController.controller.listClients.Insert(teste4);
         GameController.controller.listClients.Insert(teste5);
         GameController.controller.listClients.Insert(teste6);
-        GameController.controller.listClients.Insert(teste7);
+        GameController.controller.listClients.Insert(teste7);*/
         GameController.controller.uiController = this;
     }
 

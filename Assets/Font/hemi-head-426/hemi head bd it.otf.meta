@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: ff3f862ee2215d44bafa08f064bf8942
+guid: ec2f971d119524d42ad9ed4852b80ed1
 TrueTypeFontImporter:
   externalObjects: {}
   serializedVersion: 4
@@ -9,7 +9,7 @@ TrueTypeFontImporter:
   characterPadding: 1
   includeFontData: 1
   fontNames:
-  - Retroica
+  - Hemi Head
   fallbackFontReferences: []
   customCharacters: 
   fontRenderingMode: 0

@@ -30,7 +30,7 @@ MonoBehaviour:
     m_Value: 1.5
   tint:
     m_OverrideState: 1
-    m_Value: {r: 0.99215686, g: 0.8030165, b: 0.4901961, a: 1}
+    m_Value: {r: 1, g: 0.62500006, b: 0, a: 1}
   highQualityFiltering:
     m_OverrideState: 0
     m_Value: 0
@@ -82,8 +82,8 @@ MonoBehaviour:
         - serializedVersion: 3
           time: 0.12684989
           value: 0.15929204
-          inSlope: 1.5042865
-          outSlope: 1.5042865
+          inSlope: -0.41619322
+          outSlope: -0.41619322
           tangentMode: 0
           weightedMode: 0
           inWeight: 0
@@ -269,16 +269,16 @@ MonoBehaviour:
   active: 0
   color:
     m_OverrideState: 1
-    m_Value: {r: 0.2784314, g: 0, b: 0.42352945, a: 1}
+    m_Value: {r: 0, g: 0, b: 0, a: 1}
   center:
     m_OverrideState: 0
     m_Value: {x: 0.5, y: 0.5}
   intensity:
     m_OverrideState: 1
-    m_Value: 0.2
+    m_Value: 0.443
   smoothness:
     m_OverrideState: 1
-    m_Value: 0.14
+    m_Value: 0.047
   rounded:
     m_OverrideState: 1
     m_Value: 0
@@ -297,12 +297,12 @@ MonoBehaviour:
   active: 0
   type:
     m_OverrideState: 1
-    m_Value: 0
+    m_Value: 1
   intensity:
     m_OverrideState: 1
     m_Value: 0.4
   response:
-    m_OverrideState: 0
+    m_OverrideState: 1
     m_Value: 0.8
   texture:
     m_OverrideState: 0
@@ -378,13 +378,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66f335fb1ffd8684294ad653bf1c7564, type: 3}
   m_Name: ColorAdjustments
   m_EditorClassIdentifier: 
-  active: 0
+  active: 1
   postExposure:
     m_OverrideState: 1
     m_Value: 0.5
   contrast:
-    m_OverrideState: 0
-    m_Value: 0
+    m_OverrideState: 1
+    m_Value: 16
   colorFilter:
     m_OverrideState: 1
     m_Value: {r: 0.98333335, g: 0.95, b: 1, a: 1}
@@ -392,5 +392,5 @@ MonoBehaviour:
     m_OverrideState: 0
     m_Value: -4
   saturation:
-    m_OverrideState: 0
+    m_OverrideState: 1
     m_Value: 5

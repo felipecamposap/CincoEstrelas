@@ -17,6 +17,7 @@ public class PlayerMovement : MonoBehaviour
     public AnimationCurve steeringCurve;
     private Vector3 localVelocity;
     [SerializeField] GameController gc;
+    [SerializeField] GameObject danoFaisca;
 
     void Update()
     {
@@ -134,6 +135,8 @@ public class PlayerMovement : MonoBehaviour
         damageValue -= rb.velocity.magnitude;
         if (collision.gameObject.CompareTag("Damagable") || collision.gameObject.CompareTag("NPC"))
         {
+            ContactPoint contact = collision.contacts[0];
+            Instantiate(danoFaisca, contact.point, Quaternion.identity);
             GameController.controller.penalty += 1;
             GameController.controller.Damage((damageValue * 10f));
         }
