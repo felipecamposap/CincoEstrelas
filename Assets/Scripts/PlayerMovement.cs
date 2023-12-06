@@ -103,7 +103,7 @@ public class PlayerMovement : MonoBehaviour
 
     void ApplySteering()
     {
-        float steeringSensitivity = 2f; // Adjust the value as needed
+        float steeringSensitivity = 6f; // Adjust the value as needed
         float steeringAngle = steeringSensitivity * steeringInput * steeringCurve.Evaluate(speed);
         steeringAngle = Mathf.Clamp(steeringAngle, -maxSteeringAngle, maxSteeringAngle);
         colliders.FRWheel.steerAngle = steeringAngle;
