@@ -23,7 +23,7 @@ public class PlayerMovement : MonoBehaviour
     {
         CheckInput();
         localVelocity = transform.InverseTransformDirection(rb.velocity);
-        speed = rb.velocity.magnitude;
+        speed = rb.velocity.magnitude * 0.65f;
         GameController.controller.uiController.Velocity(speed / 20);
         ApplyMovement();
         ApplyMotor();
