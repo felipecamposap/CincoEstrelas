@@ -47,12 +47,16 @@ public class Senha_Game : MonoBehaviour
         {
             if (playerGuess == GameController.controller.passwordClient)
             {
-                messageText.text = "Você venceu!";
+                messageText.text = "Senha Correta";
                 GameController.controller.passwordCorrect = true;
+                enteredNumber = new string("");
+                inputField.text = "";
             }
             else
             {
                 messageText.text = "Número incorreto. Tente novamente.";
+                enteredNumber = new string("");
+                inputField.text = "";
             }
         }
     }

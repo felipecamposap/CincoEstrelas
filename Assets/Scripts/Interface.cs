@@ -12,7 +12,7 @@ public class Interface : MonoBehaviour
     public GameObject pauseUI;
     [SerializeField] private GameObject gameOverObj;
     [SerializeField] private Text gameOverText;
-    [SerializeField] private Animator cellPhoneAnimator;
+    [SerializeField] private Animator celular, app;
     [SerializeField] private Animator damageAnimator;
     [SerializeField] private RectTransform panelHistoryClient;
     [SerializeField] private GameObject clientHistoryObj;
@@ -31,7 +31,7 @@ public class Interface : MonoBehaviour
 
     public void AttList()
     {
-        /*ClientsParameters teste = new ClientsParameters("Felipe", 5, 5f);
+        ClientsParameters teste = new ClientsParameters("Felipe", 5, 5f);
         ClientsParameters teste2 = new ClientsParameters("Gabriel", 3, 5f);
         ClientsParameters teste3 = new ClientsParameters("Igor", 1, 5f);
         ClientsParameters teste4 = new ClientsParameters("Gustavo", 4, 5f);
@@ -44,7 +44,7 @@ public class Interface : MonoBehaviour
         GameController.controller.listClients.Insert(teste4);
         GameController.controller.listClients.Insert(teste5);
         GameController.controller.listClients.Insert(teste6);
-        GameController.controller.listClients.Insert(teste7);*/
+        GameController.controller.listClients.Insert(teste7);
         GameController.controller.uiController = this;
     }
 
@@ -158,51 +158,51 @@ public class Interface : MonoBehaviour
             case 0: // Levantar celular
                 GameController.controller.ToggleCursor(true);
                 cellphoneLift = true;
-                cellPhoneAnimator.Play("LiftCellPhone");
+                celular.Play("SubirCelular");
                 break;
 
             case 1: // abaixar celular
                 cellphoneLift = false;
                 GameController.controller.ToggleCursor(false);
-                cellPhoneAnimator.Play("LowerCellPhone");
+                celular.Play("DescerCelular");
                 break;
 
             case 2:
-                cellPhoneAnimator.Play("CincoEstrelaTransition");
+                app.Play("CincoEstrelaComecar");
                 break;
 
-            case 3:
+            case 3: // Mostrar Minimapa
                 GameController.controller.ToggleCursor(true);
-                cellPhoneAnimator.Play("CincoEstrelaHomeStart");
+                app.Play("ComecarCorrida");
                 break;
 
             case 4:
-                cellPhoneAnimator.Play("CincoEstrelasStartJob");
+                app.Play("CincoEstrelasComecarTrabalho");
                 break;
 
             case 5: // Mostrar Cliente
-                cellPhoneAnimator.Play("CincoEstrelasClientStart");
+                app.Play("CincoEstrelaFechar");
                 break;
 
             case 6: // Password Hud
                 GameController.controller.ToggleCursor(true);
-                cellPhoneAnimator.Play("Password");
+                app.Play("Password");
                 break;
 
             case 7: // Corrida concluida
-                cellPhoneAnimator.Play("JobCompleted");
+                app.Play("CorridaConcluida");
                 break;
 
             case 8: // Rejeitar corrida
-                cellPhoneAnimator.Play("CincoEstrelasRejectClient");
+                app.Play("CincoEstrelasRejectClient");
                 break;
 
             case 9: // Fade in
-                cellPhoneAnimator.Play("CincoEstrelasHistoryClientsUp");
+                app.Play("CincoEstrelasHistoryClientsUp");
                 break;
 
             case 10:
-                cellPhoneAnimator.Play("CincoEstrelasHistoryBack");
+                app.Play("CincoEstrelasHistoryBack");
                 break;
         }
     }

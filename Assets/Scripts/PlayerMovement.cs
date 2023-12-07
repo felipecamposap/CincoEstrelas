@@ -23,7 +23,7 @@ public class PlayerMovement : MonoBehaviour
     {
         CheckInput();
         localVelocity = transform.InverseTransformDirection(rb.velocity);
-        speed = rb.velocity.magnitude;
+        speed = rb.velocity.magnitude * 0.65f;
         GameController.controller.uiController.Velocity(speed / 20);
         ApplyMovement();
         ApplyMotor();
@@ -103,7 +103,7 @@ public class PlayerMovement : MonoBehaviour
 
     void ApplySteering()
     {
-        float steeringSensitivity = 2f; // Adjust the value as needed
+        float steeringSensitivity = 6f; // Adjust the value as needed
         float steeringAngle = steeringSensitivity * steeringInput * steeringCurve.Evaluate(speed);
         steeringAngle = Mathf.Clamp(steeringAngle, -maxSteeringAngle, maxSteeringAngle);
         colliders.FRWheel.steerAngle = steeringAngle;

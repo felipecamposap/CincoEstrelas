@@ -34,13 +34,13 @@ public class Client : MonoBehaviour
         {
             touchPlayer = 0;
             GameController.controller.passwordCorrect = false;
-            GameController.controller.uiController.CellPhoneAnimation(1);
+            GameController.controller.uiController.CellPhoneAnimation(3);
             password.gameObject.SetActive(false);
         }
         if (touchPlayer == 0 || touchPlayer == 3)
         {
             transform.position = Vector3.Lerp(transform.position, target.position, speed * Time.deltaTime);
-            if (Vector3.Distance(transform.position, target.position) <= 1)
+            if (Vector3.Distance(transform.position, target.position) <= 2)
             {
                 if (target.CompareTag("Player"))
                 {
@@ -83,6 +83,7 @@ public class Client : MonoBehaviour
             password.gameObject.SetActive(true);
             GameController.controller.PasswordClient();
             password.text = GameController.controller.passwordClient.ToString();
+            //GameController.controller.uiController.CellPhoneAnimation(0);
             GameController.controller.uiController.CellPhoneAnimation(6);
         }
 
