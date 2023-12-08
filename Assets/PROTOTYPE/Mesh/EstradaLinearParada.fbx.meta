@@ -3,7 +3,12 @@ guid: d42c6261bb06fad47a358a3f5c33b213
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: mat_asfaltoLinearParada
+    second: {fileID: 2100000, guid: e2dbb6c51163b5c4bb12902774724aae, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

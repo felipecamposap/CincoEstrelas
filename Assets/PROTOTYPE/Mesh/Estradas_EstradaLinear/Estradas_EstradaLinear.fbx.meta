@@ -3,7 +3,17 @@ guid: 2df8ec015cabb1f479cd3609c9360e6f
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MAT_MeioFio
+    second: {fileID: 2100000, guid: e2dbb6c51163b5c4bb12902774724aae, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: mat_asfaltoDefalt
+    second: {fileID: 2100000, guid: e2dbb6c51163b5c4bb12902774724aae, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
