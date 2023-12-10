@@ -17,7 +17,7 @@ public class PlayerMovement : MonoBehaviour
     public AnimationCurve steeringCurve;
     private Vector3 localVelocity;
     [SerializeField] GameController gc;
-    [SerializeField] GameObject danoFaisca;
+    [SerializeField] GameObject danoFaisca, luzesFreio;
 
     void Update()
     {
@@ -53,12 +53,14 @@ public class PlayerMovement : MonoBehaviour
         {
             if (localVelocity.z > brakeThreshold) //carro andando para frente
             {
+                luzesFreio.SetActive(true);
                 //Debug.Log("Frear");
                 brakeInput = 1;
                 rb.drag = brakeDrag;
             }
             else
             {
+                luzesFreio.SetActive(false);
                 //Debug.Log("Re");
                 brakeInput = 0;
                 rb.drag = gasDrag;
@@ -66,6 +68,7 @@ public class PlayerMovement : MonoBehaviour
         }
         else if (gasInput == 0) //carro solto
         {
+            luzesFreio.SetActive(false);
             brakeInput = 0.05f;
             rb.drag = idleDrag;
         }
@@ -73,12 +76,14 @@ public class PlayerMovement : MonoBehaviour
         {
             if (localVelocity.z < -brakeThreshold) //carro andando para frente
             {
+                luzesFreio.SetActive(true);
                 //Debug.Log("Frear");
                 brakeInput = 1;
                 rb.drag = brakeDrag;
             }
             else
             {
+                luzesFreio.SetActive(false);
                 //Debug.Log("Acelerar");
                 brakeInput = 0;
                 rb.drag = gasDrag;
