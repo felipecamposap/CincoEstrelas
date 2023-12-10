@@ -9,9 +9,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 500755908808433886}
+  - component: {fileID: 6690869673970072822}
   m_Layer: 0
   m_Name: TrashSphere
-  m_TagString: Untagged
+  m_TagString: Damagable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -33,6 +34,27 @@ Transform:
   - {fileID: 804657030416164663}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &6690869673970072822
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6919707393092659730}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.8, y: 1.21, z: 0.8}
+  m_Center: {x: 0, y: -0.68, z: 0}
 --- !u!1001 &909742737761534172
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -44,7 +66,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 8188235a612ec844e8220d537ed333ea,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.06887668
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 8188235a612ec844e8220d537ed333ea,
         type: 3}
@@ -118,7 +140,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: bc02f6765a4200a4b85bebc9039e0a28,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.07387668
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: bc02f6765a4200a4b85bebc9039e0a28,
         type: 3}
