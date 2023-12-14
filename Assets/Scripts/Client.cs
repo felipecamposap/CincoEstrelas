@@ -44,6 +44,7 @@ public class Client : MonoBehaviour
             {
                 if (target.CompareTag("Player"))
                 {
+                    GameController.controller.uiController.MostrarEstrelaCorrida();
                     GameController.controller.penalty = 0;
                     touchPlayer = 2;
                     transform.position = new Vector3(target.transform.position.x, target.transform.position.y, target.transform.position.z);
@@ -76,6 +77,7 @@ public class Client : MonoBehaviour
             GameController.controller.uiController.CellPhoneAnimation(7);
             ClientsParameters client = new ClientsParameters(clientName, rating, payment);
             GameController.controller.listClients.Insert(client);
+            GameController.controller.uiController.EsconderEstrelaCorrida();
 
         }
         else if (other.CompareTag("Player") && touchPlayer == -1)

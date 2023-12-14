@@ -5,9 +5,10 @@ using UnityEngine.UI;
 
 public class Interface : MonoBehaviour
 {
+    private Animator estrelasCorridaAnimator;
+    [SerializeField] private Slider estrelasCorrida;
     [SerializeField] private Slider carIntegritySlider;
     [SerializeField] private Slider playerRatingSlider;
-    [SerializeField] private Text gasText;
     [SerializeField] private Text money;
     public GameObject pauseUI;
     [SerializeField] private GameObject gameOverObj;
@@ -20,13 +21,38 @@ public class Interface : MonoBehaviour
     [SerializeField] private RectTransform speedometerPointer;
     [SerializeField] private RectTransform gasPointer;
     public ListClients interfaceListClients = new ListClients(); // Lista de clientes customizada
+    private MouseLook camMovement;
+    [Header("----- Radio -----")]
+    [SerializeField] private Text clipText;
+    [SerializeField] private Animator clipAnimator;
+    
 
 
 
     private void Start()
     {
+        camMovement = Camera.main.transform.parent.gameObject.GetComponent<MouseLook>();
+        estrelasCorridaAnimator =  estrelasCorrida.transform.parent.GetComponent<Animator>();
+        estrelasCorrida.value = 10;
         ATTUI();
         Invoke("AttList", 2);
+    }
+
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            if (cellphoneLift)
+            {
+                camMovement.LockCam(false);
+                CellPhoneAnimation(1);
+            }
+            else
+            {
+                camMovement.LockCam(true);
+                CellPhoneAnimation(0);
+            }
+        }
     }
 
     public void AttList()
@@ -55,6 +81,18 @@ public class Interface : MonoBehaviour
         money.text = $"R${GameController.controller.PlayerMoney:F2}";
         playerRatingSlider.value = GameController.controller.AvgRating;
         Gasolina(GameController.controller.PlayerFuel / GameController.controller.maxPlayerFuel);
+        estrelasCorrida.value = 10 - (GameController.controller.penalty * 2);
+
+    }
+
+    public void MostrarEstrelaCorrida()
+    {
+        estrelasCorridaAnimator.Play("MostrarEstrelasCorrida");
+    }
+
+    public void EsconderEstrelaCorrida()
+    {
+        estrelasCorridaAnimator.Play("EsconderEstrelasCorrida");
     }
 
     public void Velocity(float _value)
@@ -89,20 +127,9 @@ public class Interface : MonoBehaviour
 
     }
 
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            if (cellphoneLift)
-                CellPhoneAnimation(1);
-            else
-                CellPhoneAnimation(0);
-        }
-    }
-
     public void ShowHistoryClients(int sort)
     {
-        Debug.Log(panelHistoryClient.childCount);
+        //Debug.Log(panelHistoryClient.childCount);
         if (panelHistoryClient.childCount > 0)
         {
             ResetHistoryClients();
@@ -121,7 +148,6 @@ public class Interface : MonoBehaviour
 
     public void FillHistoryClients()
     {
-        Debug.Log("Fill");
         for (int i = 0; i < interfaceListClients.totalClients; i++)
         {
             ClientsParameters client; //ponteiro para receber valores de clientes
@@ -139,6 +165,19 @@ public class Interface : MonoBehaviour
             Destroy(panelHistoryClient.GetChild(i).gameObject);
         }
     }
+
+    public void StartClipAnimation(string _clipName)
+    {
+        clipText.text = _clipName;
+        clipAnimator.SetBool("IsPlaying", true);
+    }
+
+    public void StopClipAnimator()
+    {
+        clipAnimator.SetBool("IsPlaying", false);
+    }
+
+    
 
 
 

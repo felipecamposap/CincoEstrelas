@@ -6,6 +6,7 @@ public class GameController : MonoBehaviour
     public static GameController controller;
     public Interface uiController;
     public ListClients listClients;
+    public AudioSource audioSource;
 
 
     [Header("Status jogador:")]
@@ -16,6 +17,8 @@ public class GameController : MonoBehaviour
     [SerializeField] private const float fuelBurn = 0.001f; // 
     [SerializeField] private float fuelBurnMultiplier = 1f;
     [SerializeField] private short totalClients = 0;
+    public int penalty = 0;
+    [SerializeField] private float playerMoney = 100f;
 
     [SerializeField] public readonly float literPrice = 5.86f;
     private float ratingSum = 0;
@@ -29,19 +32,10 @@ public class GameController : MonoBehaviour
         get { return (totalClients > 0 ? ratingSum / totalClients : 0); }
     }
 
-    public int penalty = 0;
-
-    [SerializeField] private float playerMoney = 100f;
-
     public float PlayerMoney
     {
         get { return playerMoney; }
     }
-
-    //[SerializeField] private Player player;
-    //[SerializeField] private Text txtGas;
-    //[SerializeField] private Text txtMoney;
-    //[SerializeField] private GameObject pauseWidget;
 
     public float PlayerFuel
     {
@@ -80,15 +74,12 @@ public class GameController : MonoBehaviour
             Destroy(gameObject);
         listClients = new ListClients();
         DontDestroyOnLoad(this);
-        //txtMoney.text = $"{playerMoney:F2}";
     }
 
     public void FuelCar(float gasoline)
     {
         playerFuel += gasoline;
         playerMoney -= gasoline * literPrice;
-        //txtMoney.text = $"{playerMoney:F2}";
-        //txtGas.text = playerFuel.ToString();
         uiController.ATTUI();
     }
 
@@ -96,7 +87,6 @@ public class GameController : MonoBehaviour
     {
         if (!isGamePaused)
         {
-            //txtGas.text = $"{playerFuel:F2}";
             playerFuel -= fuelBurn * fuelBurnMultiplier;
             uiController.ATTUI();
             uiController.Gasolina(playerFuel/maxPlayerFuel);
@@ -129,7 +119,6 @@ public class GameController : MonoBehaviour
     public void GetPaid(float pay)
     {
         playerMoney += pay;
-        //txtMoney.text = $"{playerMoney:F2}";
         uiController.ATTUI();
     }
 
@@ -141,13 +130,22 @@ public class GameController : MonoBehaviour
             {
                 uiController.pauseUI.SetActive(false);
                 Time.timeScale = 1;
+                audioSource.reverbZoneMix = 0;
+                audioSource.volume += audioSource.volume;
+                audioSource.pitch = 1;
             }
             else
             {
                 uiController.pauseUI.SetActive(true);
                 Time.timeScale = 0;
+                audioSource.reverbZoneMix = 1;
+                audioSource.volume /= 2;
+                audioSource.pitch = 0.98f;
+
             }
+
         }
+
     }
 
     public void PasswordClient()
@@ -161,6 +159,7 @@ public class GameController : MonoBehaviour
         if (carIntegrityCurrent <= 0)
             uiController.GameOver(0);
         uiController.DamageAnimation();
+        uiController.ATTUI();
     }
 
 }
