@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameController : MonoBehaviour
 {
@@ -51,6 +52,9 @@ public class GameController : MonoBehaviour
     {
         get { return (playerMoney / literPrice); }
     }
+
+    [Header("Trapaças: ")]
+    public bool[] trapacas = new bool[2];
 
     public void ToggleCursor(bool value)
     {

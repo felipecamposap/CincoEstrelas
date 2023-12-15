@@ -143,7 +143,8 @@ public class PlayerMovement : MonoBehaviour
             ContactPoint contact = collision.contacts[0];
             Instantiate(danoFaisca, contact.point, Quaternion.identity);
             GameController.controller.penalty += 1;
-            GameController.controller.Damage((damageValue * 10f));
+            if (!GameController.controller.trapacas[0])
+                GameController.controller.Damage((damageValue * 10f));
         }
     }
 
