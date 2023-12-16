@@ -13,6 +13,7 @@ public class MusicController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        GameController.controller.audioSource = audioSource;
         clipIndex = (byte)Random.Range(0, clips.Length);
         audioSource = GetComponent<AudioSource>();
         //try { GameController.controller.audioSource = audioSource; }

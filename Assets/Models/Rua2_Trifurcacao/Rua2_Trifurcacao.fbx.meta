@@ -8,17 +8,17 @@ ModelImporter:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: MAT_MeioFio
-    second: {fileID: 2100000, guid: dc8e8cd3b871071459ca6f3feac36daa, type: 2}
+    second: {fileID: 2100000, guid: 8d965c9875cb7844283d92c3351b3b88, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: MAT_MeioFio.002
-    second: {fileID: 2100000, guid: dc8e8cd3b871071459ca6f3feac36daa, type: 2}
+    second: {fileID: 2100000, guid: 8d965c9875cb7844283d92c3351b3b88, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: mat_asfaltoDefalt.001
-    second: {fileID: 2100000, guid: dc8e8cd3b871071459ca6f3feac36daa, type: 2}
+    second: {fileID: 2100000, guid: 8d965c9875cb7844283d92c3351b3b88, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using static UnityEngine.Rendering.DebugUI;
 
@@ -7,6 +8,7 @@ public class MixerController : MonoBehaviour
 {
     [SerializeField] private AudioMixer audioMixer;
     [SerializeField] Slider[] mixerSliders;
+    [SerializeField] bool startPlay = true;
 
 
     public void Start()
@@ -14,26 +16,38 @@ public class MixerController : MonoBehaviour
         int audioValue;
         int sliderValue;
 
-        // ----- Declarar volume Geral ----- \\
-        CheckPrefs("MasterVolume", out audioValue, out sliderValue);
-        mixerSliders[0].value = sliderValue;
-        audioMixer.SetFloat("MasterVolume", audioValue);
+        if (SceneManager.GetActiveScene().buildIndex == 0 && startPlay)
+        {
+            // ----- Declarar volume Geral ----- \\
+            //CheckPrefs("MasterVolume", out audioValue, out sliderValue);
+            //mixerSliders[0].value = sliderValue;
+            mixerSliders[0].value = 3;
+            //audioMixer.SetFloat("MasterVolume", audioValue);
+            audioMixer.SetFloat("MasterVolume", -10);
 
-        // ----- Declarar volume Musica ----- \\
-        CheckPrefs("MusicaVolume", out audioValue, out sliderValue);
-        mixerSliders[1].value = sliderValue;
-        audioMixer.SetFloat("MusicaVolume", audioValue);
+            // ----- Declarar volume Musica ----- \\
+            //CheckPrefs("MusicaVolume", out audioValue, out sliderValue);
+            //mixerSliders[1].value = sliderValue;
+            mixerSliders[1].value = 3;
+            //audioMixer.SetFloat("MusicaVolume", audioValue);
+            audioMixer.SetFloat("MusicaVolume", -10);
 
-        // ----- Declarar volume Efeito ----- \\
-        CheckPrefs("EfeitosVolume", out audioValue, out sliderValue);
-        mixerSliders[2].value = sliderValue;
-        audioMixer.SetFloat("EfeitosVolume", audioValue);
+            // ----- Declarar volume Efeito ----- \\
+            //CheckPrefs("EfeitosVolume", out audioValue, out sliderValue);
+            //mixerSliders[2].value = sliderValue;
+            mixerSliders[2].value = 3;
+            //audioMixer.SetFloat("EfeitosVolume", audioValue);
+            audioMixer.SetFloat("EfeitosVolume", -10);
+            startPlay = false;
+        }
+        gameObject.SetActive(false);
 
     }
 
     private void CheckPrefs(string _name, out int audioValue, out int sliderValue)
     {
         sliderValue = 0;
+        Debug.Log(_name + " - " + PlayerPrefs.GetInt(_name));
         if (PlayerPrefs.HasKey(_name))
         {
             audioValue = PlayerPrefs.GetInt(_name);
@@ -69,7 +83,7 @@ public class MixerController : MonoBehaviour
 
     public void MasterVolume()
     {
-        float value = 0;
+        int value = 0;
         switch (mixerSliders[0].value)
         {
             case 0:
@@ -94,13 +108,14 @@ public class MixerController : MonoBehaviour
         }
 
         audioMixer.SetFloat("Master", value);
-        PlayerPrefs.SetFloat("MasterVolume", value);
+        //PlayerPrefs.SetInt("MasterVolume", value);
+        //PlayerPrefs.Save();
 
     }
 
     public void MusicaVolume()
     {
-        float value = 0;
+        int value = 0;
         switch (mixerSliders[1].value)
         {
             case 0:
@@ -125,12 +140,13 @@ public class MixerController : MonoBehaviour
         }
 
         audioMixer.SetFloat("Musica", value);
-        PlayerPrefs.SetFloat("MusicaVolume", value);
+        //PlayerPrefs.SetInt("MusicaVolume", value);
+        //PlayerPrefs.Save();
     }
 
     public void EfeitoVolume()
     {
-        float value = 0;
+        int value = 0;
         switch (mixerSliders[2].value)
         {
             case 0:
@@ -155,8 +171,8 @@ public class MixerController : MonoBehaviour
         }
 
         audioMixer.SetFloat("Efeitos", value);
-        PlayerPrefs.SetFloat("EfeitosVolume", value);
+        //PlayerPrefs.SetInt("EfeitosVolume", value);
+        //PlayerPrefs.Save();
     }
-
 
 }

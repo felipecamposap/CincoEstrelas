@@ -8,6 +8,8 @@ public class GameController : MonoBehaviour
     public Interface uiController;
     public ListClients listClients;
     public AudioSource audioSource;
+    public AlvoMinimapa alvoMinimapa;
+    public PlayerMovement player;
 
 
     [Header("Status jogador:")]
@@ -20,6 +22,7 @@ public class GameController : MonoBehaviour
     [SerializeField] private short totalClients = 0;
     public int penalty = 0;
     [SerializeField] private float playerMoney = 100f;
+    public int playerStar = 0;
 
     [SerializeField] public readonly float literPrice = 5.86f;
     private float ratingSum = 0;
@@ -53,6 +56,8 @@ public class GameController : MonoBehaviour
         get { return (playerMoney / literPrice); }
     }
 
+    public Transform[] minimapaAlvo = new Transform[2];
+
     [Header("Trapaças: ")]
     public bool[] trapacas = new bool[2];
 
@@ -75,7 +80,7 @@ public class GameController : MonoBehaviour
         if (controller == null)
             controller = this;
         else
-            Destroy(gameObject);
+            ResetGC();
         listClients = new ListClients();
         DontDestroyOnLoad(this);
     }
@@ -85,6 +90,18 @@ public class GameController : MonoBehaviour
         playerFuel += gasoline;
         playerMoney -= gasoline * literPrice;
         uiController.ATTUI();
+    }
+
+    private void ResetGC()
+    {
+        GameController.controller.listClients = new ListClients();
+        GameController.controller.carIntegrityCurrent = GameController.controller.carIntegrityMax;
+        GameController.controller.playerStar = 0;
+        GameController.controller.playerMoney = 100f;
+        GameController.controller.playerFuel = GameController.controller.maxPlayerFuel;
+        GameController.controller.totalClients = 0;
+        GameController.controller.uiController.ATTUI();
+        Destroy(gameObject);
     }
 
     public void BurnFuel(float gasInput)
@@ -101,9 +118,18 @@ public class GameController : MonoBehaviour
 
     public void NewRating(int rating)
     {
-        ratingSum += rating / 2;
+        ratingSum += rating;
         totalClients++;
+        if (rating > playerStar)
+            playerStar++;
+        else if (rating < playerStar)
+            playerStar--;
         uiController.ATTUI();
+        if (rating >= 10){
+            uiController.PlayerVitoria();
+            player.PlayerVictory();
+        }
+
     }
 
     public void SetGamePaused(bool value)
@@ -128,7 +154,7 @@ public class GameController : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetButtonDown("Pause"))
+        if (Input.GetButtonDown("Pause") && player.inGame)
         {
             if (Time.timeScale == 0)
             {
@@ -160,8 +186,11 @@ public class GameController : MonoBehaviour
     public void Damage(float _value)
     {
         carIntegrityCurrent -= _value;
-        if (carIntegrityCurrent <= 0)
+        if (carIntegrityCurrent <= 0){
             uiController.GameOver(0);
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+        }
         uiController.DamageAnimation();
         uiController.ATTUI();
     }

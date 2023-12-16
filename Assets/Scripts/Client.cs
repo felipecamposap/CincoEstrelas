@@ -36,6 +36,7 @@ public class Client : MonoBehaviour
             GameController.controller.passwordCorrect = false;
             GameController.controller.uiController.CellPhoneAnimation(3);
             password.gameObject.SetActive(false);
+            GameController.controller.alvoMinimapa.index++;
         }
         if (touchPlayer == 0 || touchPlayer == 3)
         {
@@ -67,7 +68,7 @@ public class Client : MonoBehaviour
         if (touchPlayer == 2 && other.CompareTag("Destination"))
         {
             GameController.controller.GetPaid(payment);
-            int rating = Math.Clamp(10 - (GameController.controller.penalty * 2), 1, 10);
+            int rating = Math.Clamp(10 - (GameController.controller.penalty * 2), 2, 10);
             Debug.Log(rating);
             GameController.controller.NewRating(rating);
             GameController.controller.penalty = 0; //remover depois???????
@@ -78,6 +79,7 @@ public class Client : MonoBehaviour
             ClientsParameters client = new ClientsParameters(clientName, rating, payment);
             GameController.controller.listClients.Insert(client);
             GameController.controller.uiController.EsconderEstrelaCorrida();
+            GameController.controller.alvoMinimapa.index++;
 
         }
         else if (other.CompareTag("Player") && touchPlayer == -1)
@@ -87,6 +89,7 @@ public class Client : MonoBehaviour
             password.text = GameController.controller.passwordClient.ToString();
             //GameController.controller.uiController.CellPhoneAnimation(0);
             GameController.controller.uiController.CellPhoneAnimation(6);
+            
         }
 
     }
@@ -97,6 +100,7 @@ public class Client : MonoBehaviour
         {
             coll.enabled = false;
             target = other.transform;
+            
 
         }
     }

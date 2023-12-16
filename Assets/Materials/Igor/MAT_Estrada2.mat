@@ -21,9 +21,8 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: MAT_Estrada2
-  m_Shader: {fileID: -6465566751694194690, guid: 5f21b939fbaf27b45bf7fc1e9631809d,
-    type: 3}
-  m_Parent: {fileID: 2100000, guid: 0fce9e8f2822e014e8707b03c05e98ab, type: 2}
+  m_Shader: {fileID: 4800000, guid: 0e9d5a909a1f7e84882a534d0d11e49f, type: 3}
+  m_Parent: {fileID: 2100000, guid: 8d965c9875cb7844283d92c3351b3b88, type: 2}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
   m_InvalidKeywords:

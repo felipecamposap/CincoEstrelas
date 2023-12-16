@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
@@ -18,9 +19,24 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 localVelocity;
     [SerializeField] GameController gc;
     [SerializeField] GameObject danoFaisca, luzesFreio;
+    [SerializeField] GameObject vitoriaEfeito;
+    public bool inGame;
+
+
+    private IEnumerator Start()
+    {
+        yield return new WaitForSeconds(0.1f);
+        GameController.controller.player = this;
+    }
 
     void Update()
     {
+        if (!inGame)
+        {
+            rb.drag = 100;
+            ApplyBrake();
+            return;
+        }
         CheckInput();
         localVelocity = transform.InverseTransformDirection(rb.velocity);
         speed = rb.velocity.magnitude * 0.65f;
@@ -35,7 +51,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (Input.GetAxis("Vertical") != 0 && gc.PlayerFuel > 0)
+        if (inGame && Input.GetAxis("Vertical") != 0 && !GameController.controller.trapacas[1] && gc.PlayerFuel > 0)
         {
             gc.BurnFuel(gasInput);
         }
@@ -44,7 +60,7 @@ public class PlayerMovement : MonoBehaviour
     void CheckInput()
     {
         gasInput = Input.GetAxis("Vertical");
-        steeringInput = Input.GetAxis("Horizontal");
+        steeringInput = Input.GetAxis("Horizontal"); 
     }
 
     void ApplyMovement()
@@ -135,16 +151,18 @@ public class PlayerMovement : MonoBehaviour
 
     public IEnumerator OnCollisionEnter(Collision collision)
     {
-        float damageValue = rb.velocity.magnitude * 1.5f;
-        yield return new WaitForSeconds(0.1f);
-        damageValue -= rb.velocity.magnitude;
-        if (collision.gameObject.CompareTag("Damagable") || collision.gameObject.CompareTag("NPC"))
-        {
-            ContactPoint contact = collision.contacts[0];
-            Instantiate(danoFaisca, contact.point, Quaternion.identity);
-            GameController.controller.penalty += 1;
-            if (!GameController.controller.trapacas[0])
-                GameController.controller.Damage((damageValue * 10f));
+        if (inGame) {
+            float damageValue = rb.velocity.magnitude * 1.5f;
+            yield return new WaitForSeconds(0.1f);
+            damageValue -= rb.velocity.magnitude;
+            if (collision.gameObject.CompareTag("Damagable") || collision.gameObject.CompareTag("NPC"))
+            {
+                ContactPoint contact = collision.contacts[0];
+                Instantiate(danoFaisca, contact.point, Quaternion.identity);
+                GameController.controller.penalty += 1;
+                if (!GameController.controller.trapacas[0])
+                    GameController.controller.Damage((damageValue * 10f));
+            }
         }
     }
 
@@ -155,6 +173,13 @@ public class PlayerMovement : MonoBehaviour
             GameController.controller.penalty += 1;
         }
     }
+
+    public void PlayerVictory()
+    {
+        vitoriaEfeito.SetActive(true);
+        inGame = false;
+    }
+
 }
 
 [System.Serializable]

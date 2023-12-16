@@ -8,7 +8,8 @@ public class Interface : MonoBehaviour
     private Animator estrelasCorridaAnimator;
     [SerializeField] private Slider estrelasCorrida;
     [SerializeField] private Slider carIntegritySlider;
-    [SerializeField] private Slider playerRatingSlider;
+    [SerializeField] private Slider clientRatingPlayerSlider;
+    [SerializeField] private Slider playerCurrentRating;
     [SerializeField] private Text money;
     public GameObject pauseUI;
     [SerializeField] private GameObject gameOverObj;
@@ -22,6 +23,9 @@ public class Interface : MonoBehaviour
     [SerializeField] private RectTransform gasPointer;
     public ListClients interfaceListClients = new ListClients(); // Lista de clientes customizada
     private MouseLook camMovement;
+    [SerializeField] private GameObject vitoria;
+
+
     [Header("----- Radio -----")]
     [SerializeField] private Text clipText;
     [SerializeField] private Animator clipAnimator;
@@ -31,6 +35,7 @@ public class Interface : MonoBehaviour
 
     private void Start()
     {
+        GameController.controller.uiController = this;
         camMovement = Camera.main.transform.parent.gameObject.GetComponent<MouseLook>();
         estrelasCorridaAnimator =  estrelasCorrida.transform.parent.GetComponent<Animator>();
         estrelasCorrida.value = 10;
@@ -57,7 +62,7 @@ public class Interface : MonoBehaviour
 
     public void AttList()
     {
-        ClientsParameters teste = new ClientsParameters("Felipe", 5, 5f);
+        /*ClientsParameters teste = new ClientsParameters("Felipe", 5, 5f);
         ClientsParameters teste2 = new ClientsParameters("Gabriel", 3, 5f);
         ClientsParameters teste3 = new ClientsParameters("Igor", 1, 5f);
         ClientsParameters teste4 = new ClientsParameters("Gustavo", 4, 5f);
@@ -70,7 +75,7 @@ public class Interface : MonoBehaviour
         GameController.controller.listClients.Insert(teste4);
         GameController.controller.listClients.Insert(teste5);
         GameController.controller.listClients.Insert(teste6);
-        GameController.controller.listClients.Insert(teste7);
+        GameController.controller.listClients.Insert(teste7);*/
         GameController.controller.uiController = this;
     }
 
@@ -79,7 +84,8 @@ public class Interface : MonoBehaviour
         carIntegritySlider.maxValue = GameController.controller.carIntegrityMax; // Declarando o maximo da integridade do carro possivel no slider
         carIntegritySlider.value = GameController.controller.carIntegrityCurrent; // Declarando o valor atual da integridade do carro possivel no slider
         money.text = $"R${GameController.controller.PlayerMoney:F2}";
-        playerRatingSlider.value = GameController.controller.AvgRating;
+        clientRatingPlayerSlider.value = GameController.controller.AvgRating;
+        playerCurrentRating.value = GameController.controller.playerStar;
         Gasolina(GameController.controller.PlayerFuel / GameController.controller.maxPlayerFuel);
         estrelasCorrida.value = 10 - (GameController.controller.penalty * 2);
 
@@ -125,6 +131,11 @@ public class Interface : MonoBehaviour
         }
         gameOverObj.SetActive(true);
 
+    }
+
+    public void PlayerVitoria()
+    {
+        vitoria.SetActive(true);
     }
 
     public void ShowHistoryClients(int sort)

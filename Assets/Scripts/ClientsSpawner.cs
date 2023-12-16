@@ -59,6 +59,7 @@ public class ClientsSpawner : MonoBehaviour
         Client scriptClient = clone.GetComponentInChildren<Client>();
         scriptClient.payment = currentClientPay;
         scriptClient.clientName = clientNames[indexName];
+        GameController.controller.minimapaAlvo[0] = clone.transform;
         //GameController.controller.uiController.CellPhoneAnimation(1); // abaixar celular
     }
 
@@ -66,6 +67,7 @@ public class ClientsSpawner : MonoBehaviour
     {
         Vector3 pos;
         int rand = Random.Range(0, 2);
+        ind = Random.Range(0, locations.Length);
         pos = locations[ind].position;
         if (loc == 1)
         {
@@ -81,7 +83,8 @@ public class ClientsSpawner : MonoBehaviour
             //Debug.Log("posX: " + pos.x);
             //Debug.Log("posZ: " + pos.z);
         }
-        Instantiate(clientDestination, pos, Quaternion.identity);
+        GameObject clone = Instantiate(clientDestination, pos, Quaternion.identity);
+        GameController.controller.minimapaAlvo[1] = clone.transform;
         //CloseCellPhone();
     }
 
