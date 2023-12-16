@@ -2,13 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
 
 public class GasStation : MonoBehaviour
 {
     [SerializeField] private Slider sldGas;
-    [SerializeField] private TMP_Text txtLiters;
-    [SerializeField] private TMP_Text txtPrice;
+    [SerializeField] private Text txtLiters;
+    [SerializeField] private Text txtPrice;
     [SerializeField] private Button btnOK;
     [SerializeField] private GameObject gasUI;
     [SerializeField] private GameController gc;
@@ -26,7 +25,7 @@ public class GasStation : MonoBehaviour
             }
             else
             {
-                throw new System.Exception("N�o h� dinheiro suficiente para abastecer");
+                throw new System.Exception("Não há dinheiro suficiente para abastecer");
             }
         }
     }
@@ -36,7 +35,7 @@ public class GasStation : MonoBehaviour
         float price = value * gc.literPrice;
 
         txtLiters.text = $"{value:F2}";
-        txtPrice.text = $"{price:F2}";
+        txtPrice.text = $"R${price:F2}";
     }
 
     public void CloseUI()

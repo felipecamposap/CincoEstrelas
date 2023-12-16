@@ -45,7 +45,7 @@ public class Interface : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(KeyCode.E) && Time.timeScale > 0)
         {
             if (cellphoneLift)
             {

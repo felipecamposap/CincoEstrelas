@@ -8,7 +8,7 @@ public class MixerController : MonoBehaviour
 {
     [SerializeField] private AudioMixer audioMixer;
     [SerializeField] Slider[] mixerSliders;
-    [SerializeField] bool startPlay = true;
+    [SerializeField] bool startPlay;
 
 
     public void Start()
@@ -39,8 +39,8 @@ public class MixerController : MonoBehaviour
             //audioMixer.SetFloat("EfeitosVolume", audioValue);
             audioMixer.SetFloat("EfeitosVolume", -10);
             startPlay = false;
+            gameObject.SetActive(false);
         }
-        gameObject.SetActive(false);
 
     }
 

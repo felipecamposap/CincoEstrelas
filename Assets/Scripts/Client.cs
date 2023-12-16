@@ -16,6 +16,7 @@ public class Client : MonoBehaviour
     public string clientName { get; set; }
     public float payment { get; set; }
     //private GameController gc;
+    public bool playertouch = false;
 
     private void Awake()
     {
@@ -40,8 +41,10 @@ public class Client : MonoBehaviour
         }
         if (touchPlayer == 0 || touchPlayer == 3)
         {
-            transform.position = Vector3.Lerp(transform.position, target.position, speed * Time.deltaTime);
-            if (Vector3.Distance(transform.position, target.position) <= 2)
+            Vector3 targetPos = target.position;
+            targetPos.y = 1.4f;
+            transform.position = Vector3.Lerp(transform.position, targetPos, speed * Time.deltaTime);
+            if (Vector3.Distance(transform.position, target.position) <= 2.5f)
             {
                 if (target.CompareTag("Player"))
                 {
@@ -82,8 +85,9 @@ public class Client : MonoBehaviour
             GameController.controller.alvoMinimapa.index++;
 
         }
-        else if (other.CompareTag("Player") && touchPlayer == -1)
+        else if (other.CompareTag("Player") && touchPlayer == -1 && !playertouch)
         {
+            playertouch = true;
             password.gameObject.SetActive(true);
             GameController.controller.PasswordClient();
             password.text = GameController.controller.passwordClient.ToString();

@@ -125,19 +125,21 @@ public class GameController : MonoBehaviour
         else if (rating < playerStar)
             playerStar--;
         uiController.ATTUI();
-        if (rating >= 10){
+        if (playerStar >= 10){
             uiController.PlayerVitoria();
             player.PlayerVictory();
         }
 
     }
 
+    private bool[] cursorState = new bool[2];
     public void SetGamePaused(bool value)
     {
         if (value == true)
         {
             isGamePaused = true;
             Time.timeScale = 0;
+
         }
         else
         {
@@ -163,6 +165,15 @@ public class GameController : MonoBehaviour
                 audioSource.reverbZoneMix = 0;
                 audioSource.volume += audioSource.volume;
                 audioSource.pitch = 1;
+
+
+                Cursor.visible = cursorState[0];
+                if (cursorState[1])
+                    Cursor.lockState = CursorLockMode.Locked;
+                else
+                    Cursor.lockState = CursorLockMode.None;
+
+                
             }
             else
             {
@@ -171,6 +182,17 @@ public class GameController : MonoBehaviour
                 audioSource.reverbZoneMix = 1;
                 audioSource.volume /= 2;
                 audioSource.pitch = 0.98f;
+
+                if (Cursor.visible)
+                    cursorState[0] = true;
+                else
+                    cursorState[0] = false;
+                if (Cursor.lockState == CursorLockMode.Locked)
+                    cursorState[1] = true;
+                else
+                    cursorState[1] = false;
+                Cursor.lockState = CursorLockMode.None;
+                Cursor.visible = true;
 
             }
 
