@@ -51,22 +51,23 @@ public class Senha_Game : MonoBehaviour
                 messageText.text = "Senha Correta";
                 GameController.controller.passwordCorrect = true;
                 enteredNumber = new string("");
-                inputField.text = "";
-                
+                messageText.text = "Insira o código";
+                GameController.controller.uiController.MostrarEstrelaCorrida();
+
             }
             else
             {
-                messageText.text = "Número incorreto. Tente novamente.";
+                messageText.text = "Número incorreto";
                 enteredNumber = new string("");
                 inputField.text = "";
+                StartCoroutine(CDMessage());
             }
-            StartCoroutine(CDMessage());
         }
     }
 
     private IEnumerator CDMessage()
     {
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(1f);
         messageText.text = "Insira o código";
     }
 }

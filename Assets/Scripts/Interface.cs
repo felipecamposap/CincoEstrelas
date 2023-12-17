@@ -24,6 +24,7 @@ public class Interface : MonoBehaviour
     public ListClients interfaceListClients = new ListClients(); // Lista de clientes customizada
     private MouseLook camMovement;
     [SerializeField] private GameObject vitoria;
+    [SerializeField] private GameObject estrelaCorrida;
 
 
     [Header("----- Radio -----")]
@@ -59,6 +60,11 @@ public class Interface : MonoBehaviour
                 CellPhoneAnimation(0);
             }
         }
+    }
+
+    public void EstrelaCorrida(bool value)
+    {
+        estrelaCorrida.SetActive(value);
     }
 
     public void AttList()

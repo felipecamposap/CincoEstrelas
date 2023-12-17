@@ -9,6 +9,8 @@ public class SceneController : MonoBehaviour
         if(index == 0){
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
+            GameController.controller.trapacas[2] = false;
+            GameController.controller.playerStar = 0;
         }
         Time.timeScale = 1.0f;
         SceneManager.LoadScene(index);

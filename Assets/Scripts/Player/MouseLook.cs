@@ -6,7 +6,7 @@ public class MouseLook : MonoBehaviour
     public float sensitivity = 8.0f, lastSensitivity; // Adjust the sensitivity of the mouse movement
     public float maxPitch = 30.0f; // Maximum pitch angle in degrees
     public GameObject player;
-    private Camera camera;
+    private Camera cameraMain;
     private quaternion initialRotation;
     private bool locked;
     [SerializeField] private Transform pos;
@@ -19,7 +19,7 @@ public class MouseLook : MonoBehaviour
         initialRotation = transform.rotation;
         lastSensitivity = sensitivity;
         Application.targetFrameRate = 999;
-        camera = GetComponentInChildren<Camera>();
+        cameraMain = GetComponentInChildren<Camera>();
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
         player = GameObject.FindGameObjectWithTag("Player");
@@ -32,12 +32,12 @@ public class MouseLook : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Mouse1))
         {
-            camera.fieldOfView = 25;
+            cameraMain.fieldOfView = 25;
         }
 
         if (Input.GetKeyUp(KeyCode.Mouse1))
         {
-            camera.fieldOfView = 60;
+            cameraMain.fieldOfView = 60;
         }
     }
 
@@ -74,7 +74,7 @@ public class MouseLook : MonoBehaviour
         {
             this.locked = locked;
             sensitivity = 0f;
-            transform.rotation = Quaternion.Euler(player.transform.rotation.x, 0f, 0f);
+            //transform.rotation = Quaternion.Euler(player.transform.rotation.x, 0f, 0f);
         }
         else
         {

@@ -13,8 +13,8 @@ public class MixerController : MonoBehaviour
 
     public void Start()
     {
-        int audioValue;
-        int sliderValue;
+        //int audioValue;
+        //int sliderValue;
 
         if (SceneManager.GetActiveScene().buildIndex == 0 && startPlay)
         {
@@ -23,21 +23,21 @@ public class MixerController : MonoBehaviour
             //mixerSliders[0].value = sliderValue;
             mixerSliders[0].value = 3;
             //audioMixer.SetFloat("MasterVolume", audioValue);
-            audioMixer.SetFloat("MasterVolume", -10);
+            audioMixer.SetFloat("Master", -10);
 
             // ----- Declarar volume Musica ----- \\
             //CheckPrefs("MusicaVolume", out audioValue, out sliderValue);
             //mixerSliders[1].value = sliderValue;
             mixerSliders[1].value = 3;
             //audioMixer.SetFloat("MusicaVolume", audioValue);
-            audioMixer.SetFloat("MusicaVolume", -10);
+            audioMixer.SetFloat("Musica", -10);
 
             // ----- Declarar volume Efeito ----- \\
             //CheckPrefs("EfeitosVolume", out audioValue, out sliderValue);
             //mixerSliders[2].value = sliderValue;
             mixerSliders[2].value = 3;
             //audioMixer.SetFloat("EfeitosVolume", audioValue);
-            audioMixer.SetFloat("EfeitosVolume", -10);
+            audioMixer.SetFloat("Efeitos", -10);
             startPlay = false;
             gameObject.SetActive(false);
         }
