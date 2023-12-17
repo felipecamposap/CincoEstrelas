@@ -59,7 +59,7 @@ public class GameController : MonoBehaviour
     public Transform[] minimapaAlvo = new Transform[2];
 
     [Header("Trapaças: ")]
-    public bool[] trapacas = new bool[2];
+    public bool[] trapacas = new bool[3];
 
     public void ToggleCursor(bool value)
     {
@@ -80,7 +80,7 @@ public class GameController : MonoBehaviour
         if (controller == null)
             controller = this;
         else
-            ResetGC();
+            Destroy(gameObject);
         listClients = new ListClients();
         DontDestroyOnLoad(this);
     }
@@ -92,16 +92,27 @@ public class GameController : MonoBehaviour
         uiController.ATTUI();
     }
 
-    private void ResetGC()
+    public void ResetGC()
     {
-        GameController.controller.listClients = new ListClients();
-        GameController.controller.carIntegrityCurrent = GameController.controller.carIntegrityMax;
-        GameController.controller.playerStar = 0;
-        GameController.controller.playerMoney = 100f;
-        GameController.controller.playerFuel = GameController.controller.maxPlayerFuel;
-        GameController.controller.totalClients = 0;
-        GameController.controller.uiController.ATTUI();
-        Destroy(gameObject);
+        listClients = new ListClients();
+        carIntegrityCurrent = carIntegrityMax;
+        playerMoney = 100f;
+        playerFuel = maxPlayerFuel;
+        totalClients = 0;
+        if (trapacas[2])
+            trapacas[2] = false;
+        else
+            playerStar = 0;
+        uiController.ATTUI();
+        if (playerStar >= 10)
+            PlayerVitoria();
+
+    }
+
+    public void PlayerVitoria()
+    {
+        uiController.PlayerVitoria();
+        player.PlayerVictory();
     }
 
     public void BurnFuel(float gasInput)
@@ -125,10 +136,8 @@ public class GameController : MonoBehaviour
         else if (rating < playerStar)
             playerStar--;
         uiController.ATTUI();
-        if (playerStar >= 10){
-            uiController.PlayerVitoria();
-            player.PlayerVictory();
-        }
+        if (playerStar >= 10)
+            PlayerVitoria();
 
     }
 
@@ -181,7 +190,7 @@ public class GameController : MonoBehaviour
                 Time.timeScale = 0;
                 audioSource.reverbZoneMix = 1;
                 audioSource.volume /= 2;
-                audioSource.pitch = 0.98f;
+                audioSource.pitch = 0.99f;
 
                 if (Cursor.visible)
                     cursorState[0] = true;

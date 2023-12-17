@@ -36,6 +36,7 @@ public class Interface : MonoBehaviour
     private void Start()
     {
         GameController.controller.uiController = this;
+        GameController.controller.ResetGC();
         camMovement = Camera.main.transform.parent.gameObject.GetComponent<MouseLook>();
         estrelasCorridaAnimator =  estrelasCorrida.transform.parent.GetComponent<Animator>();
         estrelasCorrida.value = 10;

@@ -16,7 +16,7 @@ public class Client : MonoBehaviour
     public string clientName { get; set; }
     public float payment { get; set; }
     //private GameController gc;
-    public bool playertouch = false;
+    private bool playertouch = false;
 
     private void Awake()
     {
@@ -87,13 +87,15 @@ public class Client : MonoBehaviour
         }
         else if (other.CompareTag("Player") && touchPlayer == -1 && !playertouch)
         {
+
             playertouch = true;
             password.gameObject.SetActive(true);
             GameController.controller.PasswordClient();
             password.text = GameController.controller.passwordClient.ToString();
             //GameController.controller.uiController.CellPhoneAnimation(0);
             GameController.controller.uiController.CellPhoneAnimation(6);
-            
+            target = other.transform;
+
         }
 
     }
@@ -103,9 +105,6 @@ public class Client : MonoBehaviour
         if (touchPlayer == 0 && other.CompareTag("Player"))
         {
             coll.enabled = false;
-            target = other.transform;
-            
-
         }
     }
 }

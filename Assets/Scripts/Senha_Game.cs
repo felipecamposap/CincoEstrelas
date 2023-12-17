@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -51,6 +52,7 @@ public class Senha_Game : MonoBehaviour
                 GameController.controller.passwordCorrect = true;
                 enteredNumber = new string("");
                 inputField.text = "";
+                
             }
             else
             {
@@ -58,6 +60,13 @@ public class Senha_Game : MonoBehaviour
                 enteredNumber = new string("");
                 inputField.text = "";
             }
+            StartCoroutine(CDMessage());
         }
+    }
+
+    private IEnumerator CDMessage()
+    {
+        yield return new WaitForSeconds(0.5f);
+        messageText.text = "Insira o código";
     }
 }

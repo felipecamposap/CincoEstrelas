@@ -4715,12 +4715,12 @@ MonoBehaviour:
   totalClients: 0
   penalty: 0
   playerMoney: 100
-  playerStar: 0
+  playerStar: 9
   <passwordCorrect>k__BackingField: 0
   minimapaAlvo:
   - {fileID: 0}
   - {fileID: 0}
-  trapacas: 0000
+  trapacas: 000000
 --- !u!4 &1914256717
 Transform:
   m_ObjectHideFlags: 0

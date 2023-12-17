@@ -17,7 +17,6 @@ public class PlayerMovement : MonoBehaviour
     float speed;
     public AnimationCurve steeringCurve;
     private Vector3 localVelocity;
-    [SerializeField] GameController gc;
     [SerializeField] GameObject danoFaisca, luzesFreio;
     [SerializeField] GameObject vitoriaEfeito;
     public bool inGame;
@@ -51,9 +50,9 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (inGame && Input.GetAxis("Vertical") != 0 && !GameController.controller.trapacas[1] && gc.PlayerFuel > 0)
+        if (inGame && Input.GetAxis("Vertical") != 0 && !GameController.controller.trapacas[1] && GameController.controller.PlayerFuel > 0)
         {
-            gc.BurnFuel(gasInput);
+            GameController.controller.BurnFuel(gasInput);
         }
     }
 
