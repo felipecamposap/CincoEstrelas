@@ -6,6 +6,7 @@ using UnityEngine.AI;
 
 public class RaceScript : MonoBehaviour
 {
+    [SerializeField] private Rigidbody rb;
     [SerializeField] private float speed;
     [SerializeField] private Transform[] pos;
     [SerializeField] private GameObject[] wheels;
@@ -14,6 +15,7 @@ public class RaceScript : MonoBehaviour
 
     void Start()
     {
+        rb.GetComponent<Rigidbody>();
         nva = GetComponentInParent<NavMeshAgent>();
         nva.SetDestination(pos[index].position);
     }
@@ -32,6 +34,7 @@ public class RaceScript : MonoBehaviour
         if(col.collider.gameObject.CompareTag("Player") || col.collider.gameObject.CompareTag("NPC"))
         {
             nva.isStopped = true;
+            rb.freezeRotation = false;
             Invoke("Resume", 5f);
         }
     }
@@ -42,5 +45,6 @@ public class RaceScript : MonoBehaviour
         rb.velocity = Vector3.zero;
         rb.angularVelocity = Vector3.zero;
         nva.isStopped = false;
+        rb.freezeRotation = true;
     }
 }

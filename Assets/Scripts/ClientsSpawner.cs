@@ -8,7 +8,7 @@ public class ClientsSpawner : MonoBehaviour
     [SerializeField] private Transform[] locations;
     [SerializeField] private GameObject client;
     [SerializeField] private GameObject clientDestination;
-    [SerializeField] private Animator CellPhoneUI;
+    //[SerializeField] private Animator CellPhoneUI;
     [SerializeField] private string[] clientNames;
     [SerializeField] private Text txtClient;
     [SerializeField] private Slider clientRating;
@@ -59,29 +59,32 @@ public class ClientsSpawner : MonoBehaviour
         Client scriptClient = clone.GetComponentInChildren<Client>();
         scriptClient.payment = currentClientPay;
         scriptClient.clientName = clientNames[indexName];
-        GameController.controller.uiController.CellPhoneAnimation(1); // abaixar celular
+        GameController.controller.minimapaAlvo[0] = clone.transform;
+        //GameController.controller.uiController.CellPhoneAnimation(1); // abaixar celular
     }
 
     public void ShowClientDestination(int loc, int ind)
     {
         Vector3 pos;
         int rand = Random.Range(0, 2);
+        ind = Random.Range(0, locations.Length);
         pos = locations[ind].position;
         if (loc == 1)
         {
             pos.x += ((locations[ind].localScale.x / 2) * (rand * 2 - 1));
             pos.z += Random.Range(-(locations[ind].localScale.z * 0.1f), (locations[ind].localScale.z * 0.1f));
-            Debug.Log("Random Z" + (rand * 2 - 1));
-            Debug.Log("posX: " + pos.x);
-            Debug.Log("posZ: " + pos.z);
+            //Debug.Log("Random Z" + (rand * 2 - 1));
+            //Debug.Log("posX: " + pos.x);
+            //Debug.Log("posZ: " + pos.z);
         }else{
             pos.z += ((locations[ind].localScale.z / 2) * (rand * 2 - 1));
             pos.x += Random.Range(-(locations[ind].localScale.x * 0.1f), (locations[ind].localScale.x * 0.1f));
-            Debug.Log("Random X : " + (rand * 2 - 1));
-            Debug.Log("posX: " + pos.x);
-            Debug.Log("posZ: " + pos.z);
+            //Debug.Log("Random X : " + (rand * 2 - 1));
+            //Debug.Log("posX: " + pos.x);
+            //Debug.Log("posZ: " + pos.z);
         }
-        Instantiate(clientDestination, pos, Quaternion.identity);
+        GameObject clone = Instantiate(clientDestination, pos, Quaternion.identity);
+        GameController.controller.minimapaAlvo[1] = clone.transform;
         //CloseCellPhone();
     }
 

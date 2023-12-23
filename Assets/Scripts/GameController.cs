@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameController : MonoBehaviour
 {
@@ -6,6 +7,9 @@ public class GameController : MonoBehaviour
     public static GameController controller;
     public Interface uiController;
     public ListClients listClients;
+    public AudioSource audioSource;
+    public AlvoMinimapa alvoMinimapa;
+    public PlayerMovement player;
 
 
     [Header("Status jogador:")]
@@ -16,6 +20,9 @@ public class GameController : MonoBehaviour
     [SerializeField] private const float fuelBurn = 0.001f; // 
     [SerializeField] private float fuelBurnMultiplier = 1f;
     [SerializeField] private short totalClients = 0;
+    public int penalty = 0;
+    [SerializeField] private float playerMoney = 100f;
+    public int playerStar = 0;
 
     [SerializeField] public readonly float literPrice = 5.86f;
     private float ratingSum = 0;
@@ -29,19 +36,10 @@ public class GameController : MonoBehaviour
         get { return (totalClients > 0 ? ratingSum / totalClients : 0); }
     }
 
-    public int penalty = 0;
-
-    [SerializeField] private float playerMoney = 100f;
-
     public float PlayerMoney
     {
         get { return playerMoney; }
     }
-
-    //[SerializeField] private Player player;
-    //[SerializeField] private Text txtGas;
-    //[SerializeField] private Text txtMoney;
-    //[SerializeField] private GameObject pauseWidget;
 
     public float PlayerFuel
     {
@@ -57,6 +55,11 @@ public class GameController : MonoBehaviour
     {
         get { return (playerMoney / literPrice); }
     }
+
+    public Transform[] minimapaAlvo = new Transform[2];
+
+    [Header("Trapaças: ")]
+    public bool[] trapacas = new bool[3];
 
     public void ToggleCursor(bool value)
     {
@@ -80,23 +83,42 @@ public class GameController : MonoBehaviour
             Destroy(gameObject);
         listClients = new ListClients();
         DontDestroyOnLoad(this);
-        //txtMoney.text = $"{playerMoney:F2}";
     }
 
     public void FuelCar(float gasoline)
     {
         playerFuel += gasoline;
         playerMoney -= gasoline * literPrice;
-        //txtMoney.text = $"{playerMoney:F2}";
-        //txtGas.text = playerFuel.ToString();
         uiController.ATTUI();
+    }
+
+    public void ResetGC()
+    {
+        listClients = new ListClients();
+        carIntegrityCurrent = carIntegrityMax;
+        playerMoney = 100f;
+        playerFuel = maxPlayerFuel;
+        totalClients = 0;
+        if (trapacas[2])
+            trapacas[2] = false;
+        else
+            playerStar = 0;
+        uiController.ATTUI();
+        if (playerStar >= 10)
+            PlayerVitoria();
+
+    }
+
+    public void PlayerVitoria()
+    {
+        uiController.PlayerVitoria();
+        player.PlayerVictory();
     }
 
     public void BurnFuel(float gasInput)
     {
         if (!isGamePaused)
         {
-            //txtGas.text = $"{playerFuel:F2}";
             playerFuel -= fuelBurn * fuelBurnMultiplier;
             uiController.ATTUI();
             uiController.Gasolina(playerFuel/maxPlayerFuel);
@@ -107,17 +129,26 @@ public class GameController : MonoBehaviour
 
     public void NewRating(int rating)
     {
-        ratingSum += rating / 2;
+        ratingSum += rating;
         totalClients++;
+        if (rating > playerStar)
+            playerStar++;
+        else if (rating < playerStar)
+            playerStar--;
         uiController.ATTUI();
+        if (playerStar >= 10)
+            PlayerVitoria();
+
     }
 
+    private bool[] cursorState = new bool[2];
     public void SetGamePaused(bool value)
     {
         if (value == true)
         {
             isGamePaused = true;
             Time.timeScale = 0;
+
         }
         else
         {
@@ -129,25 +160,53 @@ public class GameController : MonoBehaviour
     public void GetPaid(float pay)
     {
         playerMoney += pay;
-        //txtMoney.text = $"{playerMoney:F2}";
         uiController.ATTUI();
     }
 
     private void Update()
     {
-        if (Input.GetButtonDown("Pause"))
+        if (Input.GetButtonDown("Pause") && player.inGame)
         {
             if (Time.timeScale == 0)
             {
                 uiController.pauseUI.SetActive(false);
                 Time.timeScale = 1;
+                audioSource.reverbZoneMix = 0;
+                audioSource.volume += audioSource.volume;
+                audioSource.pitch = 1;
+
+
+                Cursor.visible = cursorState[0];
+                if (cursorState[1])
+                    Cursor.lockState = CursorLockMode.Locked;
+                else
+                    Cursor.lockState = CursorLockMode.None;
+
+                
             }
             else
             {
                 uiController.pauseUI.SetActive(true);
                 Time.timeScale = 0;
+                audioSource.reverbZoneMix = 1;
+                audioSource.volume /= 2;
+                audioSource.pitch = 0.99f;
+
+                if (Cursor.visible)
+                    cursorState[0] = true;
+                else
+                    cursorState[0] = false;
+                if (Cursor.lockState == CursorLockMode.Locked)
+                    cursorState[1] = true;
+                else
+                    cursorState[1] = false;
+                Cursor.lockState = CursorLockMode.None;
+                Cursor.visible = true;
+
             }
+
         }
+
     }
 
     public void PasswordClient()
@@ -158,9 +217,13 @@ public class GameController : MonoBehaviour
     public void Damage(float _value)
     {
         carIntegrityCurrent -= _value;
-        if (carIntegrityCurrent <= 0)
+        if (carIntegrityCurrent <= 0){
             uiController.GameOver(0);
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+        }
         uiController.DamageAnimation();
+        uiController.ATTUI();
     }
 
 }

@@ -16,6 +16,7 @@ public class Client : MonoBehaviour
     public string clientName { get; set; }
     public float payment { get; set; }
     //private GameController gc;
+    private bool playertouch = false;
 
     private void Awake()
     {
@@ -34,16 +35,20 @@ public class Client : MonoBehaviour
         {
             touchPlayer = 0;
             GameController.controller.passwordCorrect = false;
-            GameController.controller.uiController.CellPhoneAnimation(1);
+            GameController.controller.uiController.CellPhoneAnimation(3);
             password.gameObject.SetActive(false);
+            GameController.controller.alvoMinimapa.index++;
         }
         if (touchPlayer == 0 || touchPlayer == 3)
         {
-            transform.position = Vector3.Lerp(transform.position, target.position, speed * Time.deltaTime);
-            if (Vector3.Distance(transform.position, target.position) <= 1)
+            Vector3 targetPos = target.position;
+            targetPos.y = 1.4f;
+            transform.position = Vector3.Lerp(transform.position, targetPos, speed * Time.deltaTime);
+            if (Vector3.Distance(transform.position, target.position) <= 2.5f)
             {
                 if (target.CompareTag("Player"))
                 {
+                    GameController.controller.uiController.MostrarEstrelaCorrida();
                     GameController.controller.penalty = 0;
                     touchPlayer = 2;
                     transform.position = new Vector3(target.transform.position.x, target.transform.position.y, target.transform.position.z);
@@ -66,7 +71,7 @@ public class Client : MonoBehaviour
         if (touchPlayer == 2 && other.CompareTag("Destination"))
         {
             GameController.controller.GetPaid(payment);
-            int rating = Math.Clamp(10 - (GameController.controller.penalty * 2), 1, 10);
+            int rating = Math.Clamp(10 - (GameController.controller.penalty * 2), 2, 10);
             Debug.Log(rating);
             GameController.controller.NewRating(rating);
             GameController.controller.penalty = 0; //remover depois???????
@@ -76,14 +81,21 @@ public class Client : MonoBehaviour
             GameController.controller.uiController.CellPhoneAnimation(7);
             ClientsParameters client = new ClientsParameters(clientName, rating, payment);
             GameController.controller.listClients.Insert(client);
+            GameController.controller.uiController.EsconderEstrelaCorrida();
+            GameController.controller.alvoMinimapa.index++;
 
         }
-        else if (other.CompareTag("Player") && touchPlayer == -1)
+        else if (other.CompareTag("Player") && touchPlayer == -1 && !playertouch)
         {
+
+            playertouch = true;
             password.gameObject.SetActive(true);
             GameController.controller.PasswordClient();
             password.text = GameController.controller.passwordClient.ToString();
+            //GameController.controller.uiController.CellPhoneAnimation(0);
             GameController.controller.uiController.CellPhoneAnimation(6);
+            target = other.transform;
+
         }
 
     }
@@ -93,8 +105,6 @@ public class Client : MonoBehaviour
         if (touchPlayer == 0 && other.CompareTag("Player"))
         {
             coll.enabled = false;
-            target = other.transform;
-
         }
     }
 }
