@@ -9017,6 +9017,11 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5814356275676224414, guid: ddddd90eab8e3f249b6118ccb1d1b36b,
+        type: 3}
+      propertyPath: startPlay
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6460668691869415361, guid: ddddd90eab8e3f249b6118ccb1d1b36b,
         type: 3}
       propertyPath: m_Color.a

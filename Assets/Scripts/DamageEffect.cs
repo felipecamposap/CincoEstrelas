@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class DamageEffect : MonoBehaviour
 {
-    [SerializeField] Volume volume;
+    public Volume volume;
     ChromaticAberration chromaAbe;
 
 

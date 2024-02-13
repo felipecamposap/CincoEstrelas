@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -11,7 +10,7 @@ public class Trapacas : MonoBehaviour
 
     private IEnumerator Start()
     {
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.1f);
         toggles[0].isOn = GameController.controller.trapacas[0];
         toggles[1].isOn = GameController.controller.trapacas[1];
     }
@@ -42,6 +41,7 @@ public class Trapacas : MonoBehaviour
             }
 
         }
+
     }
 
 }

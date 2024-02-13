@@ -40,9 +40,9 @@ public class GasStation : MonoBehaviour
 
     public void CloseUI()
     {
-        GameController.controller.ToggleCursor(false);
+        
         GameController.controller.FuelCar(sldGas.value);
-        GameController.controller.SetGamePaused(false);
         gasUI.SetActive(false);
+        GameController.controller.Interaction(false);
     }
 }

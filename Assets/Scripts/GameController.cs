@@ -85,6 +85,14 @@ public class GameController : MonoBehaviour
         DontDestroyOnLoad(this);
     }
 
+    public void RecoverIntegrity(float _integrity, float _value)
+    {
+        carIntegrityCurrent += _integrity;
+        GetPaid(-_value);
+        uiController.ATTUI();
+
+    }
+
     public void FuelCar(float gasoline)
     {
         playerFuel += gasoline;
@@ -224,6 +232,12 @@ public class GameController : MonoBehaviour
         }
         uiController.DamageAnimation();
         uiController.ATTUI();
+    }
+
+    public void Interaction(bool value)
+    {
+        GameController.controller.ToggleCursor(value);
+        GameController.controller.SetGamePaused(value);
     }
 
 }

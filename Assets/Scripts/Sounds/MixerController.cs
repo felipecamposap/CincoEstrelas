@@ -2,7 +2,6 @@ using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using static UnityEngine.Rendering.DebugUI;
 
 public class MixerController : MonoBehaviour
 {
@@ -39,9 +38,9 @@ public class MixerController : MonoBehaviour
             //audioMixer.SetFloat("EfeitosVolume", audioValue);
             audioMixer.SetFloat("Efeitos", -10);
             startPlay = false;
-            gameObject.SetActive(false);
+            this.gameObject.SetActive(false);
         }
-
+        
     }
 
     private void CheckPrefs(string _name, out int audioValue, out int sliderValue)
