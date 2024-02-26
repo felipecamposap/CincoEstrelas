@@ -48,8 +48,8 @@ public class Senha_Game : MonoBehaviour
         {
             if (playerGuess == GameController.controller.passwordClient)
             {
-                messageText.text = "Senha Correta";
                 GameController.controller.passwordCorrect = true;
+                messageText.text = "Senha Correta";
                 enteredNumber = new string("");
                 messageText.text = "Insira o código";
                 GameController.controller.uiController.MostrarEstrelaCorrida();

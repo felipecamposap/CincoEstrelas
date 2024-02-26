@@ -52,6 +52,10 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _GatherTexture2D_2cbe6405a79b462cb2c5d3eb2453816c_Texture_1_Texture2D:
+        m_Texture: {fileID: 2800000, guid: d2dea8ace197dbc4ca9ef151c6801168, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _GatherTexture2D_3bf74dbc059c4f46ab3bcf20a7f2e9f0_Texture_1:
         m_Texture: {fileID: 2800000, guid: d2dea8ace197dbc4ca9ef151c6801168, type: 3}
         m_Scale: {x: 1, y: 1}
@@ -61,6 +65,10 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _GatherTexture2D_693d4e59f34949e49df88e6386c17ac7_Texture_1_Texture2D:
+        m_Texture: {fileID: 2800000, guid: d2dea8ace197dbc4ca9ef151c6801168, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _GatherTexture2D_dbe031ca2c0747e0b6f20c35fb854afd_Texture_1_Texture2D:
         m_Texture: {fileID: 2800000, guid: d2dea8ace197dbc4ca9ef151c6801168, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -155,6 +163,7 @@ Material:
     - _MainColor: {r: 1, g: 0.05699998, b: 0.05699998, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
     - _UpCOlor: {r: 2.270603, g: 0, b: 0, a: 1}
+    - _UpColor: {r: 1, g: 0.8605422, b: 0.03137255, a: 1}
   m_BuildTextureStacks: []
 --- !u!114 &2145465818222044519
 MonoBehaviour:

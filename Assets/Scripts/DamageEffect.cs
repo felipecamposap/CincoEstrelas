@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
@@ -10,8 +11,10 @@ public class DamageEffect : MonoBehaviour
 
 
     // Start is called before the first frame update
-    void Start()
+    private IEnumerator Start()
     {
+        yield return new WaitForSeconds(.1f);
+        volume = Object.FindAnyObjectByType<Volume>();
         volume.profile.TryGet<ChromaticAberration>(out chromaAbe);
     }
 

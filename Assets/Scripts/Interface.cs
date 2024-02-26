@@ -1,14 +1,14 @@
 using System;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+
 
 public class Interface : MonoBehaviour
 {
     private Animator estrelasCorridaAnimator;
     [SerializeField] private Slider estrelasCorrida;
     [SerializeField] private Slider carIntegritySlider;
-    [SerializeField] private Slider clientRatingPlayerSlider;
+    [SerializeField] private Slider clientRatingPlayerSlider; // Estrelas apos a corrida
     [SerializeField] private Slider playerCurrentRating;
     [SerializeField] private Text money;
     public GameObject pauseUI;
@@ -18,18 +18,19 @@ public class Interface : MonoBehaviour
     [SerializeField] private Animator damageAnimator;
     [SerializeField] private RectTransform panelHistoryClient;
     [SerializeField] private GameObject clientHistoryObj;
-    private bool cellphoneLift = false;
+    [SerializeField] private bool cellphoneLift = false;
     [SerializeField] private RectTransform speedometerPointer;
     [SerializeField] private RectTransform gasPointer;
     public ListClients interfaceListClients = new ListClients(); // Lista de clientes customizada
-    private MouseLook camMovement;
+    //private MouseLook camMovement;
     [SerializeField] private GameObject vitoria;
 
+    [Header(" ----- Client Show Hud ----- ")]
+    [SerializeField] ClientPhoneShow clientHud;
 
-    [Header("----- Radio -----")]
+    [Header(" ----- Radio ----- ")]
     [SerializeField] private Text clipText;
     [SerializeField] private Animator clipAnimator;
-    
 
 
 
@@ -37,28 +38,14 @@ public class Interface : MonoBehaviour
     {
         GameController.controller.uiController = this;
         GameController.controller.ResetGC();
-        camMovement = Camera.main.transform.parent.gameObject.GetComponent<MouseLook>();
+        //camMovement = Camera.main.transform.parent.gameObject.GetComponent<MouseLook>();
         estrelasCorridaAnimator =  estrelasCorrida.transform.parent.GetComponent<Animator>();
-        estrelasCorrida.value = 10;
         ATTUI();
-        Invoke("AttList", 2);
     }
 
-    void Update()
+    public bool CellPhoneLift()
     {
-        if (Input.GetKeyDown(KeyCode.E) && Time.timeScale > 0)
-        {
-            if (cellphoneLift)
-            {
-                camMovement.LockCam(false);
-                CellPhoneAnimation(1);
-            }
-            else
-            {
-                camMovement.LockCam(true);
-                CellPhoneAnimation(0);
-            }
-        }
+        return cellphoneLift;
     }
 
     public void AttList()
@@ -77,7 +64,7 @@ public class Interface : MonoBehaviour
         GameController.controller.listClients.Insert(teste5);
         GameController.controller.listClients.Insert(teste6);
         GameController.controller.listClients.Insert(teste7);*/
-        GameController.controller.uiController = this;
+        
     }
 
     public void ATTUI()
@@ -141,7 +128,6 @@ public class Interface : MonoBehaviour
 
     public void ShowHistoryClients(int sort)
     {
-        //Debug.Log(panelHistoryClient.childCount);
         if (panelHistoryClient.childCount > 0)
         {
             ResetHistoryClients();
@@ -242,6 +228,7 @@ public class Interface : MonoBehaviour
 
             case 7: // Corrida concluida
                 app.Play("CorridaConcluida");
+                clientRatingPlayerSlider.value = estrelasCorrida.value;
                 break;
 
             case 8: // Rejeitar corrida

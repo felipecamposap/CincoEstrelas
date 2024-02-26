@@ -1,6 +1,6 @@
 using UnityEngine;
-using UnityEngine.Rendering;
 using UnityEngine.UI;
+
 
 public class ClientsSpawner : MonoBehaviour
 {
@@ -57,8 +57,8 @@ public class ClientsSpawner : MonoBehaviour
         //Debug.Log("After: " + pos);
         GameObject clone = Instantiate(client, pos, Quaternion.identity);
         Client scriptClient = clone.GetComponentInChildren<Client>();
-        scriptClient.payment = currentClientPay;
-        scriptClient.clientName = clientNames[indexName];
+        //scriptClient.payment = currentClientPay;
+        //scriptClient.clientName = clientNames[indexName];
         GameController.controller.minimapaAlvo[0] = clone.transform;
         //GameController.controller.uiController.CellPhoneAnimation(1); // abaixar celular
     }

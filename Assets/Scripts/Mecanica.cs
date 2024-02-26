@@ -1,26 +1,21 @@
 using UnityEngine.UI;
 using UnityEngine;
 
+
 public class Mecanica : MonoBehaviour
 {
+    [Header("0 - Interativo | 1 - atual | 2 - Após conserto")]
     [SerializeField] Slider[] sldIntegrity; // 0 - slider Interativo | 1 - integridade atual | 2 - integridade após concerto
-    //[SerializeField] Slider currentIntegrity;
-    [SerializeField] GameObject mecanicaUI;
     [SerializeField] Text txtPrice;
     [SerializeField] Button btnPagar;
 
     private float price;
 
 
-    public void OnTriggerEnter(Collider other)
+    private void OnEnable()
     {
-        if(GameController.controller.carIntegrityCurrent < GameController.controller.carIntegrityMax)
-        {
-            GameController.controller.ToggleCursor(true);
-            GameController.controller.SetGamePaused(true);
-            mecanicaUI.SetActive(true);
-            AttUI();
-        }
+        GameController.controller.Interaction(true);
+        AttUI();
     }
 
     public void UpdateUI()
@@ -37,7 +32,7 @@ public class Mecanica : MonoBehaviour
     public void BuyIntegrity()
     {
         if(price < GameController.controller.PlayerMoney)
-            GameController.controller.RecoverIntegrity(sldIntegrity[0].value, price);
+            GameController.controller.RecoverIntegrity(sldIntegrity[0].value, -price);
 
     }
 
@@ -49,9 +44,8 @@ public class Mecanica : MonoBehaviour
     public void AttUI()
     {
         for (int i = 0; i < sldIntegrity.Length; i++)
-        {
             sldIntegrity[i].maxValue = GameController.controller.carIntegrityMax;
-        }
+
         sldIntegrity[0].maxValue = GameController.controller.carIntegrityMax - GameController.controller.carIntegrityCurrent;
         sldIntegrity[1].value = GameController.controller.carIntegrityCurrent;
     }
