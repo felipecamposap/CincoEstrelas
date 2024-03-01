@@ -10,6 +10,7 @@ TagManager:
   - Waypoint
   - NPC
   - Calcada
+  - Mecanica
   layers:
   - Default
   - TransparentFX

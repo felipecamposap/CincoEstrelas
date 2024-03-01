@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class MusicController : MonoBehaviour
@@ -16,8 +14,6 @@ public class MusicController : MonoBehaviour
         GameController.controller.audioSource = audioSource;
         clipIndex = (byte)Random.Range(0, clips.Length);
         audioSource = GetComponent<AudioSource>();
-        //try { GameController.controller.audioSource = audioSource; }
-        //catch { Debug.Log("AudioSource GameController não encontrado!"); }
     }
 
     // Update is called once per frame

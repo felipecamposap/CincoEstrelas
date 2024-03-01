@@ -1,12 +1,12 @@
 using UnityEngine;
-using UnityEngine.UI;
+
 
 public class GameController : MonoBehaviour
 {
     [Header("Variables statics")]
     public static GameController controller;
     public Interface uiController;
-    public ListClients listClients;
+    [field: SerializeField] public ListClients listClients;
     public AudioSource audioSource;
     public AlvoMinimapa alvoMinimapa;
     public PlayerMovement player;
@@ -29,7 +29,7 @@ public class GameController : MonoBehaviour
     private bool isGamePaused = false;
 
     public int passwordClient { get; set; }
-    [field: SerializeField] public bool passwordCorrect { get; set; }
+    public bool passwordCorrect;
 
     public float AvgRating
     {
@@ -61,6 +61,17 @@ public class GameController : MonoBehaviour
     [Header("Trapaças: ")]
     public bool[] trapacas = new bool[3];
 
+
+    private void Awake()
+    {
+        if (controller == null)
+            controller = this;
+        else
+            Destroy(gameObject);
+        listClients = new ListClients();
+        DontDestroyOnLoad(this);
+    }
+
     public void ToggleCursor(bool value)
     {
         if(value)
@@ -75,14 +86,12 @@ public class GameController : MonoBehaviour
         }
     }
 
-    private void Start()
+    public void RecoverIntegrity(float _integrity, float _value)
     {
-        if (controller == null)
-            controller = this;
-        else
-            Destroy(gameObject);
-        listClients = new ListClients();
-        DontDestroyOnLoad(this);
+        carIntegrityCurrent += _integrity;
+        GetPaid(_value, false);
+        uiController.ATTUI();
+
     }
 
     public void FuelCar(float gasoline)
@@ -127,8 +136,9 @@ public class GameController : MonoBehaviour
             uiController.GameOver(1);
     }
 
-    public void NewRating(int rating)
+    public void NewRating()
     {
+        int rating = Mathf.Clamp(10 - (penalty * 2), 2, 10);
         ratingSum += rating;
         totalClients++;
         if (rating > playerStar)
@@ -138,6 +148,7 @@ public class GameController : MonoBehaviour
         uiController.ATTUI();
         if (playerStar >= 10)
             PlayerVitoria();
+        penalty = 0;
 
     }
 
@@ -157,10 +168,20 @@ public class GameController : MonoBehaviour
         }
     }
 
-    public void GetPaid(float pay)
+    public void GetPaid(float pay, bool isJob)
     {
         playerMoney += pay;
+        if (!isJob)
+            return;
+        NewRating();
+        uiController.CellPhoneAnimation(7);
+        uiController.EsconderEstrelaCorrida();
         uiController.ATTUI();
+    }
+
+    public void AddHistoryClient(ClientsParameters client)
+    {
+        listClients.Insert(client);
     }
 
     private void Update()
@@ -181,7 +202,6 @@ public class GameController : MonoBehaviour
                     Cursor.lockState = CursorLockMode.Locked;
                 else
                     Cursor.lockState = CursorLockMode.None;
-
                 
             }
             else
@@ -224,6 +244,12 @@ public class GameController : MonoBehaviour
         }
         uiController.DamageAnimation();
         uiController.ATTUI();
+    }
+
+    public void Interaction(bool value)
+    {
+        ToggleCursor(value);
+        SetGamePaused(value);
     }
 
 }

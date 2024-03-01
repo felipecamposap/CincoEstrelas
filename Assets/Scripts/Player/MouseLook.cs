@@ -1,6 +1,7 @@
 using Unity.Mathematics;
 using UnityEngine;
 
+
 public class MouseLook : MonoBehaviour
 {
     public float sensitivity = 8.0f, lastSensitivity; // Adjust the sensitivity of the mouse movement
@@ -38,6 +39,13 @@ public class MouseLook : MonoBehaviour
         if (Input.GetKeyUp(KeyCode.Mouse1))
         {
             cameraMain.fieldOfView = 60;
+        }
+
+        if (Input.GetKeyDown(KeyCode.E) && Time.timeScale > 0)
+        {
+            bool cellPhoneLift = GameController.controller.uiController.CellPhoneLift();
+            LockCam(!cellPhoneLift);
+            GameController.controller.uiController.CellPhoneAnimation(cellPhoneLift ? 1 : 0);
         }
     }
 

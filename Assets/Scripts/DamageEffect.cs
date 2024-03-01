@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
@@ -5,13 +6,15 @@ using UnityEngine.UI;
 
 public class DamageEffect : MonoBehaviour
 {
-    [SerializeField] Volume volume;
+    public Volume volume;
     ChromaticAberration chromaAbe;
 
 
     // Start is called before the first frame update
-    void Start()
+    private IEnumerator Start()
     {
+        yield return new WaitForSeconds(.1f);
+        volume = Object.FindAnyObjectByType<Volume>();
         volume.profile.TryGet<ChromaticAberration>(out chromaAbe);
     }
 
