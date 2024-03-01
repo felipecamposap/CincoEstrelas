@@ -21,9 +21,8 @@ public class PlayerMovement : MonoBehaviour
     public bool inGame;
 
 
-    private IEnumerator Start()
+    private void Start()
     {
-        yield return new WaitForSeconds(0.1f);
         GameController.controller.player = this;
     }
 

@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 
 public class ClientTest : MonoBehaviour
@@ -7,7 +8,10 @@ public class ClientTest : MonoBehaviour
     [SerializeField] GameObject clientPrefab;
     [SerializeField] GameObject destinyPrefab;
     [SerializeField] Transform[] blockPos;
-    [SerializeField] ClientPhoneShow clientShow;
+    [Header("Propriedades da Hud: ")]
+    [SerializeField] Text txtClientName;
+    [SerializeField] Text txtClientPay;
+    [SerializeField] Slider sldClientRating;
 
     //----
     private string clientName;
@@ -20,7 +24,9 @@ public class ClientTest : MonoBehaviour
         rating = Random.Range(2, 6);
         pay = Random.Range(5f, 10f) + (rating - 2f);
         Debug.Log("name: " + clientName + "| rating : " + rating + "| pay: " + pay);
-        clientShow.SetParameters(clientName, rating, pay);
+        txtClientName.text = clientName;
+        txtClientPay.text = $"R${pay:F2}";
+        sldClientRating.value = rating;
     }
 
     [ContextMenu("Spawn Client")]
