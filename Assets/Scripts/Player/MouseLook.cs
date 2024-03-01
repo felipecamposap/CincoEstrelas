@@ -47,19 +47,17 @@ public class MouseLook : MonoBehaviour
             LockCam(!cellPhoneLift);
             GameController.controller.uiController.CellPhoneAnimation(cellPhoneLift ? 1 : 0);
         }
-    }
 
-    void FixedUpdate()
-    {
+        
         // Get the mouse input
         float mouseX = Input.GetAxis("Mouse X");
         float mouseY = Input.GetAxis("Mouse Y");
 
         // Rotate the camera around the Y-axis based on mouse X input
-        transform.Rotate(Vector3.up * mouseX * sensitivity);
+        transform.Rotate(Vector3.up * mouseX * sensitivity * Time.deltaTime);
 
         // Calculate the new pitch rotation based on mouse Y input
-        float newPitch = transform.eulerAngles.x - (mouseY * sensitivity);
+        float newPitch = transform.eulerAngles.x - (mouseY * sensitivity * Time.deltaTime);
 
         // Clamp the pitch angle between 0 and maxPitch
         float clampedPitch = Mathf.Clamp(newPitch, 0f, maxPitch);
@@ -74,6 +72,10 @@ public class MouseLook : MonoBehaviour
             // Apply the new rotation with the clamped pitch
             transform.rotation = Quaternion.Euler(clampedPitch, transform.eulerAngles.y, 0f);
         }
+    }
+
+    void FixedUpdate()
+    {
     }
 
     public void LockCam(bool locked)

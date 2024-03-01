@@ -58,7 +58,7 @@ public class GameController : MonoBehaviour
 
     public Transform[] minimapaAlvo = new Transform[2];
 
-    [Header("Trapaças: ")]
+    [Header("Trapaï¿½as: ")]
     public bool[] trapacas = new bool[3];
 
 
@@ -108,10 +108,10 @@ public class GameController : MonoBehaviour
         playerMoney = 100f;
         playerFuel = maxPlayerFuel;
         totalClients = 0;
-        if (trapacas[2])
+        /*if (trapacas[2])
             trapacas[2] = false;
         else
-            playerStar = 0;
+            playerStar = 0;*/
         uiController.ATTUI();
         if (playerStar >= 10)
             PlayerVitoria();

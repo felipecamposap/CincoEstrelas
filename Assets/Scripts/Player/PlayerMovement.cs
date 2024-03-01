@@ -9,6 +9,7 @@ public class PlayerMovement : MonoBehaviour
     public float gasInput;
     float brakeInput;
     float steeringInput;
+    [SerializeField] float steeringSensitivity = 1f; // Adjust the value as needed
     [SerializeField] float maxSteeringAngle = 45;
     [SerializeField] float motorPower = 3000.0f; // Adjust the value as needed
     [SerializeField] float brakePower = 4000.0f; // Adjust the value as needed
@@ -121,7 +122,7 @@ public class PlayerMovement : MonoBehaviour
 
     void ApplySteering()
     {
-        float steeringSensitivity = 6f; // Adjust the value as needed
+        
         float steeringAngle = steeringSensitivity * steeringInput * steeringCurve.Evaluate(speed);
         steeringAngle = Mathf.Clamp(steeringAngle, -maxSteeringAngle, maxSteeringAngle);
         colliders.FRWheel.steerAngle = steeringAngle;
