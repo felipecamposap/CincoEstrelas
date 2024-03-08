@@ -4,13 +4,12 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Destination
-  - Gas
-  - Damagable
-  - Waypoint
   - NPC
+  - Waypoint
+  - Damagable
+  - Gas
+  - Destination
   - Calcada
-  - Mecanica
   layers:
   - Default
   - TransparentFX

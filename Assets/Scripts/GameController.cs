@@ -61,20 +61,22 @@ public class GameController : MonoBehaviour
     [Header("Trapa�as: ")]
     public bool[] trapacas = new bool[3];
 
-
     private void Awake()
     {
         if (controller == null)
             controller = this;
         else
             Destroy(gameObject);
+    }
+    private void Start()
+    {
         listClients = new ListClients();
         DontDestroyOnLoad(this);
     }
 
     public void ToggleCursor(bool value)
     {
-        if(value)
+        if (value)
         {
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
@@ -108,10 +110,10 @@ public class GameController : MonoBehaviour
         playerMoney = 100f;
         playerFuel = maxPlayerFuel;
         totalClients = 0;
-        /*if (trapacas[2])
+        if (trapacas[2])
             trapacas[2] = false;
         else
-            playerStar = 0;*/
+            playerStar = 0;
         uiController.ATTUI();
         if (playerStar >= 10)
             PlayerVitoria();
@@ -130,7 +132,7 @@ public class GameController : MonoBehaviour
         {
             playerFuel -= fuelBurn * fuelBurnMultiplier;
             uiController.ATTUI();
-            uiController.Gasolina(playerFuel/maxPlayerFuel);
+            uiController.Gasolina(playerFuel / maxPlayerFuel);
         }
         if (playerFuel <= 0)
             uiController.GameOver(1);
@@ -202,7 +204,7 @@ public class GameController : MonoBehaviour
                     Cursor.lockState = CursorLockMode.Locked;
                 else
                     Cursor.lockState = CursorLockMode.None;
-                
+
             }
             else
             {
@@ -237,7 +239,8 @@ public class GameController : MonoBehaviour
     public void Damage(float _value)
     {
         carIntegrityCurrent -= _value;
-        if (carIntegrityCurrent <= 0){
+        if (carIntegrityCurrent <= 0)
+        {
             uiController.GameOver(0);
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;

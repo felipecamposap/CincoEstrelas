@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MouseLook : MonoBehaviour
 {
-    public float sensitivity = 8.0f, lastSensitivity; // Adjust the sensitivity of the mouse movement
+    public float sensitivity = 100f, lastSensitivity; // Adjust the sensitivity of the mouse movement
     public float maxPitch = 30.0f; // Maximum pitch angle in degrees
     public GameObject player;
     private Camera cameraMain;
@@ -48,7 +48,6 @@ public class MouseLook : MonoBehaviour
             GameController.controller.uiController.CellPhoneAnimation(cellPhoneLift ? 1 : 0);
         }
 
-        
         // Get the mouse input
         float mouseX = Input.GetAxis("Mouse X");
         float mouseY = Input.GetAxis("Mouse Y");

@@ -9,11 +9,11 @@ public class PlayerMovement : MonoBehaviour
     public float gasInput;
     float brakeInput;
     float steeringInput;
-    [SerializeField] float steeringSensitivity = 1f; // Adjust the value as needed
+    [SerializeField] float steeringSensitivity = 0.5f; // Adjust the value as needed
     [SerializeField] float maxSteeringAngle = 45;
-    [SerializeField] float motorPower = 3000.0f; // Adjust the value as needed
-    [SerializeField] float brakePower = 4000.0f; // Adjust the value as needed
-    [SerializeField] float gasDrag = 0.2f, idleDrag = 0.5f, brakeDrag = 1.5f, brakeThreshold = 2f;
+    [SerializeField] float motorPower = 45000.0f; // Adjust the value as needed
+    [SerializeField] float brakePower = 10000.0f; // Adjust the value as needed
+    [SerializeField] float gasDrag = 0.005f, idleDrag = 0.5f, brakeDrag = 1.5f, brakeThreshold = 2f;
     float speed;
     public AnimationCurve steeringCurve;
     private Vector3 localVelocity;
@@ -58,7 +58,7 @@ public class PlayerMovement : MonoBehaviour
     void CheckInput()
     {
         gasInput = Input.GetAxis("Vertical");
-        steeringInput = Input.GetAxis("Horizontal"); 
+        steeringInput = Input.GetAxis("Horizontal");
     }
 
     void ApplyMovement()
@@ -83,7 +83,6 @@ public class PlayerMovement : MonoBehaviour
         else if (gasInput == 0) //carro solto
         {
             luzesFreio.SetActive(false);
-            brakeInput = 0.05f;
             rb.drag = idleDrag;
         }
         else //acelerando
@@ -122,7 +121,6 @@ public class PlayerMovement : MonoBehaviour
 
     void ApplySteering()
     {
-        
         float steeringAngle = steeringSensitivity * steeringInput * steeringCurve.Evaluate(speed);
         steeringAngle = Mathf.Clamp(steeringAngle, -maxSteeringAngle, maxSteeringAngle);
         colliders.FRWheel.steerAngle = steeringAngle;
@@ -149,7 +147,8 @@ public class PlayerMovement : MonoBehaviour
 
     public IEnumerator OnCollisionEnter(Collision collision)
     {
-        if (inGame) {
+        if (inGame)
+        {
             float damageValue = rb.velocity.magnitude * 1.5f;
             yield return new WaitForSeconds(0.1f);
             damageValue -= rb.velocity.magnitude;
