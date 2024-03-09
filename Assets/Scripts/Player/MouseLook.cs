@@ -6,11 +6,10 @@ public class MouseLook : MonoBehaviour
 {
     public float sensitivity = 100f, lastSensitivity; // Adjust the sensitivity of the mouse movement
     public float maxPitch = 30.0f; // Maximum pitch angle in degrees
-    public GameObject player;
+    private GameObject player;
     private Camera cameraMain;
     private quaternion initialRotation;
     private bool locked;
-    [SerializeField] private Transform pos;
     [SerializeField] private float camSpeed;
     [SerializeField] private Transform lookRot;
     [SerializeField] private float rotSpeed;
@@ -58,7 +57,7 @@ public class MouseLook : MonoBehaviour
         if ((mouseX != 0f || mouseY != 0f) && !cellPhoneLift)
         {
             idleCamTimer = 0;
-            LockCam(false);
+            LockCam(false, mouseX, mouseY);
         }
         else
         {
@@ -67,7 +66,7 @@ public class MouseLook : MonoBehaviour
 
         if (idleCamTimer >= maxIdleCamTimer || cellPhoneLift)
         {
-            LockCam(true);
+            LockCam(true, mouseX, mouseY);
         }
 
 
@@ -78,20 +77,29 @@ public class MouseLook : MonoBehaviour
         }
         else
         {
-            // Apply the new rotation with the clamped pitch
-            // Rotate the camera around the Y-axis based on mouse X input
             transform.Rotate(Vector3.up * mouseX * sensitivity * Time.deltaTime);
-            // Calculate the new pitch rotation based on mouse Y input
             float newPitch = transform.eulerAngles.x - (mouseY * sensitivity * Time.deltaTime);
-            // Clamp the pitch angle between 0 and maxPitch
-            float clampedPitch = Mathf.Clamp(newPitch, 1f, maxPitch);
+            float clampedPitch = ClampAngle(newPitch, -10f, 40f);
             transform.rotation = Quaternion.Euler(clampedPitch, transform.eulerAngles.y, 0f);
         }
     }
 
-    
+    float ClampAngle(float angle, float min, float max)
+    {
+        if (angle < 90 || angle > 270)
+        {       // if angle in the critic region...
+            if (angle > 180) angle -= 360;  // convert all angles to -180..+180
+            if (max > 180) max -= 360;
+            if (min > 180) min -= 360;
+        }
+        angle = Mathf.Clamp(angle, min, max);
+        if (angle < 0) angle += 360;  // if angle negative, convert to 0..360
+        return angle;
+    }
 
-    public void LockCam(bool locked)
+
+
+    public void LockCam(bool locked, float mouseX, float mouseY)
     {
         if (locked)
         {

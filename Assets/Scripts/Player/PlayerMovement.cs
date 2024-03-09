@@ -13,6 +13,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float motorPower = 45000.0f; // Adjust the value as needed
     [SerializeField] float brakePower = 10000.0f; // Adjust the value as needed
     [SerializeField] float gasDrag = 0.005f, idleDrag = 0.5f, brakeDrag = 1.5f, brakeThreshold = 2f;
+    float regularStiffness;
     float speed;
     public AnimationCurve steeringCurve;
     private Vector3 localVelocity;
@@ -100,6 +101,11 @@ public class PlayerMovement : MonoBehaviour
                 brakeInput = 0;
                 rb.drag = gasDrag;
             }
+        }
+        if(Input.GetButton("Jump"))
+        {
+            Debug.Log("Drift");
+            brakeInput += 0.2f;
         }
 
     }
