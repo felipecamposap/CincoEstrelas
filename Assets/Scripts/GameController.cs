@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 
 public class GameController : MonoBehaviour
@@ -67,6 +68,15 @@ public class GameController : MonoBehaviour
             controller = this;
         else
             Destroy(gameObject);
+
+            if(SceneManager.GetActiveScene().name != "Menu")
+            {
+                ToggleCursor(false);
+            }
+            else
+            {
+                ToggleCursor(true);
+            }
     }
     private void Start()
     {
@@ -79,7 +89,7 @@ public class GameController : MonoBehaviour
         if (value)
         {
             Cursor.visible = true;
-            Cursor.lockState = CursorLockMode.None;
+            Cursor.lockState = CursorLockMode.Confined;
         }
         else
         {

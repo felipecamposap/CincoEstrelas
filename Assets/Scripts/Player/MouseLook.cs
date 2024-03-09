@@ -14,6 +14,8 @@ public class MouseLook : MonoBehaviour
     [SerializeField] private float camSpeed;
     [SerializeField] private Transform lookRot;
     [SerializeField] private float rotSpeed;
+    float idleCamTimer = 0;
+    [SerializeField] float maxIdleCamTimer = 1f;
 
     void Start()
     {
@@ -41,10 +43,11 @@ public class MouseLook : MonoBehaviour
             cameraMain.fieldOfView = 60;
         }
 
+
+        bool cellPhoneLift = GameController.controller.uiController.CellPhoneLift();
+
         if (Input.GetKeyDown(KeyCode.E) && Time.timeScale > 0)
         {
-            bool cellPhoneLift = GameController.controller.uiController.CellPhoneLift();
-            LockCam(!cellPhoneLift);
             GameController.controller.uiController.CellPhoneAnimation(cellPhoneLift ? 1 : 0);
         }
 
@@ -52,30 +55,41 @@ public class MouseLook : MonoBehaviour
         float mouseX = Input.GetAxis("Mouse X");
         float mouseY = Input.GetAxis("Mouse Y");
 
-        // Rotate the camera around the Y-axis based on mouse X input
-        transform.Rotate(Vector3.up * mouseX * sensitivity * Time.deltaTime);
+        if ((mouseX != 0f || mouseY != 0f) && !cellPhoneLift)
+        {
+            idleCamTimer = 0;
+            LockCam(false);
+        }
+        else
+        {
+            idleCamTimer += Time.deltaTime;
+        }
 
-        // Calculate the new pitch rotation based on mouse Y input
-        float newPitch = transform.eulerAngles.x - (mouseY * sensitivity * Time.deltaTime);
+        if (idleCamTimer >= maxIdleCamTimer || cellPhoneLift)
+        {
+            LockCam(true);
+        }
 
-        // Clamp the pitch angle between 0 and maxPitch
-        float clampedPitch = Mathf.Clamp(newPitch, 0f, maxPitch);
 
         if (locked)
         {
             //transform.rotation = Quaternion.Euler(player.transform.rotation.x   , player.transform.rotation.y, 0f);
-            transform.localRotation = Quaternion.Slerp(new Quaternion(0f, transform.rotation.y, 0f, transform.rotation.w), lookRot.rotation, rotSpeed * Time.deltaTime);
+            transform.rotation = Quaternion.Slerp(transform.rotation, lookRot.rotation, rotSpeed * Time.deltaTime);
         }
         else
         {
             // Apply the new rotation with the clamped pitch
+            // Rotate the camera around the Y-axis based on mouse X input
+            transform.Rotate(Vector3.up * mouseX * sensitivity * Time.deltaTime);
+            // Calculate the new pitch rotation based on mouse Y input
+            float newPitch = transform.eulerAngles.x - (mouseY * sensitivity * Time.deltaTime);
+            // Clamp the pitch angle between 0 and maxPitch
+            float clampedPitch = Mathf.Clamp(newPitch, 1f, maxPitch);
             transform.rotation = Quaternion.Euler(clampedPitch, transform.eulerAngles.y, 0f);
         }
     }
 
-    void FixedUpdate()
-    {
-    }
+    
 
     public void LockCam(bool locked)
     {
@@ -83,12 +97,10 @@ public class MouseLook : MonoBehaviour
         {
             this.locked = locked;
             sensitivity = 0f;
-            //transform.rotation = Quaternion.Euler(player.transform.rotation.x, 0f, 0f);
         }
         else
         {
             this.locked = false;
-            transform.parent = null;
             sensitivity = lastSensitivity;
         }
 
