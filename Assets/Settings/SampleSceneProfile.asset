@@ -12,19 +12,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 558a8e2b6826cf840aae193990ba9f2e, type: 3}
   m_Name: ShadowsMidtonesHighlights
   m_EditorClassIdentifier: 
-  active: 1
+  active: 0
   shadows:
     m_OverrideState: 1
-    m_Value: {x: 1, y: 1, z: 1, w: -0.19417477}
+    m_Value: {x: 1, y: 0.97011787, z: 0.88047314, w: 0.026478449}
   midtones:
     m_OverrideState: 1
-    m_Value: {x: 1, y: 1, z: 1, w: 0.1676964}
+    m_Value: {x: 0.85978997, y: 0.97788835, z: 1, w: -0.2030009}
   highlights:
     m_OverrideState: 1
-    m_Value: {x: 1, y: 1, z: 1, w: 0.3353928}
+    m_Value: {x: 1, y: 0.8622859, z: 0.99967545, w: 0.5648721}
   shadowsStart:
     m_OverrideState: 0
-    m_Value: 0
+    m_Value: 0.3
   shadowsEnd:
     m_OverrideState: 0
     m_Value: 0.3
@@ -55,7 +55,7 @@ MonoBehaviour:
     m_Value: 1.58
   intensity:
     m_OverrideState: 1
-    m_Value: 0.31
+    m_Value: 0.15
   scatter:
     m_OverrideState: 1
     m_Value: 0.482
@@ -64,7 +64,7 @@ MonoBehaviour:
     m_Value: 100
   tint:
     m_OverrideState: 1
-    m_Value: {r: 1, g: 0.38510543, b: 0, a: 1}
+    m_Value: {r: 0.7359619, g: 0.4198113, b: 1, a: 1}
   highQualityFiltering:
     m_OverrideState: 1
     m_Value: 1
@@ -114,7 +114,7 @@ MonoBehaviour:
   active: 1
   mode:
     m_OverrideState: 1
-    m_Value: 1
+    m_Value: 2
   neutralHDRRangeReductionMode:
     m_OverrideState: 0
     m_Value: 2
@@ -153,13 +153,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   active: 0
   postExposure:
-    m_OverrideState: 1
-    m_Value: 1
+    m_OverrideState: 0
+    m_Value: 0
   contrast:
-    m_OverrideState: 1
-    m_Value: 25
+    m_OverrideState: 0
+    m_Value: -13
   colorFilter:
-    m_OverrideState: 1
+    m_OverrideState: 0
     m_Value: {r: 0.92460096, g: 0.8915094, b: 1, a: 1}
   hueShift:
     m_OverrideState: 0

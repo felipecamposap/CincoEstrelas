@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 
 public class GameController : MonoBehaviour
@@ -61,27 +62,24 @@ public class GameController : MonoBehaviour
 
     [Header("Trapa�as: ")]
     public bool[] trapacas = new bool[3];
-
     private void Awake()
     {
+        listClients = new ListClients();
+        DontDestroyOnLoad(this);
+
         if (controller == null)
             controller = this;
         else
             Destroy(gameObject);
 
-            if(SceneManager.GetActiveScene().name != "Menu")
-            {
-                ToggleCursor(false);
-            }
-            else
-            {
-                ToggleCursor(true);
-            }
-    }
-    private void Start()
-    {
-        listClients = new ListClients();
-        DontDestroyOnLoad(this);
+        if (SceneManager.GetActiveScene().name != "Menu")
+        {
+            ToggleCursor(false);
+        }
+        else
+        {
+            ToggleCursor(true);
+        }
     }
 
     public void ToggleCursor(bool value)
@@ -164,19 +162,19 @@ public class GameController : MonoBehaviour
 
     }
 
-    private bool[] cursorState = new bool[2];
     public void SetGamePaused(bool value)
     {
         if (value == true)
         {
             isGamePaused = true;
             Time.timeScale = 0;
-
+            ToggleCursor(true);
         }
         else
         {
             isGamePaused = false;
             Time.timeScale = 1;
+            ToggleCursor(false);
         }
     }
 
@@ -200,6 +198,7 @@ public class GameController : MonoBehaviour
     {
         if (Input.GetButtonDown("Pause") && player.inGame)
         {
+            Debug.Log("pause");
             if (Time.timeScale == 0)
             {
                 uiController.pauseUI.SetActive(false);
@@ -207,14 +206,7 @@ public class GameController : MonoBehaviour
                 audioSource.reverbZoneMix = 0;
                 audioSource.volume += audioSource.volume;
                 audioSource.pitch = 1;
-
-
-                Cursor.visible = cursorState[0];
-                if (cursorState[1])
-                    Cursor.lockState = CursorLockMode.Locked;
-                else
-                    Cursor.lockState = CursorLockMode.None;
-
+                ToggleCursor(false);
             }
             else
             {
@@ -223,18 +215,7 @@ public class GameController : MonoBehaviour
                 audioSource.reverbZoneMix = 1;
                 audioSource.volume /= 2;
                 audioSource.pitch = 0.99f;
-
-                if (Cursor.visible)
-                    cursorState[0] = true;
-                else
-                    cursorState[0] = false;
-                if (Cursor.lockState == CursorLockMode.Locked)
-                    cursorState[1] = true;
-                else
-                    cursorState[1] = false;
-                Cursor.lockState = CursorLockMode.None;
-                Cursor.visible = true;
-
+                ToggleCursor(true);
             }
 
         }

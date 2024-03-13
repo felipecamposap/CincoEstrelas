@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-4372944262627227452
+--- !u!114 &-6699469458558143711
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}
@@ -20,18 +20,19 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: MAT_Skybox-PracadaEstacao
-  m_Shader: {fileID: -6465566751694194690, guid: 987c16cefdb50b94ebee507a9e9906e0,
-    type: 3}
+  m_Name: CarPaint
+  m_Shader: {fileID: 4800000, guid: 933532a4fcc9baf4fa0491de14d08ed7, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
-  m_ValidKeywords: []
+  m_ValidKeywords:
+  - _SPECULARHIGHLIGHTS_OFF
   m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
-  stringTagMap: {}
+  stringTagMap:
+    RenderType: Opaque
   disabledShaderPasses: []
   m_LockedProperties: 
   m_SavedProperties:
@@ -61,10 +62,6 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - _GatherTexture2D_0c764a94f8874c808ed1cdb62450bea7_Texture_1_Texture2D:
-        m_Texture: {fileID: 2800000, guid: d2dea8ace197dbc4ca9ef151c6801168, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
     - _MainTex:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -81,32 +78,8 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - _SampleTexture2D_89a607b6b35f4a97a5d8f5885662a957_Texture_1_Texture2D:
-        m_Texture: {fileID: 2800000, guid: 9825f151b04e98b4f868cddd3efc55ab, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _SampleTexture2D_8cb5b1f72a4e482ab1d3db42f5d62317_Texture_1_Texture2D:
-        m_Texture: {fileID: 2800000, guid: 9825f151b04e98b4f868cddd3efc55ab, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _SampleTexture2D_a1a0b68658cf4ad6b28e5676b4379643_Texture_1_Texture2D:
-        m_Texture: {fileID: 2800000, guid: 9825f151b04e98b4f868cddd3efc55ab, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _SampleTexture2D_d368b1d0b9d84133b370bf4dcdffa63a_Texture_1_Texture2D:
-        m_Texture: {fileID: 2800000, guid: 9825f151b04e98b4f868cddd3efc55ab, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
     - _SpecGlossMap:
         m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _Texture2DAsset_47e8d613e361424db79244208f2ddc7b_Out_0_Texture2D:
-        m_Texture: {fileID: 2800000, guid: 6293bb052bb84de4fa6994d84434a2b9, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _Texture2DAsset_ef12b542092640fe80b01a644b628831_Out_0_Texture2D:
-        m_Texture: {fileID: 2800000, guid: 254877f4159858c4eabc0b0318562a55, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - unity_Lightmaps:
@@ -139,41 +112,27 @@ Material:
     - _EnvironmentReflections: 1
     - _GlossMapScale: 0
     - _Glossiness: 0
+    - _GlossinessSource: 0
     - _GlossyReflections: 0
-    - _Metallic: 0
+    - _Metallic: 0.356
     - _OcclusionStrength: 1
     - _Parallax: 0.005
-    - _QueueControl: 0
     - _QueueOffset: 0
     - _ReceiveShadows: 1
-    - _SizeDarknessDown: 0.01
-    - _SizeDarknessUp: 3.7
-    - _SizeDown: 0.01
-    - _SizeHorizon: 4.6
-    - _SizeUp: 0.6
-    - _Smoothness: 0.5
+    - _Shininess: 0
+    - _Smoothness: 1
+    - _SmoothnessSource: 0
     - _SmoothnessTextureChannel: 0
-    - _SpecularHighlights: 1
+    - _SpecSource: 0
+    - _SpecularHighlights: 0
     - _SrcBlend: 1
     - _SrcBlendAlpha: 1
-    - _StarNoise: 253.8
-    - _StarPower: 10.4
-    - _StarSpeed: -0.01
     - _Surface: 0
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
-    - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
-    - _CloudColor: {r: 0, g: 0, b: 0, a: 0}
-    - _CloudSpeed: {r: 3, g: 3, b: 0, a: 0}
-    - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _ColorDown: {r: 0, g: 0.001548214, b: 0.16037738, a: 1}
-    - _ColorHorizon: {r: 0, g: 0.745, b: 0.53464705, a: 1}
-    - _ColorUp: {r: 1, g: 0.411, b: 0.67662764, a: 1}
+    - _BaseColor: {r: 0.13207549, g: 0, b: 0.059807785, a: 1}
+    - _Color: {r: 0.13207546, g: 0, b: 0.059807755, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _OffsetCloud: {r: 2.15, g: 0, b: 0, a: 0}
-    - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
-    - _StarColor: {r: 0.681, g: 1, b: 0.9099294, a: 1}
-    - _TilingCloud: {r: 0.3, g: 0.3, b: 0, a: 0}
-    - _tilingStar: {r: 1.2, g: 1.2, b: 0, a: 0}
+    - _SpecColor: {r: 1, g: 1, b: 1, a: 1}
   m_BuildTextureStacks: []

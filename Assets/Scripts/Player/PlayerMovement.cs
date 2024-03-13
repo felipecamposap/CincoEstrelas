@@ -19,7 +19,7 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 localVelocity;
     [SerializeField] GameObject danoFaisca, luzesFreio;
     [SerializeField] GameObject vitoriaEfeito;
-    public bool inGame;
+    public bool inGame = true;
 
 
     private void Start()
