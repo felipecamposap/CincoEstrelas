@@ -10,6 +10,7 @@ TagManager:
   - Gas
   - Destination
   - Calcada
+  - Road
   layers:
   - Default
   - TransparentFX
@@ -18,7 +19,7 @@ TagManager:
   - Water
   - UI
   - Minimap
-  - 
+  - Calcada
   - 
   - 
   - 
