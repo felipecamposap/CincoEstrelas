@@ -136,9 +136,9 @@ Material:
     - _Parallax: 0.005
     - _PureShadowColor: 1
     - _QueueOffset: 0
-    - _Ramp0: 0.1
-    - _Ramp1: 0.02
-    - _RampSmoothness: 0
+    - _Ramp0: 0.09
+    - _Ramp1: 0.31
+    - _RampSmoothness: 0.06
     - _RampTriple: 1
     - _ReceiveShadows: 1
     - _ReflectionBlend: 0.518
@@ -149,10 +149,10 @@ Material:
     - _Smoothness: 0.5
     - _SmoothnessTextureChannel: 0
     - _Specular: 1
-    - _SpecularExponent: 32
+    - _SpecularExponent: 48
     - _SpecularHighlights: 1
-    - _SpecularSmoothness: 0.028
-    - _SpecularThreshold: 0.91
+    - _SpecularSmoothness: 0
+    - _SpecularThreshold: 0.103
     - _SrcBlend: 1
     - _SrcBlendAlpha: 1
     - _Surface: 0

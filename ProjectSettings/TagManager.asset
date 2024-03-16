@@ -9,8 +9,8 @@ TagManager:
   - Damagable
   - Gas
   - Destination
-  - Calcada
   - Road
+  - Sidewalk
   layers:
   - Default
   - TransparentFX
@@ -19,7 +19,7 @@ TagManager:
   - Water
   - UI
   - Minimap
-  - Calcada
+  - Sidewalk
   - 
   - 
   - 

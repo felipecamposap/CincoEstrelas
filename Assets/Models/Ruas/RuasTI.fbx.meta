@@ -3,12 +3,7 @@ guid: 4eca12dc629bf134e8291229404eda4b
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects:
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Calcada
-    second: {fileID: 2100000, guid: 0a3ef5b797849424386bdf7ed3d9812c, type: 2}
+  externalObjects: {}
   materials:
     materialImportMode: 2
     materialName: 0
