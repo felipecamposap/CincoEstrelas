@@ -9,7 +9,7 @@ public class GasStation : MonoBehaviour
     [SerializeField] private Text txtPrice;
 
 
-    private void Start()
+    private void OnEnable()
     {
         //if (other.CompareTag("Player"))
         //{
