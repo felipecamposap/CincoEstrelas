@@ -10,8 +10,8 @@ public class PlayerMovement : MonoBehaviour
     float brakeInput;
     float steeringInput;
     [SerializeField] float steeringSensitivity = 0.5f; // Adjust the value as needed
-    [SerializeField] float motorPower = 45000.0f; // Adjust the value as needed
-    [SerializeField] float brakePower = 10000.0f; // Adjust the value as needed
+    [SerializeField] float motorPower = 1000.0f; // Adjust the value as needed
+    [SerializeField] float brakePower = 500.0f; // Adjust the value as needed
     [SerializeField] float gasDrag = 0.005f, idleDrag = 0.5f, brakeDrag = 1.5f, brakeThreshold = 2f;
     float regularStiffness;
     float speed;
