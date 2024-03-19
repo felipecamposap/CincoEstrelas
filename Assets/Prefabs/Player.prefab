@@ -31198,7 +31198,7 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 1.55, y: 0.32, z: 3.65}
-  m_Center: {x: 0, y: 0.59, z: -0.06}
+  m_Center: {x: 0, y: 0.61, z: -0.06}
 --- !u!114 &2188913322937851649
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -31223,7 +31223,7 @@ MonoBehaviour:
     BRWheel: {fileID: 1292194540419071650}
     BLWheel: {fileID: 5588932702155304845}
   gasInput: 0
-  maxSteeringAngle: 35
+  steeringSensitivity: 0.5
   motorPower: 1500
   brakePower: 10000
   gasDrag: 0.01

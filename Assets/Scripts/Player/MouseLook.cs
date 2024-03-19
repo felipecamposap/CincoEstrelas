@@ -73,7 +73,10 @@ public class MouseLook : MonoBehaviour
         if (locked)
         {
             //transform.rotation = Quaternion.Euler(player.transform.rotation.x   , player.transform.rotation.y, 0f);
-            transform.rotation = Quaternion.Slerp(transform.rotation, lookRot.rotation, rotSpeed * Time.deltaTime);
+            Quaternion correctedRot = lookRot.rotation;
+            correctedRot.z = 0;
+            correctedRot.x = 0;
+            transform.rotation = Quaternion.Slerp(transform.rotation, correctedRot, rotSpeed * Time.deltaTime);
         }
         else
         {
