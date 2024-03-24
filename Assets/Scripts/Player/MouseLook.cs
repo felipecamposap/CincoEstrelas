@@ -54,7 +54,7 @@ public class MouseLook : MonoBehaviour
         float mouseX = Input.GetAxis("Mouse X");
         float mouseY = Input.GetAxis("Mouse Y");
 
-        if ((mouseX != 0f || mouseY != 0f) && !cellPhoneLift)
+        if ((mouseX != 0f || mouseY != 0f) && !cellPhoneLift && GameController.controller.player.localVelocity.z != 0)
         {
             idleCamTimer = 0;
             LockCam(false, mouseX, mouseY);
@@ -73,6 +73,7 @@ public class MouseLook : MonoBehaviour
         if (locked)
         {
             //transform.rotation = Quaternion.Euler(player.transform.rotation.x   , player.transform.rotation.y, 0f);
+            lookRot.rotation = new Quaternion(0f, lookRot.rotation.y, 0f, lookRot.rotation.w);
             transform.rotation = Quaternion.Slerp(transform.rotation, lookRot.rotation, rotSpeed * Time.deltaTime);
         }
         else

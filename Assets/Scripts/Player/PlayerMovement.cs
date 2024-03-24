@@ -16,7 +16,7 @@ public class PlayerMovement : MonoBehaviour
     float regularStiffness;
     float speed;
     public AnimationCurve steeringCurve;
-    private Vector3 localVelocity;
+    public Vector3 localVelocity;
     [SerializeField] GameObject danoFaisca, luzesFreio;
     [SerializeField] GameObject vitoriaEfeito;
     public bool inGame = true;

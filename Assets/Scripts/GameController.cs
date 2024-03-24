@@ -1,6 +1,4 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
 
 public class GameController : MonoBehaviour
@@ -62,32 +60,24 @@ public class GameController : MonoBehaviour
 
     [Header("Trapa�as: ")]
     public bool[] trapacas = new bool[3];
+
+
     private void Awake()
     {
-        listClients = new ListClients();
-        DontDestroyOnLoad(this);
-
         if (controller == null)
             controller = this;
         else
             Destroy(gameObject);
-
-        if (SceneManager.GetActiveScene().name != "Menu")
-        {
-            ToggleCursor(false);
-        }
-        else
-        {
-            ToggleCursor(true);
-        }
+        listClients = new ListClients();
+        DontDestroyOnLoad(this);
     }
 
     public void ToggleCursor(bool value)
     {
-        if (value)
+        if(value)
         {
             Cursor.visible = true;
-            Cursor.lockState = CursorLockMode.Confined;
+            Cursor.lockState = CursorLockMode.None;
         }
         else
         {
@@ -140,7 +130,7 @@ public class GameController : MonoBehaviour
         {
             playerFuel -= fuelBurn * fuelBurnMultiplier;
             uiController.ATTUI();
-            uiController.Gasolina(playerFuel / maxPlayerFuel);
+            uiController.Gasolina(playerFuel/maxPlayerFuel);
         }
         if (playerFuel <= 0)
             uiController.GameOver(1);
@@ -162,19 +152,19 @@ public class GameController : MonoBehaviour
 
     }
 
+    private bool[] cursorState = new bool[2];
     public void SetGamePaused(bool value)
     {
         if (value == true)
         {
             isGamePaused = true;
             Time.timeScale = 0;
-            ToggleCursor(true);
+
         }
         else
         {
             isGamePaused = false;
             Time.timeScale = 1;
-            ToggleCursor(false);
         }
     }
 
@@ -198,7 +188,6 @@ public class GameController : MonoBehaviour
     {
         if (Input.GetButtonDown("Pause") && player.inGame)
         {
-            Debug.Log("pause");
             if (Time.timeScale == 0)
             {
                 uiController.pauseUI.SetActive(false);
@@ -206,7 +195,14 @@ public class GameController : MonoBehaviour
                 audioSource.reverbZoneMix = 0;
                 audioSource.volume += audioSource.volume;
                 audioSource.pitch = 1;
-                ToggleCursor(false);
+
+
+                Cursor.visible = cursorState[0];
+                if (cursorState[1])
+                    Cursor.lockState = CursorLockMode.Locked;
+                else
+                    Cursor.lockState = CursorLockMode.None;
+                
             }
             else
             {
@@ -215,7 +211,18 @@ public class GameController : MonoBehaviour
                 audioSource.reverbZoneMix = 1;
                 audioSource.volume /= 2;
                 audioSource.pitch = 0.99f;
-                ToggleCursor(true);
+
+                if (Cursor.visible)
+                    cursorState[0] = true;
+                else
+                    cursorState[0] = false;
+                if (Cursor.lockState == CursorLockMode.Locked)
+                    cursorState[1] = true;
+                else
+                    cursorState[1] = false;
+                Cursor.lockState = CursorLockMode.None;
+                Cursor.visible = true;
+
             }
 
         }
@@ -230,8 +237,7 @@ public class GameController : MonoBehaviour
     public void Damage(float _value)
     {
         carIntegrityCurrent -= _value;
-        if (carIntegrityCurrent <= 0)
-        {
+        if (carIntegrityCurrent <= 0){
             uiController.GameOver(0);
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;

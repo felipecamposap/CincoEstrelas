@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class Interface : MonoBehaviour
 {
-    private Animator estrelasCorridaAnimator;
+    [SerializeField]private Animator estrelasCorridaAnimator;
     [SerializeField] private Slider estrelasCorrida;
     [SerializeField] private Slider carIntegritySlider;
     [SerializeField] private Slider clientRatingPlayerSlider; // Estrelas apos a corrida
@@ -39,7 +39,7 @@ public class Interface : MonoBehaviour
         GameController.controller.uiController = this;
         GameController.controller.ResetGC();
         //camMovement = Camera.main.transform.parent.gameObject.GetComponent<MouseLook>();
-        estrelasCorridaAnimator =  estrelasCorrida.transform.parent.GetComponent<Animator>();
+        //estrelasCorridaAnimator =  estrelasCorrida.transform.parent.GetComponent<Animator>();
         ATTUI();
     }
 

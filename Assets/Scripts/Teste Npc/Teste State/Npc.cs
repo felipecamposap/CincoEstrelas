@@ -1,4 +1,3 @@
-using UnityEditor.UIElements;
 using UnityEngine;
 
 public class Npc : MonoBehaviour
@@ -7,7 +6,7 @@ public class Npc : MonoBehaviour
     [HideInInspector] public Rigidbody rb;
     public float speed;
     public LinkedStreets currentStreet;
-    public Vector3 targetPosition; // Você precisa implementar essa função para obter a próxima posição de destino
+    public Vector3 targetPosition; // Vocï¿½ precisa implementar essa funï¿½ï¿½o para obter a prï¿½xima posiï¿½ï¿½o de destino
 
     [Header("Raycast Properties:")]
     public Transform frontRay;
