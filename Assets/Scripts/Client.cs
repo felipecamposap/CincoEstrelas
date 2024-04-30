@@ -97,6 +97,7 @@ public class Client : MonoBehaviour
             touchPlayer++;
             GameController.controller.AddHistoryClient(new ClientsParameters(clientName, clientRating, clientPayment));
             GameController.controller.alvoMinimapa.index++;
+            GameController.controller.uiController.EsconderEstrelaCorrida();
 
         }
         else if (other.CompareTag("Player") && touchPlayer == -1 && !playertouch)

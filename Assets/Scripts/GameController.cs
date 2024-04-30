@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
 
 public class GameController : MonoBehaviour
@@ -25,13 +24,27 @@ public class GameController : MonoBehaviour
     public int penalty = 0;
     [SerializeField] private float playerMoney = 100f;
     public int playerStar = 0;
+    private float debt;
 
     [SerializeField] public readonly float literPrice = 5.86f;
     private float ratingSum = 0;
-    private bool isGamePaused = false;
+    private bool isGamePaused = true;
 
     public int passwordClient { get; set; }
-    public bool passwordCorrect;
+    [HideInInspector] public bool passwordCorrect;
+
+    // ----- Tempo Jogo
+    [Header("Tempo Jogo")]
+    [SerializeField] private int hour, minute;
+    private float timerMinute;
+
+    [Header("Gastos")]
+    public readonly float vwater = 80;
+    public readonly float vlight = 300;
+    public readonly float internet = 100;
+    public readonly float netMobile = 50;
+    public readonly float iptu = 125;
+    public readonly float food = 600;
 
     public float AvgRating
     {
@@ -62,6 +75,8 @@ public class GameController : MonoBehaviour
 
     [Header("Trapa�as: ")]
     public bool[] trapacas = new bool[3];
+
+
     private void Awake()
     {
         listClients = new ListClients();
@@ -82,6 +97,29 @@ public class GameController : MonoBehaviour
         }
     }
 
+    public void Update()
+    {
+        if(!isGamePaused)
+            if(timerMinute < Time.time)
+            {
+                minute++;
+                if(minute == 60)
+                {
+                    minute = 0;
+                    hour++;
+                }
+                timerMinute = Time.time + 2;
+                if (hour == 6)
+                {
+                    isGamePaused = true;
+                    player.inGame = false;
+                    uiController.NextDay();
+                }
+
+                uiController.SetHour(hour, minute);
+            }
+    }
+
     public void ToggleCursor(bool value)
     {
         if (value)
@@ -100,7 +138,7 @@ public class GameController : MonoBehaviour
     {
         carIntegrityCurrent += _integrity;
         GetPaid(_value, false);
-        uiController.ATTUI();
+        uiController?.ATTUI(); // Checar UI
 
     }
 
@@ -113,19 +151,35 @@ public class GameController : MonoBehaviour
 
     public void ResetGC()
     {
+        hour = 0;
+        minute = 0;
         listClients = new ListClients();
         carIntegrityCurrent = carIntegrityMax;
         playerMoney = 100f;
         playerFuel = maxPlayerFuel;
         totalClients = 0;
-        if (trapacas[2])
-            trapacas[2] = false;
+        if (trapacas[1])
+            trapacas[1] = false;
         else
             playerStar = 0;
         uiController.ATTUI();
         if (playerStar >= 10)
             PlayerVitoria();
+        isGamePaused = false;
 
+    }
+
+    public float GetDailyBill()
+    {
+        return vwater + vlight + internet + netMobile + iptu + food;
+    }
+
+    public void NextDay()
+    {
+        hour = 0;
+        minute = 0;
+        isGamePaused = false;
+        player.inGame = true;
     }
 
     public void PlayerVitoria()
@@ -192,34 +246,6 @@ public class GameController : MonoBehaviour
     public void AddHistoryClient(ClientsParameters client)
     {
         listClients.Insert(client);
-    }
-
-    private void Update()
-    {
-        if (Input.GetButtonDown("Pause") && player.inGame)
-        {
-            Debug.Log("pause");
-            if (Time.timeScale == 0)
-            {
-                uiController.pauseUI.SetActive(false);
-                Time.timeScale = 1;
-                audioSource.reverbZoneMix = 0;
-                audioSource.volume += audioSource.volume;
-                audioSource.pitch = 1;
-                ToggleCursor(false);
-            }
-            else
-            {
-                uiController.pauseUI.SetActive(true);
-                Time.timeScale = 0;
-                audioSource.reverbZoneMix = 1;
-                audioSource.volume /= 2;
-                audioSource.pitch = 0.99f;
-                ToggleCursor(true);
-            }
-
-        }
-
     }
 
     public void PasswordClient()

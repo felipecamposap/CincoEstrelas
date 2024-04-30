@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
+
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] Rigidbody rb;
@@ -25,6 +26,7 @@ public class PlayerMovement : MonoBehaviour
     private void Start()
     {
         GameController.controller.player = this;
+        inGame = true;
     }
 
     void Update()
@@ -177,7 +179,8 @@ public class PlayerMovement : MonoBehaviour
 
     public void PlayerVictory()
     {
-        vitoriaEfeito.SetActive(true);
+        if(GameController.controller.playerStar >= 10)
+            vitoriaEfeito.SetActive(true);
         inGame = false;
     }
 

@@ -7,7 +7,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: CincoEstrelaFechar
+  m_Name: FecharApps
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -130,6 +130,32 @@ AnimatorState:
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
+--- !u!1102 &-4431561259982302721
+AnimatorState:
+  serializedVersion: 6
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: BancoLumiComecar
+  m_Speed: 1
+  m_CycleOffset: 0
+  m_Transitions: []
+  m_StateMachineBehaviours: []
+  m_Position: {x: 50, y: 50, z: 0}
+  m_IKOnFeet: 0
+  m_WriteDefaultValues: 1
+  m_Mirror: 0
+  m_SpeedParameterActive: 0
+  m_MirrorParameterActive: 0
+  m_CycleOffsetParameterActive: 0
+  m_TimeParameterActive: 0
+  m_Motion: {fileID: 7400000, guid: 7202f0d5700124b43bc042976dda8ec9, type: 2}
+  m_Tag: 
+  m_SpeedParameter: 
+  m_MirrorParameter: 
+  m_CycleOffsetParameter: 
+  m_TimeParameter: 
 --- !u!1102 &-3796423959824840751
 AnimatorState:
   serializedVersion: 6
@@ -163,7 +189,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: CincoEstrelaComecar
+  m_Name: CincoEstrelasComecar
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -241,40 +267,43 @@ AnimatorStateMachine:
   m_ChildStates:
   - serializedVersion: 1
     m_State: {fileID: -3642735264656858951}
-    m_Position: {x: 0, y: 400, z: 0}
+    m_Position: {x: 0, y: 600, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 7119379076439861353}
-    m_Position: {x: 240, y: 400, z: 0}
+    m_Position: {x: 240, y: 600, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -5173008657032642123}
-    m_Position: {x: 0, y: 480, z: 0}
+    m_Position: {x: 0, y: 680, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -6262939219650719858}
-    m_Position: {x: 10, y: 1150, z: 0}
+    m_Position: {x: 10, y: 1350, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1228372033515599186}
-    m_Position: {x: 10, y: 1210, z: 0}
+    m_Position: {x: 10, y: 1410, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 4183572574311567211}
-    m_Position: {x: 0, y: 560, z: 0}
+    m_Position: {x: 0, y: 760, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -7850442490740516235}
-    m_Position: {x: 10, y: 970, z: 0}
+    m_Position: {x: 10, y: 1170, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -3796423959824840751}
-    m_Position: {x: 0, y: 640, z: 0}
+    m_Position: {x: 0, y: 840, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 8801367534971619498}
-    m_Position: {x: 10, y: 1030, z: 0}
+    m_Position: {x: 10, y: 1230, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 4354601811562848031}
     m_Position: {x: 0, y: 260, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -6088764691731066888}
-    m_Position: {x: 0, y: 720, z: 0}
+    m_Position: {x: 0, y: 920, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -8810849978286941907}
-    m_Position: {x: -240, y: 400, z: 0}
+    m_Position: {x: 0, y: 330, z: 0}
+  - serializedVersion: 1
+    m_State: {fileID: -4431561259982302721}
+    m_Position: {x: -400, y: 600, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []
@@ -346,8 +375,8 @@ AnimatorState:
   m_Transitions: []
   m_StateMachineBehaviours: []
   m_Position: {x: 50, y: 50, z: 0}
-  m_IKOnFeet: 0
-  m_WriteDefaultValues: 1
+  m_IKOnFeet: 1
+  m_WriteDefaultValues: 0
   m_Mirror: 0
   m_SpeedParameterActive: 0
   m_MirrorParameterActive: 0

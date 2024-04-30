@@ -24,6 +24,10 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - _5Estrela:
+        m_Texture: {fileID: 2800000, guid: 3e63723216b5b7745bdf0ff495ddcb91, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _AlphaTexture:
         m_Texture: {fileID: 2800000, guid: 254877f4159858c4eabc0b0318562a55, type: 3}
         m_Scale: {x: 1, y: 1}
@@ -122,6 +126,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - _5eTrue: 0
     - _AlphaClip: 0
     - _Bits: 16
     - _Blend: 0
