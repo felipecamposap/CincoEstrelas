@@ -41,7 +41,7 @@ PrefabInstance:
     - target: {fileID: 1834854664146604219, guid: 0c003094e3d034141ad1d4e1dbbc4d8b,
         type: 3}
       propertyPath: m_Name
-      value: CurvaPDireita Variant
+      value: CurvaPEsquerda
       objectReference: {fileID: 0}
     - target: {fileID: 5820240362153137268, guid: 0c003094e3d034141ad1d4e1dbbc4d8b,
         type: 3}

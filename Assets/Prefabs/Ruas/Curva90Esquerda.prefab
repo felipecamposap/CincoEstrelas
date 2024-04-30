@@ -10,6 +10,21 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1331262252000518468, guid: 33b53fe647833c34aac01a22510a8225,
         type: 3}
+      propertyPath: m_LocalScale.x
+      value: 2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1331262252000518468, guid: 33b53fe647833c34aac01a22510a8225,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1331262252000518468, guid: 33b53fe647833c34aac01a22510a8225,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1331262252000518468, guid: 33b53fe647833c34aac01a22510a8225,
+        type: 3}
       propertyPath: m_LocalPosition.x
       value: -15
       objectReference: {fileID: 0}
@@ -86,7 +101,7 @@ PrefabInstance:
     - target: {fileID: 5951231545692471545, guid: 33b53fe647833c34aac01a22510a8225,
         type: 3}
       propertyPath: m_Name
-      value: Curva90Direita Variant
+      value: Curva90Esquerda
       objectReference: {fileID: 0}
     - target: {fileID: 7455504667019005193, guid: 33b53fe647833c34aac01a22510a8225,
         type: 3}

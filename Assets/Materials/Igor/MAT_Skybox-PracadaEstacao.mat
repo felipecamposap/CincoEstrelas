@@ -147,10 +147,10 @@ Material:
     - _QueueOffset: 0
     - _ReceiveShadows: 1
     - _SizeDarknessDown: 0.01
-    - _SizeDarknessUp: 3.7
+    - _SizeDarknessUp: 1.9
     - _SizeDown: 0.01
-    - _SizeHorizon: 4.6
-    - _SizeUp: 0.6
+    - _SizeHorizon: 2
+    - _SizeUp: 0.4
     - _Smoothness: 0.5
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1

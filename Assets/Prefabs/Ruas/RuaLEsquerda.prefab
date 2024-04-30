@@ -61,7 +61,7 @@ PrefabInstance:
     - target: {fileID: 3265069497328224624, guid: 74044434db543e34ab3d1722da1d5ae6,
         type: 3}
       propertyPath: m_Name
-      value: RuaLDireita Variant
+      value: RuaLEsquerda
       objectReference: {fileID: 0}
     - target: {fileID: 4697716294936145146, guid: 74044434db543e34ab3d1722da1d5ae6,
         type: 3}
