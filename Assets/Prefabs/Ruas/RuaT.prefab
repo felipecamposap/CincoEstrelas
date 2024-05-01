@@ -26,7 +26,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -25, y: 0, z: 300}
-  m_LocalScale: {x: 2.5, y: 2.5, z: 2.5}
+  m_LocalScale: {x: 2.5, y: 2, z: 2.5}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6776474097190791625}
@@ -95,6 +95,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: RuaT
+      objectReference: {fileID: 0}
+    - target: {fileID: 6141783424397776697, guid: 7dc0b76f19c58764cabf92bb809f1e43,
+        type: 3}
+      propertyPath: m_TagString
+      value: Road
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -200,6 +205,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: RuaTCalcada
+      objectReference: {fileID: 0}
+    - target: {fileID: 2895196847863367117, guid: 958cb5394cabecf4aa0f353a359473c7,
+        type: 3}
+      propertyPath: m_TagString
+      value: Sidewalk
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

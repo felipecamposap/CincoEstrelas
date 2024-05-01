@@ -7,11 +7,11 @@ public class MouseLook : MonoBehaviour
     public float sensitivity = 100f, lastSensitivity; // Adjust the sensitivity of the mouse movement
     public float maxPitch = 30.0f; // Maximum pitch angle in degrees
     private GameObject player;
-    private Camera cameraMain;
+    private Camera mainCamera;
     private quaternion initialRotation;
     private bool locked;
     [SerializeField] private float camSpeed;
-    [SerializeField] private Transform lookRot;
+    [SerializeField] private Transform lookTarget;
     [SerializeField] private float rotSpeed;
     float idleCamTimer = 0;
     [SerializeField] float maxIdleCamTimer = 1f;
@@ -21,10 +21,10 @@ public class MouseLook : MonoBehaviour
         initialRotation = transform.rotation;
         lastSensitivity = sensitivity;
         Application.targetFrameRate = 999;
-        cameraMain = GetComponentInChildren<Camera>();
+        mainCamera = GetComponentInChildren<Camera>();
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
-        player = GameObject.FindGameObjectWithTag("Player");
+        player = GameController.controller.player.gameObject;
     }
 
     void Update()
@@ -34,12 +34,12 @@ public class MouseLook : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Mouse1))
         {
-            cameraMain.fieldOfView = 25;
+            mainCamera.fieldOfView = 25;
         }
 
         if (Input.GetKeyUp(KeyCode.Mouse1))
         {
-            cameraMain.fieldOfView = 60;
+            mainCamera.fieldOfView = 60;
         }
 
 
@@ -72,8 +72,8 @@ public class MouseLook : MonoBehaviour
 
         if (locked)
         {
-            //transform.rotation = Quaternion.Euler(player.transform.rotation.x   , player.transform.rotation.y, 0f);
-            transform.rotation = Quaternion.Slerp(transform.rotation, lookRot.rotation, rotSpeed * Time.deltaTime);
+            lookTarget.rotation = new Quaternion(0f, lookTarget.rotation.y, 0f, lookTarget.rotation.w); // evitar que a camera automatica rotacione em eixos errados
+            transform.rotation = Quaternion.Slerp(transform.rotation, lookTarget.rotation, rotSpeed * Time.deltaTime);
         }
         else
         {
@@ -101,16 +101,7 @@ public class MouseLook : MonoBehaviour
 
     public void LockCam(bool locked, float mouseX, float mouseY)
     {
-        if (locked)
-        {
-            this.locked = locked;
-            sensitivity = 0f;
-        }
-        else
-        {
-            this.locked = false;
-            sensitivity = lastSensitivity;
-        }
-
+        this.locked = locked;
+        sensitivity = (locked ? 0f : lastSensitivity);
     }
 }

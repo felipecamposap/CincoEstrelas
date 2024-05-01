@@ -1,4 +1,7 @@
+using System;
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 
@@ -10,8 +13,7 @@ public class PlayerMovement : MonoBehaviour
     public float gasInput;
     float brakeInput;
     float steeringInput;
-    [SerializeField] float steeringSensitivity = 0.5f; // Adjust the value as needed
-    [SerializeField] float motorPower = 45000.0f; // Adjust the value as needed
+    [SerializeField] float motorPower = 5000.0f; // Adjust the value as needed
     [SerializeField] float brakePower = 10000.0f; // Adjust the value as needed
     [SerializeField] float gasDrag = 0.005f, idleDrag = 0.5f, brakeDrag = 1.5f, brakeThreshold = 2f;
     float regularStiffness;
@@ -21,10 +23,16 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] GameObject danoFaisca, luzesFreio;
     [SerializeField] GameObject vitoriaEfeito;
     public bool inGame = true;
-
+    private Material breakLights;
 
     private void Start()
     {
+        List<Material> materials = GetComponentInChildren<Renderer>().materials.ToList();
+        // foreach (Material material in materials)
+        // {
+        //     Debug.Log(material.name);
+        // }
+        breakLights = materials[4];
         GameController.controller.player = this;
         inGame = true;
     }
@@ -69,14 +77,16 @@ public class PlayerMovement : MonoBehaviour
         {
             if (localVelocity.z > brakeThreshold) //carro andando para frente
             {
-                luzesFreio.SetActive(true);
+                //luzesFreio.SetActive(true);
+                SetBrakeLights(true);
                 //Debug.Log("Frear");
                 brakeInput = 1;
                 rb.drag = brakeDrag;
             }
             else
             {
-                luzesFreio.SetActive(false);
+                //luzesFreio.SetActive(false);
+                SetBrakeLights(false);
                 //Debug.Log("Re");
                 brakeInput = 0;
                 rb.drag = gasDrag;
@@ -84,32 +94,40 @@ public class PlayerMovement : MonoBehaviour
         }
         else if (gasInput == 0) //carro solto
         {
-            luzesFreio.SetActive(false);
+            //luzesFreio.SetActive(false);
+            SetBrakeLights(false);
             rb.drag = idleDrag;
         }
         else //acelerando
         {
             if (localVelocity.z < -brakeThreshold) //carro andando para frente
             {
-                luzesFreio.SetActive(true);
+                //luzesFreio.SetActive(true);
+                SetBrakeLights(true);
                 //Debug.Log("Frear");
                 brakeInput = 1;
                 rb.drag = brakeDrag;
             }
             else
             {
-                luzesFreio.SetActive(false);
+                //luzesFreio.SetActive(false);
+                SetBrakeLights(false);
                 //Debug.Log("Acelerar");
                 brakeInput = 0;
                 rb.drag = gasDrag;
             }
         }
-        if(Input.GetButton("Jump"))
+        if (Input.GetButton("Jump"))
         {
             Debug.Log("Drift");
             brakeInput += 0.2f;
         }
 
+    }
+
+    void SetBrakeLights(bool value)
+    {
+        breakLights.SetColor("_EmissionColor", (value ? Color.red : Color.black));
     }
 
     void ApplyBrake()
@@ -128,7 +146,7 @@ public class PlayerMovement : MonoBehaviour
 
     void ApplySteering()
     {
-        float steeringAngle = steeringSensitivity * steeringInput * steeringCurve.Evaluate(speed);
+        float steeringAngle = steeringInput * steeringCurve.Evaluate(speed);
         colliders.FRWheel.steerAngle = steeringAngle;
         colliders.FLWheel.steerAngle = steeringAngle;
     }
@@ -179,7 +197,7 @@ public class PlayerMovement : MonoBehaviour
 
     public void PlayerVictory()
     {
-        if(GameController.controller.playerStar >= 10)
+        if (GameController.controller.playerStar >= 10)
             vitoriaEfeito.SetActive(true);
         inGame = false;
     }
