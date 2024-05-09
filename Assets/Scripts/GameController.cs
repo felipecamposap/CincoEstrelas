@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 
 public class GameController : MonoBehaviour
@@ -23,13 +24,27 @@ public class GameController : MonoBehaviour
     public int penalty = 0;
     [SerializeField] private float playerMoney = 100f;
     public int playerStar = 0;
+    private float debt;
 
     [SerializeField] public readonly float literPrice = 5.86f;
     private float ratingSum = 0;
-    private bool isGamePaused = false;
+    private bool isGamePaused = true;
 
     public int passwordClient { get; set; }
-    public bool passwordCorrect;
+    [HideInInspector] public bool passwordCorrect;
+
+    // ----- Tempo Jogo
+    [Header("Tempo Jogo")]
+    [SerializeField] private int hour, minute;
+    private float timerMinute;
+
+    [Header("Gastos")]
+    public readonly float vwater = 80;
+    public readonly float vlight = 300;
+    public readonly float internet = 100;
+    public readonly float netMobile = 50;
+    public readonly float iptu = 125;
+    public readonly float food = 600;
 
     public float AvgRating
     {
@@ -58,26 +73,59 @@ public class GameController : MonoBehaviour
 
     public Transform[] minimapaAlvo = new Transform[2];
 
-    [Header("Trapaças: ")]
+    [Header("Trapaï¿½as: ")]
     public bool[] trapacas = new bool[3];
 
 
     private void Awake()
     {
+        listClients = new ListClients();
+        DontDestroyOnLoad(this);
+
         if (controller == null)
             controller = this;
         else
             Destroy(gameObject);
-        listClients = new ListClients();
-        DontDestroyOnLoad(this);
+
+        if (SceneManager.GetActiveScene().name != "Menu")
+        {
+            ToggleCursor(false);
+        }
+        else
+        {
+            ToggleCursor(true);
+        }
+    }
+
+    public void Update()
+    {
+        if(!isGamePaused)
+            if(timerMinute < Time.time)
+            {
+                minute++;
+                if(minute == 60)
+                {
+                    minute = 0;
+                    hour++;
+                }
+                timerMinute = Time.time + 2;
+                if (hour == 6)
+                {
+                    isGamePaused = true;
+                    player.inGame = false;
+                    uiController.NextDay();
+                }
+
+                uiController.SetHour(hour, minute);
+            }
     }
 
     public void ToggleCursor(bool value)
     {
-        if(value)
+        if (value)
         {
             Cursor.visible = true;
-            Cursor.lockState = CursorLockMode.None;
+            Cursor.lockState = CursorLockMode.Confined;
         }
         else
         {
@@ -90,7 +138,7 @@ public class GameController : MonoBehaviour
     {
         carIntegrityCurrent += _integrity;
         GetPaid(_value, false);
-        uiController.ATTUI();
+        uiController?.ATTUI(); // Checar UI
 
     }
 
@@ -103,19 +151,35 @@ public class GameController : MonoBehaviour
 
     public void ResetGC()
     {
+        hour = 0;
+        minute = 0;
         listClients = new ListClients();
         carIntegrityCurrent = carIntegrityMax;
         playerMoney = 100f;
         playerFuel = maxPlayerFuel;
         totalClients = 0;
-        if (trapacas[2])
-            trapacas[2] = false;
+        if (trapacas[1])
+            trapacas[1] = false;
         else
             playerStar = 0;
         uiController.ATTUI();
         if (playerStar >= 10)
             PlayerVitoria();
+        isGamePaused = false;
 
+    }
+
+    public float GetDailyBill()
+    {
+        return vwater + vlight + internet + netMobile + iptu + food;
+    }
+
+    public void NextDay()
+    {
+        hour = 0;
+        minute = 0;
+        isGamePaused = false;
+        player.inGame = true;
     }
 
     public void PlayerVitoria()
@@ -130,7 +194,7 @@ public class GameController : MonoBehaviour
         {
             playerFuel -= fuelBurn * fuelBurnMultiplier;
             uiController.ATTUI();
-            uiController.Gasolina(playerFuel/maxPlayerFuel);
+            uiController.Gasolina(playerFuel / maxPlayerFuel);
         }
         if (playerFuel <= 0)
             uiController.GameOver(1);
@@ -152,19 +216,19 @@ public class GameController : MonoBehaviour
 
     }
 
-    private bool[] cursorState = new bool[2];
     public void SetGamePaused(bool value)
     {
         if (value == true)
         {
             isGamePaused = true;
             Time.timeScale = 0;
-
+            ToggleCursor(true);
         }
         else
         {
             isGamePaused = false;
             Time.timeScale = 1;
+            ToggleCursor(false);
         }
     }
 
@@ -184,51 +248,6 @@ public class GameController : MonoBehaviour
         listClients.Insert(client);
     }
 
-    private void Update()
-    {
-        if (Input.GetButtonDown("Pause") && player.inGame)
-        {
-            if (Time.timeScale == 0)
-            {
-                uiController.pauseUI.SetActive(false);
-                Time.timeScale = 1;
-                audioSource.reverbZoneMix = 0;
-                audioSource.volume += audioSource.volume;
-                audioSource.pitch = 1;
-
-
-                Cursor.visible = cursorState[0];
-                if (cursorState[1])
-                    Cursor.lockState = CursorLockMode.Locked;
-                else
-                    Cursor.lockState = CursorLockMode.None;
-                
-            }
-            else
-            {
-                uiController.pauseUI.SetActive(true);
-                Time.timeScale = 0;
-                audioSource.reverbZoneMix = 1;
-                audioSource.volume /= 2;
-                audioSource.pitch = 0.99f;
-
-                if (Cursor.visible)
-                    cursorState[0] = true;
-                else
-                    cursorState[0] = false;
-                if (Cursor.lockState == CursorLockMode.Locked)
-                    cursorState[1] = true;
-                else
-                    cursorState[1] = false;
-                Cursor.lockState = CursorLockMode.None;
-                Cursor.visible = true;
-
-            }
-
-        }
-
-    }
-
     public void PasswordClient()
     {
         passwordClient = Random.Range(1000, 9999);
@@ -237,7 +256,8 @@ public class GameController : MonoBehaviour
     public void Damage(float _value)
     {
         carIntegrityCurrent -= _value;
-        if (carIntegrityCurrent <= 0){
+        if (carIntegrityCurrent <= 0)
+        {
             uiController.GameOver(0);
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;

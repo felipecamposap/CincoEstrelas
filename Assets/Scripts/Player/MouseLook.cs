@@ -1,95 +1,109 @@
+using System;
 using Unity.Mathematics;
+using Unity.VisualScripting;
 using UnityEngine;
 
 
 public class MouseLook : MonoBehaviour
 {
-    public float sensitivity = 8.0f, lastSensitivity; // Adjust the sensitivity of the mouse movement
+    public float sensitivity = 100f, lastSensitivity; // Adjust the sensitivity of the mouse movement
     public float maxPitch = 30.0f; // Maximum pitch angle in degrees
-    public GameObject player;
-    private Camera cameraMain;
-    private quaternion initialRotation;
-    private bool locked;
-    [SerializeField] private Transform pos;
+    private GameObject player;
+    private Camera mainCamera;
+    private bool locked, reverse;
     [SerializeField] private float camSpeed;
-    [SerializeField] private Transform lookRot;
+    [SerializeField] private Transform lookTarget;
     [SerializeField] private float rotSpeed;
+    float idleCamTimer = 0, reverseModifier = 0;
+    [SerializeField] float maxIdleCamTimer = 1f;
+    private PlayerMovement playerMovement;
 
     void Start()
     {
-        initialRotation = transform.rotation;
         lastSensitivity = sensitivity;
         Application.targetFrameRate = 999;
-        cameraMain = GetComponentInChildren<Camera>();
+        mainCamera = GetComponentInChildren<Camera>();
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
-        player = GameObject.FindGameObjectWithTag("Player");
+        player = GameController.controller.player.gameObject;
+        playerMovement = player.GetComponent<PlayerMovement>();
     }
 
     void Update()
     {
+
         gameObject.transform.position = player.transform.position;
         //transform.position = Vector3.Lerp(new Vector3(transform.position.x, player.transform.position.y, transform.position.z), pos.position, camSpeed * Time.deltaTime);  
 
         if (Input.GetKeyDown(KeyCode.Mouse1))
         {
-            cameraMain.fieldOfView = 25;
+            mainCamera.fieldOfView = 25;
         }
 
         if (Input.GetKeyUp(KeyCode.Mouse1))
         {
-            cameraMain.fieldOfView = 60;
+            mainCamera.fieldOfView = 60;
         }
+
+
+        bool cellPhoneLift = GameController.controller.uiController.CellPhoneLift();
 
         if (Input.GetKeyDown(KeyCode.E) && Time.timeScale > 0)
         {
-            bool cellPhoneLift = GameController.controller.uiController.CellPhoneLift();
-            LockCam(!cellPhoneLift);
             GameController.controller.uiController.CellPhoneAnimation(cellPhoneLift ? 1 : 0);
         }
-    }
 
-    void FixedUpdate()
-    {
         // Get the mouse input
         float mouseX = Input.GetAxis("Mouse X");
         float mouseY = Input.GetAxis("Mouse Y");
 
-        // Rotate the camera around the Y-axis based on mouse X input
-        transform.Rotate(Vector3.up * mouseX * sensitivity);
+        if ((mouseX != 0f || mouseY != 0f) && !cellPhoneLift)
+        {
+            idleCamTimer = 0;
+            LockCam(false, mouseX, mouseY);
+        }
+        else if (playerMovement.gasInput != 0)
+            idleCamTimer += Time.deltaTime;
+        else
+            idleCamTimer = 0;
 
-        // Calculate the new pitch rotation based on mouse Y input
-        float newPitch = transform.eulerAngles.x - (mouseY * sensitivity);
-
-        // Clamp the pitch angle between 0 and maxPitch
-        float clampedPitch = Mathf.Clamp(newPitch, 0f, maxPitch);
+        if (idleCamTimer >= maxIdleCamTimer || cellPhoneLift)
+        {
+            LockCam(true, mouseX, mouseY);
+        }
 
         if (locked)
         {
-            //transform.rotation = Quaternion.Euler(player.transform.rotation.x   , player.transform.rotation.y, 0f);
-            transform.localRotation = Quaternion.Slerp(new Quaternion(0f, transform.rotation.y, 0f, transform.rotation.w), lookRot.rotation, rotSpeed * Time.deltaTime);
+            lookTarget.rotation = new Quaternion(0f, lookTarget.rotation.y, 0f, lookTarget.rotation.w); // evitar que a camera automatica rotacione em eixos errados
+            transform.rotation = Quaternion.Slerp(transform.rotation, lookTarget.rotation, rotSpeed * Time.deltaTime);
         }
         else
         {
-            // Apply the new rotation with the clamped pitch
+            transform.Rotate(Vector3.up * mouseX * sensitivity * Time.deltaTime);
+            float newPitch = transform.eulerAngles.x - (mouseY * sensitivity * Time.deltaTime);
+            float clampedPitch = ClampAngle(newPitch, -10f, 40f);
             transform.rotation = Quaternion.Euler(clampedPitch, transform.eulerAngles.y, 0f);
         }
     }
 
-    public void LockCam(bool locked)
+    float ClampAngle(float angle, float min, float max)
     {
-        if (locked)
-        {
-            this.locked = locked;
-            sensitivity = 0f;
-            //transform.rotation = Quaternion.Euler(player.transform.rotation.x, 0f, 0f);
+        if (angle < 90 || angle > 270)
+        {       // if angle in the critic region...
+            if (angle > 180) angle -= 360;  // convert all angles to -180..+180
+            if (max > 180) max -= 360;
+            if (min > 180) min -= 360;
         }
-        else
-        {
-            this.locked = false;
-            transform.parent = null;
-            sensitivity = lastSensitivity;
-        }
+        angle = Mathf.Clamp(angle, min, max);
+        if (angle < 0) angle += 360;  // if angle negative, convert to 0..360
+        return angle;
+    }
 
+
+
+    public void LockCam(bool locked, float mouseX, float mouseY)
+    {
+        this.locked = locked;
+        sensitivity = (locked ? 0f : lastSensitivity);
     }
 }

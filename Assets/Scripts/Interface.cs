@@ -5,15 +5,12 @@ using UnityEngine.UI;
 
 public class Interface : MonoBehaviour
 {
-    private Animator estrelasCorridaAnimator;
+    [SerializeField] private Animator estrelasCorridaAnimator;
     [SerializeField] private Slider estrelasCorrida;
     [SerializeField] private Slider carIntegritySlider;
     [SerializeField] private Slider clientRatingPlayerSlider; // Estrelas apos a corrida
     [SerializeField] private Slider playerCurrentRating;
-    [SerializeField] private Text money;
     public GameObject pauseUI;
-    [SerializeField] private GameObject gameOverObj;
-    [SerializeField] private Text gameOverText;
     [SerializeField] private Animator celular, app;
     [SerializeField] private Animator damageAnimator;
     [SerializeField] private RectTransform panelHistoryClient;
@@ -23,7 +20,13 @@ public class Interface : MonoBehaviour
     [SerializeField] private RectTransform gasPointer;
     public ListClients interfaceListClients = new ListClients(); // Lista de clientes customizada
     //private MouseLook camMovement;
+
+    [Header("EndGames")]
+    [SerializeField] private GameObject gameOverObj;
+    [SerializeField] private Text gameOverText;
     [SerializeField] private GameObject vitoria;
+    [SerializeField] private GameObject nextDay;
+
 
     [Header(" ----- Client Show Hud ----- ")]
     [SerializeField] ClientPhoneShow clientHud;
@@ -32,7 +35,8 @@ public class Interface : MonoBehaviour
     [SerializeField] private Text clipText;
     [SerializeField] private Animator clipAnimator;
 
-
+    [Header(" ----- Controlador Hora ----- ")]
+    [SerializeField] private HourPhoneController hourController;
 
     private void Start()
     {
@@ -48,9 +52,9 @@ public class Interface : MonoBehaviour
         return cellphoneLift;
     }
 
-    public void AttList()
+    /*public void AttList()
     {
-        /*ClientsParameters teste = new ClientsParameters("Felipe", 5, 5f);
+        ClientsParameters teste = new ClientsParameters("Felipe", 5, 5f);
         ClientsParameters teste2 = new ClientsParameters("Gabriel", 3, 5f);
         ClientsParameters teste3 = new ClientsParameters("Igor", 1, 5f);
         ClientsParameters teste4 = new ClientsParameters("Gustavo", 4, 5f);
@@ -63,20 +67,25 @@ public class Interface : MonoBehaviour
         GameController.controller.listClients.Insert(teste4);
         GameController.controller.listClients.Insert(teste5);
         GameController.controller.listClients.Insert(teste6);
-        GameController.controller.listClients.Insert(teste7);*/
+        GameController.controller.listClients.Insert(teste7);
         
-    }
+    }*/
 
     public void ATTUI()
     {
         carIntegritySlider.maxValue = GameController.controller.carIntegrityMax; // Declarando o maximo da integridade do carro possivel no slider
         carIntegritySlider.value = GameController.controller.carIntegrityCurrent; // Declarando o valor atual da integridade do carro possivel no slider
-        money.text = $"R${GameController.controller.PlayerMoney:F2}";
         clientRatingPlayerSlider.value = GameController.controller.AvgRating;
         playerCurrentRating.value = GameController.controller.playerStar;
         Gasolina(GameController.controller.PlayerFuel / GameController.controller.maxPlayerFuel);
         estrelasCorrida.value = 10 - (GameController.controller.penalty * 2);
 
+
+    }
+
+    public void SetHour(int _hour, int _minute)
+    {
+        hourController.SetHour(_hour, _minute);
     }
 
     public void MostrarEstrelaCorrida()
@@ -119,6 +128,11 @@ public class Interface : MonoBehaviour
         }
         gameOverObj.SetActive(true);
 
+    }
+
+    public void NextDay()
+    {
+        nextDay.SetActive(true);
     }
 
     public void PlayerVitoria()
@@ -205,7 +219,7 @@ public class Interface : MonoBehaviour
                 break;
 
             case 2:
-                app.Play("CincoEstrelaComecar");
+                app.Play("CincoEstrelasComecar");
                 break;
 
             case 3: // Mostrar Minimapa
@@ -218,7 +232,7 @@ public class Interface : MonoBehaviour
                 break;
 
             case 5: // Mostrar Cliente
-                app.Play("CincoEstrelaFechar");
+                app.Play("FecharApps");
                 break;
 
             case 6: // Password Hud

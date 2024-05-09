@@ -4,13 +4,15 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Destination
-  - Gas
-  - Damagable
   - Waypoint
-  - NPC
+  - Damagable
+  - Gas
+  - Destination
   - Calcada
-  - Mecanica
+  - Semaforo
+  - Sidewalk
+  - Road
+  - Npc
   layers:
   - Default
   - TransparentFX
@@ -19,9 +21,9 @@ TagManager:
   - Water
   - UI
   - Minimap
-  - 
-  - 
-  - 
+  - Semaforo
+  - Carro
+  - Player
   - 
   - 
   - 

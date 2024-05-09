@@ -9,7 +9,7 @@ public class InterfaceInterativos : MonoBehaviour
     [SerializeField] private Color[] colorVar;
     [SerializeField] private Image imgSlider;
     [SerializeField] private bool playerTouch = false;
-    [Header("Coloque o gameObject da interface da contrução: ")]
+    [Header("Coloque o gameObject da interface da contruï¿½ï¿½o: ")]
     [SerializeField] private GameObject uiObject;
 
 

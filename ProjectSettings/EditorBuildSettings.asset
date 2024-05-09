@@ -9,6 +9,8 @@ EditorBuildSettings:
     path: Assets/Scenes/Menu.unity
     guid: ce8d7d1471bd21e4ba3519d36196af19
   - enabled: 1
-    path: "Assets/Scenes/Pra\xE7a da Esta\xE7\xE3o.unity"
-    guid: 548324e9ea96e5546a83869973e8b523
-  m_configObjects: {}
+    path: Assets/Scenes/Luminopolis.unity
+    guid: ea83f54d7632bca46abbb262c1f60cd7
+  m_configObjects:
+    com.unity.input.settings: {fileID: 11400000, guid: 2efdde7f79870fe479cbcfc2300e9a3f,
+      type: 2}

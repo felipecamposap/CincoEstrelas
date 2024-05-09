@@ -24,6 +24,10 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - _5Estrela:
+        m_Texture: {fileID: 2800000, guid: 3e63723216b5b7745bdf0ff495ddcb91, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _AlphaTexture:
         m_Texture: {fileID: 2800000, guid: 254877f4159858c4eabc0b0318562a55, type: 3}
         m_Scale: {x: 1, y: 1}
@@ -122,6 +126,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - _5eTrue: 0
     - _AlphaClip: 0
     - _Bits: 16
     - _Blend: 0
@@ -157,13 +162,13 @@ Material:
     - _AlphaTiling: {r: 1, g: 9.73, b: 0, a: 0}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 0, g: 0, b: 0, a: 1}
-    - _DownColor: {r: 0, g: 3.172596, b: 22.363523, a: 1}
+    - _DownColor: {r: 0, g: 2.9960787, b: 2.152598, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _LineScale: {r: 1, g: 10, b: 0, a: 0}
     - _MainColor: {r: 1, g: 0.05699998, b: 0.05699998, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
     - _UpCOlor: {r: 47.93727, g: 0, b: 0, a: 1}
-    - _UpColor: {r: 10.515513, g: 0.6448195, b: 8.221245, a: 1}
+    - _UpColor: {r: 51.984146, g: 0, b: 17.386183, a: 1}
   m_BuildTextureStacks: []
 --- !u!114 &2145465818222044519
 MonoBehaviour:
