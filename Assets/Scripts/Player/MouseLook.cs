@@ -1,4 +1,6 @@
+using System;
 using Unity.Mathematics;
+using Unity.VisualScripting;
 using UnityEngine;
 
 
@@ -8,27 +10,28 @@ public class MouseLook : MonoBehaviour
     public float maxPitch = 30.0f; // Maximum pitch angle in degrees
     private GameObject player;
     private Camera mainCamera;
-    private quaternion initialRotation;
-    private bool locked;
+    private bool locked, reverse;
     [SerializeField] private float camSpeed;
     [SerializeField] private Transform lookTarget;
     [SerializeField] private float rotSpeed;
-    float idleCamTimer = 0;
+    float idleCamTimer = 0, reverseModifier = 0;
     [SerializeField] float maxIdleCamTimer = 1f;
+    private PlayerMovement playerMovement;
 
     void Start()
     {
-        initialRotation = transform.rotation;
         lastSensitivity = sensitivity;
         Application.targetFrameRate = 999;
         mainCamera = GetComponentInChildren<Camera>();
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
         player = GameController.controller.player.gameObject;
+        playerMovement = player.GetComponent<PlayerMovement>();
     }
 
     void Update()
     {
+
         gameObject.transform.position = player.transform.position;
         //transform.position = Vector3.Lerp(new Vector3(transform.position.x, player.transform.position.y, transform.position.z), pos.position, camSpeed * Time.deltaTime);  
 
@@ -59,16 +62,15 @@ public class MouseLook : MonoBehaviour
             idleCamTimer = 0;
             LockCam(false, mouseX, mouseY);
         }
-        else
-        {
+        else if (playerMovement.gasInput != 0)
             idleCamTimer += Time.deltaTime;
-        }
+        else
+            idleCamTimer = 0;
 
         if (idleCamTimer >= maxIdleCamTimer || cellPhoneLift)
         {
             LockCam(true, mouseX, mouseY);
         }
-
 
         if (locked)
         {
