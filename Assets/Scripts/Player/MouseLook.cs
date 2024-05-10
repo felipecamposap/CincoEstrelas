@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using Unity.Mathematics;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -12,14 +13,15 @@ public class MouseLook : MonoBehaviour
     private Camera mainCamera;
     private bool locked, reverse;
     [SerializeField] private float camSpeed;
-    [SerializeField] private Transform lookTarget;
+    private Transform lookTarget;
     [SerializeField] private float rotSpeed;
-    float idleCamTimer = 0, reverseModifier = 0;
+    float idleCamTimer = 0;
     [SerializeField] float maxIdleCamTimer = 1f;
     private PlayerMovement playerMovement;
 
-    void Start()
+    private IEnumerator Start()
     {
+        yield return new WaitForSeconds(0.1f);
         lastSensitivity = sensitivity;
         Application.targetFrameRate = 999;
         mainCamera = GetComponentInChildren<Camera>();
@@ -27,6 +29,7 @@ public class MouseLook : MonoBehaviour
         Cursor.visible = false;
         player = GameController.controller.player.gameObject;
         playerMovement = player.GetComponent<PlayerMovement>();
+        lookTarget = player.transform;
     }
 
     void Update()
@@ -104,6 +107,6 @@ public class MouseLook : MonoBehaviour
     public void LockCam(bool locked, float mouseX, float mouseY)
     {
         this.locked = locked;
-        sensitivity = (locked ? 0f : lastSensitivity);
+        sensitivity = locked ? 0f : lastSensitivity;
     }
 }

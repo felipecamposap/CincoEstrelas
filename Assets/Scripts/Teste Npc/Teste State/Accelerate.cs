@@ -82,10 +82,10 @@ public class Accelerate : MonoBehaviour, IState
     void SteeringCalculate()
     {
 
-        // Calcula a direção desejada para o próximo destino
+        // Calcula a direï¿½ï¿½o desejada para o prï¿½ximo destino
         desiredVelocity = (npc.targetPosition - npc.transform.position).normalized;
 
-        // Calcula a força de direção
+        // Calcula a forï¿½a de direï¿½ï¿½o
         steeringTotal = (desiredVelocity - velocity) * SteeringForce;
 
 
@@ -93,8 +93,8 @@ public class Accelerate : MonoBehaviour, IState
         velocity = npc.transform.forward + steeringTotal * Time.deltaTime;
 
 
-        // Rotaciona para olhar na direção do movimento
-        if (velocity.magnitude > 0.1f) // Verifica se há movimento significativo
+        // Rotaciona para olhar na direï¿½ï¿½o do movimento
+        if (velocity.magnitude > 0.1f) // Verifica se hï¿½ movimento significativo
         {
             npc.transform.rotation = Quaternion.LookRotation(velocity);
         }
