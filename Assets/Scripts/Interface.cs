@@ -122,7 +122,7 @@ public class Interface : MonoBehaviour
                 break;
 
             case 1:
-                gameOverText.text = "A gasolina do seu carro acabou!";
+                gameOverText.text = "Você não tem dinheiro para pagar o dia!";
                 break;
 
         }

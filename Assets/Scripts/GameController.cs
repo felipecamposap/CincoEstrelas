@@ -24,7 +24,7 @@ public class GameController : MonoBehaviour
     public int penalty = 0;
     [SerializeField] private float playerMoney = 100f;
     public int playerStar = 0;
-    private float debt;
+    //public float lastMoney;
 
     [SerializeField] public readonly float literPrice = 5.86f;
     private float ratingSum = 0;
@@ -45,6 +45,7 @@ public class GameController : MonoBehaviour
     public readonly float netMobile = 50;
     public readonly float iptu = 125;
     public readonly float food = 600;
+    public float debtDay = 0;
 
     public float AvgRating
     {
@@ -108,12 +109,20 @@ public class GameController : MonoBehaviour
                     minute = 0;
                     hour++;
                 }
-                timerMinute = Time.time + 2;
+                timerMinute = Time.time + 1.25f;
                 if (hour == 6)
                 {
                     isGamePaused = true;
                     player.inGame = false;
-                    uiController.NextDay();
+                    Debug.Log(playerMoney - GetDailyBill());
+                    if (playerMoney - GetDailyBill() <= 0)
+                    {
+                        uiController.GameOver(1);
+                        Cursor.visible = true;
+                        Cursor.lockState = CursorLockMode.None;
+                    }
+                    else
+                        uiController.NextDay();
                 }
 
                 uiController.SetHour(hour, minute);
@@ -145,17 +154,18 @@ public class GameController : MonoBehaviour
     public void FuelCar(float gasoline)
     {
         playerFuel += gasoline;
-        playerMoney -= gasoline * literPrice;
+        GetPaid(gasoline * literPrice, false);
         uiController.ATTUI();
     }
 
     public void ResetGC()
     {
+
         hour = 0;
         minute = 0;
         listClients = new ListClients();
         carIntegrityCurrent = carIntegrityMax;
-        playerMoney = 100f;
+        playerMoney = 10f;
         playerFuel = maxPlayerFuel;
         totalClients = 0;
         if (trapacas[1])
@@ -171,13 +181,18 @@ public class GameController : MonoBehaviour
 
     public float GetDailyBill()
     {
-        return vwater + vlight + internet + netMobile + iptu + food;
+        float debtAll = (vwater + vlight + internet + netMobile + iptu + food + debtDay) / 30;
+        return debtAll;
     }
 
     public void NextDay()
     {
         hour = 0;
         minute = 0;
+        if (playerMoney < GetDailyBill())
+            GetPaid(debtDay = playerMoney - GetDailyBill(), false);
+        else
+            debtDay = 0;
         isGamePaused = false;
         player.inGame = true;
     }
