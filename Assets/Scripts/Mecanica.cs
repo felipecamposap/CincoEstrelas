@@ -13,14 +13,31 @@ public class Mecanica : MonoBehaviour
     private float price;
     private float brokenAmount, brokenAmountPerCent, maxLife, currentLife, repairPerCent;
 
+    [Header("Upgrades")]
+    [SerializeField] Button[] btnUpgrade; // 0 - Motor | 1 - Direcao
+    [SerializeField] Text priceUpgradeMotor;
+
+    // ----- Variaveis de Controle ----- \\
+    float playerMoney;
+    float motorPower;
+    float motorUpgradePrice;
+
 
     private void OnEnable()
     {
         UpdateUI();
-
+        SetControlVariables();
         GameController.controller.Interaction(true);
+    }
 
-        //AttUI();
+    public void SetControlVariables()
+    {
+        playerMoney = GameController.controller.PlayerMoney;
+        motorUpgradePrice = GameController.controller.motorUpgradePrice;
+        motorPower = GameController.controller.player.motorPower;
+        priceUpgradeMotor.text = $"Preço: R${GameController.controller.motorUpgradePrice}:R2";
+
+        btnUpgrade[0].interactable = motorPower < 2000 && playerMoney > motorUpgradePrice;
     }
 
     public void UpdateUI()
@@ -66,5 +83,12 @@ public class Mecanica : MonoBehaviour
 
         //sldIntegrity.maxValue = GameController.controller.carIntegrityMax - GameController.controller.carIntegrityCurrent;
         fillImages[0].fillAmount = GameController.controller.carIntegrityCurrent;
+    }
+
+    public void UpgradeMotor()
+    {
+        GameController.controller.GetPaid(motorUpgradePrice, false);
+        GameController.controller.player.UpgradeMotor();
+        SetControlVariables();
     }
 }

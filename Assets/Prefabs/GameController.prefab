@@ -57,7 +57,10 @@ MonoBehaviour:
   playerMoney: 100
   playerStar: 0
   passwordCorrect: 0
+  hour: 5
+  minute: 57
+  debtDay: 0
   minimapaAlvo:
   - {fileID: 0}
   - {fileID: 0}
-  trapacas: 0000
+  trapacas: 000000

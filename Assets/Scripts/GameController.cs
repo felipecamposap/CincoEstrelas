@@ -33,6 +33,11 @@ public class GameController : MonoBehaviour
     public int passwordClient { get; set; }
     [HideInInspector] public bool passwordCorrect;
 
+    // ----- Config Upgrades
+    [Header("Upgrades Config")]
+    [SerializeField] public readonly float motorUpgradePrice = 100f;
+
+
     // ----- Tempo Jogo
     [Header("Tempo Jogo")]
     [SerializeField] private int hour, minute;
