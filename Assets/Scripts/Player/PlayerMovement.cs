@@ -32,7 +32,7 @@ public class PlayerMovement : MonoBehaviour
         // {
         //     Debug.Log(material.name);
         // }
-        breakLights = materials[4];
+        breakLights = materials[6];
         GameController.controller.player = this;
         inGame = true;
     }
