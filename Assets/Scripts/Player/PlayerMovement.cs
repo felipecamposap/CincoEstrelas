@@ -28,11 +28,8 @@ public class PlayerMovement : MonoBehaviour
     private void Start()
     {
         List<Material> materials = GetComponentInChildren<Renderer>().materials.ToList();
-        // foreach (Material material in materials)
-        // {
-        //     Debug.Log(material.name);
-        // }
-        breakLights = materials[6];
+        breakLights = materials[5];
+        Debug.Log(breakLights.name);
         GameController.controller.player = this;
         inGame = true;
     }

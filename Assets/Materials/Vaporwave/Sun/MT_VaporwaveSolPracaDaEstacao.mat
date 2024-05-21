@@ -158,17 +158,17 @@ Material:
     - _isMenu: 0
     m_Colors:
     - _AlphaPosition: {r: 0, g: 0.25, b: 0, a: 0}
-    - _AlphaScale: {r: 1, g: 15, b: 0, a: 0}
+    - _AlphaScale: {r: 1, g: 37.98, b: 0, a: 0}
     - _AlphaTiling: {r: 1, g: 9.73, b: 0, a: 0}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 0, g: 0, b: 0, a: 1}
-    - _DownColor: {r: 0, g: 2.9960787, b: 2.152598, a: 1}
+    - _DownColor: {r: 0.9098039, g: 0.24705882, b: 0.43529412, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _LineScale: {r: 1, g: 10, b: 0, a: 0}
     - _MainColor: {r: 1, g: 0.05699998, b: 0.05699998, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
     - _UpCOlor: {r: 47.93727, g: 0, b: 0, a: 1}
-    - _UpColor: {r: 51.984146, g: 0, b: 17.386183, a: 1}
+    - _UpColor: {r: 18.379171, g: 7.0689125, b: 0, a: 1}
   m_BuildTextureStacks: []
 --- !u!114 &2145465818222044519
 MonoBehaviour:
