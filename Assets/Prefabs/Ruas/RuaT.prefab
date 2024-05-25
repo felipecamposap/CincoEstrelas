@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4622745029369385537}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: RuaT
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -95,6 +95,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: RuaT
+      objectReference: {fileID: 0}
+    - target: {fileID: 6141783424397776697, guid: 7dc0b76f19c58764cabf92bb809f1e43,
+        type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6141783424397776697, guid: 7dc0b76f19c58764cabf92bb809f1e43,
         type: 3}
@@ -210,6 +215,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: RuaTCalcada
+      objectReference: {fileID: 0}
+    - target: {fileID: 2895196847863367117, guid: 958cb5394cabecf4aa0f353a359473c7,
+        type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 2895196847863367117, guid: 958cb5394cabecf4aa0f353a359473c7,
         type: 3}

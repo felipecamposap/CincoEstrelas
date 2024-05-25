@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7933276385963784920}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Rua
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -119,7 +119,7 @@ PrefabInstance:
     - target: {fileID: 5596927729919222063, guid: fb832706e6be70e4284fb8744e98e3db,
         type: 3}
       propertyPath: m_Layer
-      value: 0
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5596927729919222063, guid: fb832706e6be70e4284fb8744e98e3db,
         type: 3}

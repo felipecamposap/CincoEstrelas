@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2878365188724669364}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: RuaSemSaida
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -45,6 +45,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: RuaSemSaidaCalcada
+      objectReference: {fileID: 0}
+    - target: {fileID: 6809354584162482188, guid: 5a171ce481c2ce94cb527f9f64ede41b,
+        type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7187288806751098452, guid: 5a171ce481c2ce94cb527f9f64ede41b,
         type: 3}
@@ -135,6 +140,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: RuaSemSaida
+      objectReference: {fileID: 0}
+    - target: {fileID: 3528027445335419864, guid: 351066808e3055a419e1d4e891f1b0cd,
+        type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5630024549301395981, guid: 351066808e3055a419e1d4e891f1b0cd,
         type: 3}

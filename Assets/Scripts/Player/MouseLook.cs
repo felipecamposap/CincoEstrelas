@@ -13,7 +13,7 @@ public class MouseLook : MonoBehaviour
     private Camera mainCamera;
     private bool locked, reverse;
     [SerializeField] private float camSpeed;
-    private Transform lookTarget;
+    private Quaternion lookTarget;
     [SerializeField] private float rotSpeed;
     float idleCamTimer = 0;
     [SerializeField] float maxIdleCamTimer = 1f;
@@ -29,7 +29,7 @@ public class MouseLook : MonoBehaviour
         Cursor.visible = false;
         player = GameController.controller.player.gameObject;
         playerMovement = player.GetComponent<PlayerMovement>();
-        lookTarget = player.transform;
+        lookTarget = player.transform.rotation;
     }
 
     void Update()
@@ -77,8 +77,9 @@ public class MouseLook : MonoBehaviour
 
         if (locked)
         {
-            lookTarget.rotation = new Quaternion(0f, lookTarget.rotation.y, 0f, lookTarget.rotation.w); // evitar que a camera automatica rotacione em eixos errados
-            transform.rotation = Quaternion.Slerp(transform.rotation, lookTarget.rotation, rotSpeed * Time.deltaTime);
+            lookTarget = player.transform.rotation;
+            lookTarget = new Quaternion(0f, -lookTarget.y, 0f, -lookTarget.w); // evitar que a camera automatica rotacione em eixos errados
+            transform.rotation = Quaternion.Slerp(transform.rotation, lookTarget, rotSpeed * Time.deltaTime);
         }
         else
         {

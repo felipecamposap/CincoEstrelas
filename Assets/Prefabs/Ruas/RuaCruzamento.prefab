@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4454022778277257282}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: RuaCruzamento
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -49,7 +49,7 @@ PrefabInstance:
     - target: {fileID: 3941714699174425145, guid: 72f45fecec8412b46bff58f932aa656d,
         type: 3}
       propertyPath: m_Layer
-      value: 0
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 3941714699174425145, guid: 72f45fecec8412b46bff58f932aa656d,
         type: 3}

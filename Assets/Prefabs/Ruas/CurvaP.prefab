@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7716674335666815394}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: CurvaP
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -49,7 +49,7 @@ PrefabInstance:
     - target: {fileID: 4949962377847053667, guid: 34c6c3beace7d1a4e91641eea1442f04,
         type: 3}
       propertyPath: m_Layer
-      value: 0
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 4949962377847053667, guid: 34c6c3beace7d1a4e91641eea1442f04,
         type: 3}
