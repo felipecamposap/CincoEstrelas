@@ -25,7 +25,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _5Estrela:
-        m_Texture: {fileID: 2800000, guid: 3e63723216b5b7745bdf0ff495ddcb91, type: 3}
+        m_Texture: {fileID: 2800000, guid: 184c2dd343951f0419e7d7baf4299c0f, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _AlphaTexture:
@@ -109,7 +109,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _SunTexture:
-        m_Texture: {fileID: 2800000, guid: 6293bb052bb84de4fa6994d84434a2b9, type: 3}
+        m_Texture: {fileID: 2800000, guid: 526fdd806195c844087981c34e246a8e, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - unity_Lightmaps:
@@ -162,13 +162,13 @@ Material:
     - _AlphaTiling: {r: 1, g: 9.73, b: 0, a: 0}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 0, g: 0, b: 0, a: 1}
-    - _DownColor: {r: 0.9098039, g: 0.24705882, b: 0.43529412, a: 1}
+    - _DownColor: {r: 0, g: 0.7490196, b: 0.6823262, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _LineScale: {r: 1, g: 10, b: 0, a: 0}
     - _MainColor: {r: 1, g: 0.05699998, b: 0.05699998, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
     - _UpCOlor: {r: 47.93727, g: 0, b: 0, a: 1}
-    - _UpColor: {r: 18.379171, g: 7.0689125, b: 0, a: 1}
+    - _UpColor: {r: 1.8980392, g: 1.827451, b: 1.7882353, a: 1}
   m_BuildTextureStacks: []
 --- !u!114 &2145465818222044519
 MonoBehaviour:
