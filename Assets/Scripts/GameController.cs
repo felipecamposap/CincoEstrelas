@@ -1,6 +1,6 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
-
+using UnityEngine.Timeline;
 
 public class GameController : MonoBehaviour
 {
@@ -11,6 +11,7 @@ public class GameController : MonoBehaviour
     public AudioSource audioSource;
     public AlvoMinimapa alvoMinimapa;
     public PlayerMovement player;
+    [HideInInspector]public ObserverTrafficLight obsTrafficLight;
 
 
     [Header("Status jogador:")]

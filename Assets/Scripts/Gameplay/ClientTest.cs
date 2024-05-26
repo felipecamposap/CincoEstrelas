@@ -1,3 +1,4 @@
+using System.Threading;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,6 +8,7 @@ public class ClientTest : MonoBehaviour
     [SerializeField] Database db;
     [SerializeField] GameObject clientPrefab;
     [SerializeField] GameObject destinyPrefab;
+    [SerializeField] Transform[] blockParent;
     [SerializeField] Transform[] blockPos;
     [SerializeField] int blocksVariation;
     [Header("Propriedades da Hud: ")]
@@ -19,6 +21,18 @@ public class ClientTest : MonoBehaviour
     private string clientName;
     private int rating;
     private float pay;
+
+    private void Start()
+    {
+        blockPos = new Transform[blockParent.Length * 2];
+        int countPos = 0;
+        for (int i = 0; i < blockParent.Length;i++)
+            for (int j = 0; j < 2; j++)
+            {
+                blockPos[countPos] = blockParent[i].GetChild(j);
+                countPos++;
+            }
+    }
 
     public void FindClient()
     {
