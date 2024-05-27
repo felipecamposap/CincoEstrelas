@@ -202,7 +202,7 @@ public class PlayerMovement : MonoBehaviour
             float damageValue = rb.velocity.magnitude * 1.5f;
             yield return new WaitForSeconds(0.1f);
             damageValue -= rb.velocity.magnitude;
-            if (collision.gameObject.CompareTag("Damagable") || collision.gameObject.CompareTag("NPC"))
+            if (collision.gameObject.CompareTag("Damagable") || collision.gameObject.CompareTag("Npc"))
             {
                 ContactPoint contact = collision.contacts[0];
                 Instantiate(danoFaisca, contact.point, Quaternion.identity);

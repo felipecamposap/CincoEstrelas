@@ -44,7 +44,7 @@ Light:
   serializedVersion: 10
   m_Type: 0
   m_Shape: 0
-  m_Color: {r: 0.9607843, g: 0.7804525, b: 0.6677451, a: 1}
+  m_Color: {r: 1, g: 0.93856627, b: 0.6462264, a: 1}
   m_Intensity: 85
   m_Range: 30
   m_SpotAngle: 71.140434
@@ -45222,7 +45222,6 @@ MonoBehaviour:
   vitoriaEfeito: {fileID: 2132914442851711180}
   inGame: 0
   speedLines: {fileID: 8305988850641195828}
-  tireSmoke: {fileID: 0}
 --- !u!208 &981858307731068988
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -105550,7 +105549,7 @@ Light:
   serializedVersion: 10
   m_Type: 0
   m_Shape: 0
-  m_Color: {r: 0.9607843, g: 0.7804525, b: 0.6677451, a: 1}
+  m_Color: {r: 1, g: 0.93856627, b: 0.6462264, a: 1}
   m_Intensity: 85
   m_Range: 30
   m_SpotAngle: 71.140434
