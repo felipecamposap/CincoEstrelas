@@ -30,7 +30,7 @@ Material:
   - _ENVIRONMENT_LIGHTING_ENABLED
   - _FOG
   - _RAMP_TRIPLE
-  - _REFLECTIONS
+  - _REFLECTION_PROBES
   - _SPECULAR
   m_InvalidKeywords:
   - _ZWRITE_ON
@@ -142,18 +142,18 @@ Material:
     - _RampSmoothness: 0
     - _RampTriple: 1
     - _ReceiveShadows: 1
-    - _ReflectionBlend: 0.5
-    - _ReflectionProbes: 0
-    - _ReflectionSmoothness: 0.5
-    - _Reflections: 1
+    - _ReflectionBlend: 1
+    - _ReflectionProbes: 1
+    - _ReflectionSmoothness: 0
+    - _Reflections: 0
     - _ShadowMask: 0
     - _Smoothness: 0.5
     - _SmoothnessTextureChannel: 0
     - _Specular: 1
-    - _SpecularExponent: 9
+    - _SpecularExponent: 15
     - _SpecularHighlights: 1
-    - _SpecularSmoothness: 0.301
-    - _SpecularThreshold: 0.8
+    - _SpecularSmoothness: 0.015
+    - _SpecularThreshold: 1
     - _SrcBlend: 1
     - _SrcBlendAlpha: 1
     - _Surface: 0

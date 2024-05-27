@@ -13,7 +13,7 @@ public class TrafficLight : MonoBehaviour, IObserverTrafficLight
     //[SerializeField] float trafficTime;
     [SerializeField] int index;
 
-    private void Start()
+    private void OnEnable()
     {
         if (isTraffic)
         {

@@ -1,21 +1,19 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Timeline;
-
+[DefaultExecutionOrder(-99)]
 public class GameController : MonoBehaviour
 {
-    [Header("Variables statics")]
-    public static GameController controller;
+    [Header("Variables statics")] public static GameController controller;
     public Interface uiController;
     [field: SerializeField] public ListClients listClients;
     public AudioSource audioSource;
     public AlvoMinimapa alvoMinimapa;
     public PlayerMovement player;
-    [HideInInspector]public ObserverTrafficLight obsTrafficLight;
+    public ObserverTrafficLight obsTrafficLight;
 
 
-    [Header("Status jogador:")]
-    public float carIntegrityMax; // Integridade do carro
+    [Header("Status jogador:")] public float carIntegrityMax; // Integridade do carro
     public float carIntegrityCurrent; // Integridade do carro
     [SerializeField] private float playerFuel = 55; // quantidade atual de gasolina
     public readonly float maxPlayerFuel = 55; // Maximo do tanque de gasolina
@@ -35,17 +33,17 @@ public class GameController : MonoBehaviour
     [HideInInspector] public bool passwordCorrect;
 
     // ----- Config Upgrades
-    [Header("Upgrades Config")]
-    [SerializeField] public readonly float motorUpgradePrice = 100f;
+    [Header("Upgrades Config")] [SerializeField]
+    public readonly float motorUpgradePrice = 100f;
 
 
     // ----- Tempo Jogo
-    [Header("Tempo Jogo")]
-    [SerializeField] private int hour, minute;
+    [Header("Tempo Jogo")] [SerializeField]
+    private int hour, minute;
+
     private float timerMinute;
 
-    [Header("Gastos")]
-    public readonly float vwater = 80;
+    [Header("Gastos")] public readonly float vwater = 80;
     public readonly float vlight = 300;
     public readonly float internet = 100;
     public readonly float netMobile = 50;
@@ -80,8 +78,7 @@ public class GameController : MonoBehaviour
 
     public Transform[] minimapaAlvo = new Transform[2];
 
-    [Header("Trapa�as: ")]
-    public bool[] trapacas = new bool[3];
+    [Header("Trapa�as: ")] public bool[] trapacas = new bool[3];
 
 
     private void Awake()
@@ -106,15 +103,16 @@ public class GameController : MonoBehaviour
 
     public void Update()
     {
-        if(!isGamePaused)
-            if(timerMinute < Time.time)
+        if (!isGamePaused)
+            if (timerMinute < Time.time)
             {
                 minute++;
-                if(minute == 60)
+                if (minute == 60)
                 {
                     minute = 0;
                     hour++;
                 }
+
                 timerMinute = Time.time + 1.25f;
                 if (hour == 6)
                 {
@@ -154,7 +152,6 @@ public class GameController : MonoBehaviour
         carIntegrityCurrent += _integrity;
         GetPaid(_value, false);
         uiController?.ATTUI(); // Checar UI
-
     }
 
     public void FuelCar(float gasoline)
@@ -166,7 +163,6 @@ public class GameController : MonoBehaviour
 
     public void ResetGC()
     {
-
         hour = 0;
         minute = 0;
         listClients = new ListClients();
@@ -182,7 +178,6 @@ public class GameController : MonoBehaviour
         if (playerStar >= 10)
             PlayerVitoria();
         isGamePaused = false;
-
     }
 
     public float GetDailyBill()
@@ -217,6 +212,7 @@ public class GameController : MonoBehaviour
             uiController.ATTUI();
             uiController.Gasolina(playerFuel / maxPlayerFuel);
         }
+
         if (playerFuel <= 0)
             uiController.GameOver(1);
     }
@@ -234,7 +230,6 @@ public class GameController : MonoBehaviour
         if (playerStar >= 10)
             PlayerVitoria();
         penalty = 0;
-
     }
 
     public void SetGamePaused(bool value)
@@ -283,6 +278,7 @@ public class GameController : MonoBehaviour
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
         }
+
         uiController.DamageAnimation();
         uiController.ATTUI();
     }
@@ -292,5 +288,4 @@ public class GameController : MonoBehaviour
         ToggleCursor(value);
         SetGamePaused(value);
     }
-
 }

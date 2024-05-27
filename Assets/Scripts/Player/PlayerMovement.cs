@@ -24,6 +24,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] GameObject vitoriaEfeito;
     public bool inGame = true;
     private Material breakLights;
+    [SerializeField] private ParticleSystem speedLines;
+    // [SerializeField] private ParticleSystem tireSmokeL, tireSmokeR;
 
     private void Start()
     {
@@ -32,6 +34,9 @@ public class PlayerMovement : MonoBehaviour
         Debug.Log(breakLights.name);
         GameController.controller.player = this;
         inGame = true;
+        // speedLines.Stop();
+        // tireSmokeR?.Stop();
+        // tireSmokeL?.Stop();
     }
 
     void Update()
@@ -59,6 +64,30 @@ public class PlayerMovement : MonoBehaviour
         if (inGame && Input.GetAxis("Vertical") != 0 && !GameController.controller.trapacas[1] && GameController.controller.PlayerFuel > 0)
         {
             GameController.controller.BurnFuel(gasInput);
+        }
+
+        // if (gasInput>0 && localVelocity.z > 0 && localVelocity.z < 10)
+        // {
+        //     tireSmokeR?.Play();
+        //     tireSmokeL?.Play();
+        // }
+        // else
+        // {
+        //     tireSmokeR?.Stop();
+        //     tireSmokeL?.Stop();
+        // }
+        
+        if (localVelocity.z > 30)
+        {
+            // tireSmokeR?.Stop();
+            // tireSmokeL?.Stop();
+            speedLines.Play();
+        }
+        else
+        {
+            // tireSmokeR?.Play();
+            // tireSmokeL?.Play();
+            speedLines.Stop();
         }
     }
 
