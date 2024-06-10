@@ -118,11 +118,11 @@ public class Interface : MonoBehaviour
         switch (_value)
         {
             case 0:
-                gameOverText.text = "YOUR CAR HAS BEEN DESTROYED.";
+                gameOverText.text = "Seu carro está muito danificado!";
                 break;
 
             case 1:
-                gameOverText.text = "YOU ARE BROKE";
+                gameOverText.text = "Você não conseguiu pagar pela noite!";
                 break;
 
         }

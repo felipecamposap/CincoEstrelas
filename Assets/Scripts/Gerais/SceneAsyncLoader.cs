@@ -27,12 +27,12 @@ public class SceneAsyncLoader : MonoBehaviour
             skipButtom.gameObject.SetActive(true);
         else
             StartCoroutine(SceneIsDone());
-        Debug.Log("Load Progress " + asyncLoad.progress);
+        //Debug.Log("Load Progress " + asyncLoad.progress);
     }
 
     public void LoadScene()
     {
-        Debug.Log("Carregar");
+        //Debug.Log("Carregar");
         asyncLoad.allowSceneActivation = true;
     }
 }

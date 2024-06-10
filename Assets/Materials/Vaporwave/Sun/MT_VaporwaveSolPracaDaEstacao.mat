@@ -126,7 +126,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _5eTrue: 1
+    - _5eTrue: 0
     - _AlphaClip: 0
     - _Bits: 16
     - _Blend: 0
@@ -158,17 +158,17 @@ Material:
     - _isMenu: 0
     m_Colors:
     - _AlphaPosition: {r: 0, g: 0.25, b: 0, a: 0}
-    - _AlphaScale: {r: 1, g: 37.98, b: 0, a: 0}
+    - _AlphaScale: {r: 1, g: 29.5, b: 0, a: 0}
     - _AlphaTiling: {r: 1, g: 9.73, b: 0, a: 0}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 0, g: 0, b: 0, a: 1}
-    - _DownColor: {r: 205.51152, g: 0, b: 59.14, a: 1}
+    - _DownColor: {r: 47.93726, g: 0, b: 13.794894, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _LineScale: {r: 1, g: 10, b: 0, a: 0}
     - _MainColor: {r: 1, g: 0.05699998, b: 0.05699998, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
     - _UpCOlor: {r: 47.93727, g: 0, b: 0, a: 1}
-    - _UpColor: {r: 372.80692, g: 202.3809, b: 95.86464, a: 1}
+    - _UpColor: {r: 47.937256, g: 26.023083, b: 12.326724, a: 1}
   m_BuildTextureStacks: []
 --- !u!114 &2145465818222044519
 MonoBehaviour:

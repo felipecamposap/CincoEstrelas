@@ -1,10 +1,12 @@
 using UnityEngine;
 
+
 public interface IObserverTrafficLight
 {
     public void Notify();
 }
 
+[DefaultExecutionOrder(99)]
 public class TrafficLight : MonoBehaviour, IObserverTrafficLight
 {
     public LinkedStreets[] streets;
@@ -17,6 +19,8 @@ public class TrafficLight : MonoBehaviour, IObserverTrafficLight
     {
         if (isTraffic)
         {
+            Debug.Log(GameController.controller);
+            Debug.Log(GameController.controller.obsTrafficLight);
             GameController.controller.obsTrafficLight.AddListTrafficLight(this);
             //invokerepeating("changetraffic", traffictime, traffictime);
         }

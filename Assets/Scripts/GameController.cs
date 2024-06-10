@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.Timeline;
+
+
 [DefaultExecutionOrder(-99)]
 public class GameController : MonoBehaviour
 {
@@ -124,6 +125,13 @@ public class GameController : MonoBehaviour
                         uiController.GameOver(1);
                         Cursor.visible = true;
                         Cursor.lockState = CursorLockMode.None;
+                        if (alvoMinimapa != null)
+                        {
+                            foreach (Transform item in minimapaAlvo)
+                                Destroy(item);
+                            GetPaid(0,true);
+                        }
+
                     }
                     else
                         uiController.NextDay();
@@ -131,6 +139,7 @@ public class GameController : MonoBehaviour
 
                 uiController.SetHour(hour, minute);
             }
+
     }
 
     public void ToggleCursor(bool value)

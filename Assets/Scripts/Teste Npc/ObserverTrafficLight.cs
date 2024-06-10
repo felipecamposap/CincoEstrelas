@@ -1,7 +1,8 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+[DefaultExecutionOrder(0)]
 public class ObserverTrafficLight : MonoBehaviour
 {
     [SerializeField] List<IObserverTrafficLight> m_Lights = new List<IObserverTrafficLight>();
@@ -9,7 +10,7 @@ public class ObserverTrafficLight : MonoBehaviour
 
 
 
-    private void Start()
+    private void Awake()
     {
         GameController.controller.obsTrafficLight = this;
         InvokeRepeating("CountTime", trafficTime, trafficTime);

@@ -27,8 +27,9 @@ public class Trapacas : MonoBehaviour
 
     public void Estrelas(string _value)
     {
-        if (int.Parse(_value) >= 0 && int.Parse(_value) < 6){
-            GameController.controller.playerStar = int.Parse(_value) * 2;
+        int _newValue = int.Parse(_value);
+        if (_newValue >= 0 && _newValue < 6){
+            GameController.controller.playerStar = _newValue * 2;
             GameController.controller.trapacas[2] = true;
             GameController.controller.uiController.ATTUI();
             if (GameController.controller.playerStar == 10 && SceneManager.GetActiveScene().buildIndex == 1){
