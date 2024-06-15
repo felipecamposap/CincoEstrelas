@@ -26,7 +26,7 @@ public class GameController : MonoBehaviour
     public int playerStar = 0;
     //public float lastMoney;
 
-    [SerializeField] public readonly float literPrice = 5.86f;
+    [SerializeField] public const float literPrice = 5.86f;
     private float ratingSum = 0;
     private bool isGamePaused = true;
 
@@ -52,30 +52,15 @@ public class GameController : MonoBehaviour
     public readonly float food = 600;
     public float debtDay = 0;
 
-    public float AvgRating
-    {
-        get { return (totalClients > 0 ? ratingSum / totalClients : 0); }
-    }
+    public float AvgRating => (totalClients > 0 ? ratingSum / totalClients : 0);
 
-    public float PlayerMoney
-    {
-        get { return playerMoney; }
-    }
+    public float PlayerMoney => playerMoney;
 
-    public float PlayerFuel
-    {
-        get { return playerFuel; }
-    }
+    public float PlayerFuel => playerFuel;
 
-    public float AvailableFuelSpace
-    {
-        get { return maxPlayerFuel - playerFuel; }
-    }
+    public float AvailableFuelSpace => maxPlayerFuel - playerFuel;
 
-    public float BuyableLiters
-    {
-        get { return (playerMoney / literPrice); }
-    }
+    public float BuyableLiters => (playerMoney / literPrice);
 
     public Transform[] minimapaAlvo = new Transform[2];
 
@@ -92,53 +77,44 @@ public class GameController : MonoBehaviour
         else
             Destroy(gameObject);
 
-        if (SceneManager.GetActiveScene().name != "Menu")
-        {
-            ToggleCursor(false);
-        }
-        else
-        {
-            ToggleCursor(true);
-        }
+        ToggleCursor(SceneManager.GetActiveScene().name == "Menu");
     }
 
     public void Update()
     {
-        if (!isGamePaused)
-            if (timerMinute < Time.time)
+        if (isGamePaused) return;
+        if (!(timerMinute < Time.time)) return;
+        minute++;
+        if (minute == 60)
+        {
+            minute = 0;
+            hour++;
+        }
+
+        timerMinute = Time.time + 1.25f;
+        if (hour == 6)
+        {
+            isGamePaused = true;
+            player.inGame = false;
+            //Debug.Log(playerMoney - GetDailyBill());
+            if (playerMoney - GetDailyBill() <= 0)
             {
-                minute++;
-                if (minute == 60)
+                uiController.GameOver(1);
+                Cursor.visible = true;
+                Cursor.lockState = CursorLockMode.None;
+                if (alvoMinimapa != null)
                 {
-                    minute = 0;
-                    hour++;
+                    foreach (Transform item in minimapaAlvo)
+                        Destroy(item);
+                    GetPaid(0,true);
                 }
 
-                timerMinute = Time.time + 1.25f;
-                if (hour == 6)
-                {
-                    isGamePaused = true;
-                    player.inGame = false;
-                    Debug.Log(playerMoney - GetDailyBill());
-                    if (playerMoney - GetDailyBill() <= 0)
-                    {
-                        uiController.GameOver(1);
-                        Cursor.visible = true;
-                        Cursor.lockState = CursorLockMode.None;
-                        if (alvoMinimapa != null)
-                        {
-                            foreach (Transform item in minimapaAlvo)
-                                Destroy(item);
-                            GetPaid(0,true);
-                        }
-
-                    }
-                    else
-                        uiController.NextDay();
-                }
-
-                uiController.SetHour(hour, minute);
             }
+            else
+                uiController.NextDay();
+        }
+
+        uiController.SetHour(hour, minute);
 
     }
 
@@ -226,7 +202,7 @@ public class GameController : MonoBehaviour
             uiController.GameOver(1);
     }
 
-    public void NewRating()
+    private void NewRating()
     {
         int rating = Mathf.Clamp(10 - (penalty * 2), 2, 10);
         ratingSum += rating;
@@ -241,7 +217,7 @@ public class GameController : MonoBehaviour
         penalty = 0;
     }
 
-    public void SetGamePaused(bool value)
+    private void SetGamePaused(bool value)
     {
         if (value == true)
         {
