@@ -34,7 +34,7 @@ public class GasStation : MonoBehaviour
 
     public void UpdateUI(float value)
     {
-        float price = value * GameController.literPrice;
+        var price = value * GameController.literPrice;
 
         txtLiters.text = $"{value:F2}";
         txtPrice.text = $"R${price:F2}";

@@ -3,9 +3,9 @@ using UnityEngine.UI;
 
 public class ClientPhoneShow : MonoBehaviour
 {
-    [SerializeField] Text clientName;
-    [SerializeField] Slider clientRating;
-    [SerializeField] Text clientPay;
+    [SerializeField] private Text clientName;
+    [SerializeField] private Slider clientRating;
+    [SerializeField] private Text clientPay;
 
     public void SetParameters(string _name, int _rating, float _pay)
     {

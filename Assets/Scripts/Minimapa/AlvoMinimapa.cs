@@ -25,7 +25,7 @@ public class AlvoMinimapa : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
 #if UNITY_EDITOR
         if (check)

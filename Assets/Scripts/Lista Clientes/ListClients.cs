@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class ListClients
 {
-    [SerializeField] ClientsParameters head;
-    [SerializeField] ClientsParameters tail;
+    [SerializeField] private ClientsParameters head;
+    [SerializeField] private ClientsParameters tail;
     public int totalClients { get; set; }
 
     private void Awake()
@@ -20,7 +20,7 @@ public class ListClients
 
     public void Insert(ClientsParameters client)
     {
-        ClientsParameters _client = new ClientsParameters(client.clientName, client.rating, client.paid);
+        var _client = new ClientsParameters(client.clientName, client.rating, client.paid);
         if (head == null)
         {
             head = _client;
@@ -28,7 +28,7 @@ public class ListClients
         }
         else
         {
-            ClientsParameters count = head;
+            var count = head;
             while (count.next != null)
                 count = count.next;
             count.next = _client;
@@ -39,7 +39,7 @@ public class ListClients
 
     public void Insert(ClientsParameters client, int sort)  // 0: default order | 1: money | 2: client rating | 3: alphabetical order
     {
-        ClientsParameters _client = new ClientsParameters(client.clientName, client.rating, client.paid);
+        var _client = new ClientsParameters(client.clientName, client.rating, client.paid);
         if (head == null)
         {
             head = _client;
@@ -47,7 +47,7 @@ public class ListClients
         }
         else
         {
-            ClientsParameters count = head;
+            var count = head;
             ClientsParameters countAux = null;
             switch (sort)
             {
@@ -154,8 +154,8 @@ public class ListClients
     {
         //Debug.Log("Head: " + head.clientName);
 
-        ClientsParameters countClient = head;
-        int count = 0;
+        var countClient = head;
+        var count = 0;
         while (count != _value)
         {
 

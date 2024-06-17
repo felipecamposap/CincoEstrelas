@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class Trapacas : MonoBehaviour
 {
-    [SerializeField] Toggle[] toggles;
+    [SerializeField] private Toggle[] toggles;
 
 
     private IEnumerator Start()
@@ -27,7 +27,7 @@ public class Trapacas : MonoBehaviour
 
     public void Estrelas(string _value)
     {
-        int _newValue = int.Parse(_value);
+        var _newValue = int.Parse(_value);
         if (_newValue >= 0 && _newValue < 6){
             GameController.controller.playerStar = _newValue * 2;
             GameController.controller.trapacas[2] = true;

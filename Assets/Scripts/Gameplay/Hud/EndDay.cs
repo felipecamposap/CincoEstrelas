@@ -4,14 +4,14 @@ using UnityEngine.UI;
 
 public class EndDay : MonoBehaviour
 {
-    [SerializeField] Text dayBill;
-    [SerializeField] Text currentMoney;
-    float moneyCutscene;
-    [SerializeField] Animator animator;
+    [SerializeField] private Text dayBill;
+    [SerializeField] private Text currentMoney;
+    private float moneyCutscene;
+    [SerializeField] private Animator animator;
 
     public void OnEnable()
     {
-        dayBill.text = $"Custo di·rio: R${GameController.controller.GetDailyBill():F2}";
+        dayBill.text = $"Custo di√°rio: R${GameController.controller.GetDailyBill():F2}";
         moneyCutscene = 0;
         animator.SetBool("FadeOut", false);
         InvokeRepeating("MoneyCutscene", 2, 0.01f);

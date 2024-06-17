@@ -3,11 +3,11 @@ using UnityEngine;
 
 public class Npc : MonoBehaviour
 {
-    IState state;
+    private IState state;
     [HideInInspector] public Rigidbody rb;
     public float speed;
     public LinkedStreets currentStreet;
-    public Vector3 targetPosition; // Você precisa implementar essa função para obter a próxima posição de destino
+    public Vector3 targetPosition; // VocÃª precisa implementar essa funÃ§Ã£o para obter a prÃ³xima posiÃ§Ã£o de destino
 
     [Header("Raycast Properties:")]
     public Transform frontRay;
@@ -15,7 +15,7 @@ public class Npc : MonoBehaviour
 
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         rb = GetComponent<Rigidbody>();
         ChangeState(new Accelerate());
@@ -24,7 +24,7 @@ public class Npc : MonoBehaviour
     }
 
     // Update is called once per frame
-    void FixedUpdate()
+    private void FixedUpdate()
     {
         state?.Update();
         
@@ -41,7 +41,7 @@ public class Npc : MonoBehaviour
     {
         if ((transform.position - currentStreet.transform.position).magnitude < 2f)
         {
-            int index = Random.Range(0, currentStreet.connectedStreets.Length);
+            var index = Random.Range(0, currentStreet.connectedStreets.Length);
             currentStreet = currentStreet.connectedStreets[index];
         }
         targetPosition = currentStreet.transform.position;

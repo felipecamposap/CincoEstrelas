@@ -29,7 +29,8 @@ public class Interface : MonoBehaviour
 
 
     [Header(" ----- Client Show Hud ----- ")]
-    [SerializeField] ClientPhoneShow clientHud;
+    [SerializeField]
+    private ClientPhoneShow clientHud;
 
     [Header(" ----- Radio ----- ")]
     [SerializeField] private Text clipText;
@@ -147,7 +148,7 @@ public class Interface : MonoBehaviour
             ResetHistoryClients();
         }
         interfaceListClients = new ListClients();
-        for (int i = 0; i < GameController.controller.listClients.totalClients; i++)
+        for (var i = 0; i < GameController.controller.listClients.totalClients; i++)
         {
             ClientsParameters client;
             GameController.controller.listClients.GetClient(i, out client);
@@ -160,11 +161,11 @@ public class Interface : MonoBehaviour
 
     public void FillHistoryClients()
     {
-        for (int i = 0; i < interfaceListClients.totalClients; i++)
+        for (var i = 0; i < interfaceListClients.totalClients; i++)
         {
             ClientsParameters client; //ponteiro para receber valores de clientes
             interfaceListClients.GetClient(i, out client); //recebe valores da lista de clientes
-            GameObject clone = Instantiate(clientHistoryObj, panelHistoryClient); //salva e instancia gameobject no lugar correto
+            var clone = Instantiate(clientHistoryObj, panelHistoryClient); //salva e instancia gameobject no lugar correto
             clone.GetComponent<ClientsHud>().GetClientsInfo(client); //transfere informações do cliente para a instancia
         }
     }
@@ -172,7 +173,7 @@ public class Interface : MonoBehaviour
     public void ResetHistoryClients()
     {
         
-        for (int i = panelHistoryClient.childCount - 1; i >= 0; i--)
+        for (var i = panelHistoryClient.childCount - 1; i >= 0; i--)
         {
             Destroy(panelHistoryClient.GetChild(i).gameObject);
         }
@@ -181,7 +182,7 @@ public class Interface : MonoBehaviour
     public void StartClipAnimation(string _clipName)
     {
         clipText.text = _clipName;
-        clipAnimator.SetBool("IsPlaying", true);
+        //clipAnimator.SetBool("IsPlaying", true);
     }
 
     public void StopClipAnimator()

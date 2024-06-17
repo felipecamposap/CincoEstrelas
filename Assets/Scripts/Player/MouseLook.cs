@@ -15,8 +15,8 @@ public class MouseLook : MonoBehaviour
     [SerializeField] private float camSpeed;
     private Quaternion lookTarget;
     [SerializeField] private float rotSpeed;
-    float idleCamTimer = 0;
-    [SerializeField] float maxIdleCamTimer = 1f;
+    private float idleCamTimer = 0;
+    [SerializeField] private float maxIdleCamTimer = 1f;
     private PlayerMovement playerMovement;
 
     private IEnumerator Start()
@@ -32,9 +32,8 @@ public class MouseLook : MonoBehaviour
         lookTarget = player.transform.rotation;
     }
 
-    void Update()
+    private void Update()
     {
-
         gameObject.transform.position = player.transform.position;
         //transform.position = Vector3.Lerp(new Vector3(transform.position.x, player.transform.position.y, transform.position.z), pos.position, camSpeed * Time.deltaTime);  
 
@@ -49,7 +48,7 @@ public class MouseLook : MonoBehaviour
         }
 
 
-        bool cellPhoneLift = GameController.controller.uiController.CellPhoneLift();
+        var cellPhoneLift = GameController.controller.uiController.CellPhoneLift();
 
         if (Input.GetKeyDown(KeyCode.E) && Time.timeScale > 0)
         {
@@ -57,8 +56,8 @@ public class MouseLook : MonoBehaviour
         }
 
         // Get the mouse input
-        float mouseX = Input.GetAxis("Mouse X");
-        float mouseY = Input.GetAxis("Mouse Y");
+        var mouseX = Input.GetAxis("Mouse X");
+        var mouseY = Input.GetAxis("Mouse Y");
 
         if ((mouseX != 0f || mouseY != 0f) && !cellPhoneLift)
         {
@@ -83,16 +82,17 @@ public class MouseLook : MonoBehaviour
         }
         else
         {
-            transform.Rotate(Vector3.up * mouseX * sensitivity * Time.deltaTime);
-            float newPitch = transform.eulerAngles.x - (mouseY * sensitivity * Time.deltaTime);
-            float clampedPitch = ClampAngle(newPitch, -10f, 40f);
+            transform.Rotate(Vector3.up * (mouseX * sensitivity * Time.deltaTime));
+            var newPitch = transform.eulerAngles.x - (mouseY * sensitivity * Time.deltaTime);
+            var clampedPitch = ClampAngle(newPitch, -10f, 40f);
             transform.rotation = Quaternion.Euler(clampedPitch, transform.eulerAngles.y, 0f);
         }
+        
     }
 
-    float ClampAngle(float angle, float min, float max)
+    private static float ClampAngle(float angle, float min, float max)
     {
-        if (angle < 90 || angle > 270)
+        if (angle is < 90 or > 270)
         {       // if angle in the critic region...
             if (angle > 180) angle -= 360;  // convert all angles to -180..+180
             if (max > 180) max -= 360;
@@ -104,8 +104,7 @@ public class MouseLook : MonoBehaviour
     }
 
 
-
-    public void LockCam(bool locked, float mouseX, float mouseY)
+    private void LockCam(bool locked, float mouseX, float mouseY)
     {
         this.locked = locked;
         sensitivity = locked ? 0f : lastSensitivity;

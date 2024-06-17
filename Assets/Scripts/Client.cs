@@ -42,7 +42,7 @@ public class Client : MonoBehaviour
         }
         if (touchPlayer == 0 || touchPlayer == 3)
         {
-            Vector3 targetPos = target.position;
+            var targetPos = target.position;
             targetPos.y = 1.4f;
             transform.position = Vector3.Lerp(transform.position, targetPos, speed * Time.deltaTime);
             if (Vector3.Distance(transform.position, target.position) <= 2.5f)

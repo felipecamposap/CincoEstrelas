@@ -3,22 +3,22 @@ using UnityEngine;
 
 public class TransformBillbord : MonoBehaviour
 {
-    [SerializeField] bool keepDistance;
-    [SerializeField] float distance;
-    Transform cam;
-    [SerializeField] Vector3 offset;
-    Vector3 originalPos;
+    [SerializeField] private bool keepDistance;
+    [SerializeField] private float distance;
+    private Transform cam;
+    [SerializeField] private Vector3 offset;
+    private Vector3 originalPos;
 
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         originalPos = transform.position;
         cam = Camera.main.transform;
     }
 
     // Update is called once per frame
-    void FixedUpdate()
+    private void FixedUpdate()
     {
         transform.LookAt(cam.position, Vector3.up);
         transform.rotation *= Quaternion.Euler(offset);

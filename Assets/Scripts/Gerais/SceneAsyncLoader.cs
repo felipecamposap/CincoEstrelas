@@ -5,12 +5,12 @@ using UnityEngine.UI;
 
 public class SceneAsyncLoader : MonoBehaviour
 {
-    AsyncOperation asyncLoad;
-    [SerializeField] Button skipButtom;
+    private AsyncOperation asyncLoad;
+    [SerializeField] private Button skipButtom;
 
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         int indexScene;
         try { indexScene = SceneManager.GetActiveScene().buildIndex + 1; }

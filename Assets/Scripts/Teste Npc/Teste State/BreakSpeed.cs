@@ -2,17 +2,17 @@ using UnityEngine;
 
 public class BreakSpeed : IState
 {
-    Npc npc;
-    float breakPower = 0.30f;
-    float steeringPower = 0.006f;
-    float maxSpeed = 8;
+    private Npc npc;
+    private float breakPower = 0.30f;
+    private float steeringPower = 0.006f;
+    private float maxSpeed = 8;
 
     // ------
-    Vector3 steeringTotal = Vector3.zero;
-    float SteeringForce = 0;
-    Vector3 velocity = Vector3.zero;
-    float currentSpeed;
-    Vector3 desiredVelocity;
+    private Vector3 steeringTotal = Vector3.zero;
+    private float SteeringForce = 0;
+    private Vector3 velocity = Vector3.zero;
+    private float currentSpeed;
+    private Vector3 desiredVelocity;
 
     public void Enter(Npc _npc)
     {
@@ -59,9 +59,9 @@ public class BreakSpeed : IState
     {
         try
         {
-            TrafficLight tl = _hit.transform.GetComponent<TrafficLight>();
-            int index = 0;
-            for (int i = 0; i < tl.streets.Length; i++)
+            var tl = _hit.transform.GetComponent<TrafficLight>();
+            var index = 0;
+            for (var i = 0; i < tl.streets.Length; i++)
             {
                 index = i;
                 if (npc.currentStreet == tl.streets[i])
@@ -77,13 +77,13 @@ public class BreakSpeed : IState
         catch { }
     }
 
-    void SteeringCalculate()
+    private void SteeringCalculate()
     {
 
-        // Calcula a direÁ„o desejada para o prÛximo destino
+        // Calcula a dire√ß√£o desejada para o pr√≥ximo destino
         desiredVelocity = (npc.targetPosition - npc.transform.position).normalized;
 
-        // Calcula a forÁa de direÁ„o
+        // Calcula a for√ßa de dire√ß√£o
         steeringTotal = (desiredVelocity - velocity) * SteeringForce;
 
 
@@ -91,8 +91,8 @@ public class BreakSpeed : IState
         velocity = npc.transform.forward + steeringTotal * Time.deltaTime;//Vector3.ClampMagnitude(velocity + steeringForce * Time.deltaTime, maxSpeed);
 
 
-        // Rotaciona para olhar na direÁ„o do movimento
-        if (velocity.magnitude > 0.1f) // Verifica se h· movimento significativo
+        // Rotaciona para olhar na dire√ß√£o do movimento
+        if (velocity.magnitude > 0.1f) // Verifica se h√° movimento significativo
         {
             npc.transform.rotation = Quaternion.LookRotation(velocity);
         }

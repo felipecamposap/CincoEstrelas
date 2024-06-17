@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class DamageEffect : MonoBehaviour
 {
     public Volume volume;
-    ChromaticAberration chromaAbe;
+    private ChromaticAberration chromaAbe;
 
 
     // Start is called before the first frame update

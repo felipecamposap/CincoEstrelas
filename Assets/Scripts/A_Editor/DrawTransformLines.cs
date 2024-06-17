@@ -5,26 +5,26 @@ using UnityEngine;
 public class DrawTransformLines : MonoBehaviour
 {
     [SerializeField]public Texture2D texture;
-    [SerializeField] string nameArray = "posicoes";
+    [SerializeField] private string nameArray = "posicoes";
     [SerializeField] public Node<Component> node;
-    [SerializeField] Transform[] posicoes;
-    [SerializeField] int numVar = 3;
+    [SerializeField] private Transform[] posicoes;
+    [SerializeField] private int numVar = 3;
 
 
     private void OnDrawGizmos()
     {
         if (node.data == null) { posicoes = null; return; }
 
-        SerializedObject seriaObject = new SerializedObject(node.data);
-        SerializedProperty property = seriaObject.FindProperty(nameArray);
-        Transform[] posArray = new Transform[property.arraySize];
-        for (int i = 0; i < posArray.Length; i++)
+        var seriaObject = new SerializedObject(node.data);
+        var property = seriaObject.FindProperty(nameArray);
+        var posArray = new Transform[property.arraySize];
+        for (var i = 0; i < posArray.Length; i++)
         {
             posArray[i] = (Transform)property.GetArrayElementAtIndex(i).objectReferenceValue;
         }
         posicoes = posArray;
-        int cont = 1;
-        for (int i = 0; i < posicoes.Length; i++)
+        var cont = 1;
+        for (var i = 0; i < posicoes.Length; i++)
         {
             if ((float)((i + 1) / numVar) == cont)
             {
@@ -49,7 +49,7 @@ public class DesenharLinhas_Editor : Editor
 {
     private void OnEnable()
     {
-        DrawTransformLines script = (DrawTransformLines)target;
+        var script = (DrawTransformLines)target;
         EditorGUIUtility.SetIconForObject(script, script.texture);
     }
 

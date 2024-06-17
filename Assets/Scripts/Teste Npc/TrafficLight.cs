@@ -11,9 +11,9 @@ public class TrafficLight : MonoBehaviour, IObserverTrafficLight
 {
     public LinkedStreets[] streets;
     public bool[] isRed;
-    [SerializeField] bool isTraffic;
+    [SerializeField] private bool isTraffic;
     //[SerializeField] float trafficTime;
-    [SerializeField] int index;
+    [SerializeField] private int index;
 
     private void OnEnable()
     {
@@ -35,7 +35,7 @@ public class TrafficLight : MonoBehaviour, IObserverTrafficLight
 
     public void Notify()
     {
-        for (int i = 0; i < isRed.Length; i++)
+        for (var i = 0; i < isRed.Length; i++)
         {
             isRed[i] = true;
         }
