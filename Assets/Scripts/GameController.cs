@@ -48,10 +48,14 @@ public class GameController : MonoBehaviour
     [SerializeField] private GameObject dayNightCycle;
     private Light sun, moon;
     [SerializeField] private Material skybox, predioBloom;
-    [SerializeField] private Color dayColorHorizon, nightColorHorizon, nightFogColor, dayFogColor;
+    [SerializeField] private Color dayColorHorizon, nightColorHorizon, nightFogColor, dayFogColor, nightPredioBloom, dayPredioBloom;
     private float sunIntensity, moonIntensity, lightTimer;
     private float timerMinute;
-    private float nightSizeDarknessUp = 2f, daySizeDarknessUp = 1.5f, nightBuildingEmission = 6, dayBuildingEmission = 0.5f;
+
+    private float nightSizeDarknessUp = 2f,
+        daySizeDarknessUp = 1.5f,
+        nightBuildingEmission = 6,
+        dayBuildingEmission = 0.5f;
 
     [Header("Gastos")] public readonly float vwater = 80;
     public readonly float vlight = 300;
@@ -81,20 +85,12 @@ public class GameController : MonoBehaviour
         listClients = new ListClients();
         DontDestroyOnLoad(this);
 
-        if (controller == null)
+        if (!controller)
             controller = this;
         else
             Destroy(gameObject);
 
         ToggleCursor(SceneManager.GetActiveScene().name == "Menu");
-    }
-
-    private void Start()
-    {
-        sun = dayNightCycle.transform.GetChild(0).GetChild(0).GetComponent<Light>();
-        moon = dayNightCycle.transform.GetChild(1).GetChild(0).GetComponent<Light>();
-        sunIntensity = sun.intensity;
-        moonIntensity = moon.intensity;
     }
 
     public void Update()
@@ -135,25 +131,44 @@ public class GameController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        UpdateDayNightCycle();
+        if (SceneManager.GetActiveScene().name == "Luminopolis")
+            UpdateDayNightCycle();
     }
 
     private void UpdateDayNightCycle()
     {
+        if (!dayNightCycle)
+        {
+            dayNightCycle = GameObject.FindWithTag("DayNightCycle");
+        }
+
+        if (!sun || !moon)
+        {
+            sun = dayNightCycle.transform.GetChild(0).GetChild(0).GetComponent<Light>();
+            sunIntensity = sun.intensity;
+            moon = dayNightCycle.transform.GetChild(1).GetChild(0).GetComponent<Light>();
+            moonIntensity = moon.intensity;
+        }
+
         // Calculate the target angle based on the current time
         var timeOfDay = ((hour * 60) + minute) / 60f; // Fractional hours
-        var targetAngle = Mathf.Lerp(0, 90, timeOfDay / 6f); // Example range from 90 to -15 degrees over 24 hours
-        
-        
+        var targetAngle = Mathf.Lerp(0, 90, timeOfDay / 6f);
+
+
         skybox.SetColor("_ColorHorizon", Color.Lerp(nightColorHorizon, dayColorHorizon, timeOfDay / 6));
         skybox.SetFloat("_SizeDarknessUp", Mathf.Lerp(nightSizeDarknessUp, daySizeDarknessUp, timeOfDay / 6));
         RenderSettings.fogColor = Color.Lerp(nightFogColor, dayFogColor, timeOfDay / 6);
+        predioBloom.SetColor("_EmissionColor", Color.Lerp(nightPredioBloom, dayPredioBloom, timeOfDay / 6));
         if (hour >= 4)
         {
             sun.gameObject.SetActive(true);
             lightTimer += Time.fixedDeltaTime;
             sun.intensity = Mathf.Lerp(0f, sunIntensity, lightTimer);
             moon.intensity = Mathf.Lerp(moonIntensity, 0f, lightTimer);
+            if (moon.intensity == 0)
+            {
+                moon.gameObject.SetActive(false);
+            }
         }
 
         // Apply the rotation
@@ -186,14 +201,14 @@ public class GameController : MonoBehaviour
     public void FuelCar(float gasoline)
     {
         playerFuel += gasoline;
-        GetPaid(gasoline * literPrice, false);
+        playerMoney -= gasoline * literPrice;
         uiController.ATTUI();
     }
 
     public void ResetGC()
     {
-        //hour = 0;
-        //minute = 0;
+        hour = 0;
+        minute = 0;
         listClients = new ListClients();
         carIntegrityCurrent = carIntegrityMax;
         playerMoney = 10f;
@@ -207,6 +222,23 @@ public class GameController : MonoBehaviour
         if (playerStar >= 10)
             PlayerVitoria();
         isGamePaused = false;
+
+        skybox.SetColor("_ColorHorizon", nightColorHorizon);
+        skybox.SetFloat("_SizeDarknessUp", nightSizeDarknessUp);
+        RenderSettings.fogColor = nightFogColor;
+        sun.intensity = sunIntensity;
+        moon.intensity = moonIntensity;
+        sun.gameObject.SetActive(false);
+        moon.gameObject.SetActive(true);
+
+        var currentRotation = dayNightCycle.transform.eulerAngles;
+        currentRotation.x = 0f;
+        dayNightCycle.transform.eulerAngles = currentRotation;
+
+        sun.intensity = sunIntensity;
+        moon.intensity = moonIntensity;
+        sun.gameObject.SetActive(false);
+        moon.gameObject.SetActive(true);
     }
 
     public float GetDailyBill()

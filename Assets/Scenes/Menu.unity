@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.3138197, g: 0.1957881, b: 0.15229636, a: 1}
+  m_IndirectSpecularColor: {r: 0.37103078, g: 0.086254306, b: 0.0658218, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -14823,8 +14823,133 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4486988519327783631, guid: c0b3110d11aa02c44a30617f6987db6e,
         type: 3}
+      propertyPath: skybox
+      value: 
+      objectReference: {fileID: 2100000, guid: 42615741e4fb41f4b84a6cccdc96bd3e, type: 2}
+    - target: {fileID: 4486988519327783631, guid: c0b3110d11aa02c44a30617f6987db6e,
+        type: 3}
       propertyPath: playerMoney
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4486988519327783631, guid: c0b3110d11aa02c44a30617f6987db6e,
+        type: 3}
+      propertyPath: predioBloom
+      value: 
+      objectReference: {fileID: 2100000, guid: cf2cc521c2b696840b17e0a12ca56985, type: 2}
+    - target: {fileID: 4486988519327783631, guid: c0b3110d11aa02c44a30617f6987db6e,
+        type: 3}
+      propertyPath: dayFogColor.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4486988519327783631, guid: c0b3110d11aa02c44a30617f6987db6e,
+        type: 3}
+      propertyPath: dayFogColor.b
+      value: 0.12339252
+      objectReference: {fileID: 0}
+    - target: {fileID: 4486988519327783631, guid: c0b3110d11aa02c44a30617f6987db6e,
+        type: 3}
+      propertyPath: dayFogColor.g
+      value: 0.2147944
+      objectReference: {fileID: 0}
+    - target: {fileID: 4486988519327783631, guid: c0b3110d11aa02c44a30617f6987db6e,
+        type: 3}
+      propertyPath: dayFogColor.r
+      value: 0.48900002
+      objectReference: {fileID: 0}
+    - target: {fileID: 4486988519327783631, guid: c0b3110d11aa02c44a30617f6987db6e,
+        type: 3}
+      propertyPath: nightFogColor.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4486988519327783631, guid: c0b3110d11aa02c44a30617f6987db6e,
+        type: 3}
+      propertyPath: nightFogColor.b
+      value: 0.333
+      objectReference: {fileID: 0}
+    - target: {fileID: 4486988519327783631, guid: c0b3110d11aa02c44a30617f6987db6e,
+        type: 3}
+      propertyPath: nightFogColor.g
+      value: 0.17244641
+      objectReference: {fileID: 0}
+    - target: {fileID: 4486988519327783631, guid: c0b3110d11aa02c44a30617f6987db6e,
+        type: 3}
+      propertyPath: dayPredioBloom.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4486988519327783631, guid: c0b3110d11aa02c44a30617f6987db6e,
+        type: 3}
+      propertyPath: dayPredioBloom.b
+      value: 0.5484603
+      objectReference: {fileID: 0}
+    - target: {fileID: 4486988519327783631, guid: c0b3110d11aa02c44a30617f6987db6e,
+        type: 3}
+      propertyPath: dayPredioBloom.g
+      value: 0.6092827
+      objectReference: {fileID: 0}
+    - target: {fileID: 4486988519327783631, guid: c0b3110d11aa02c44a30617f6987db6e,
+        type: 3}
+      propertyPath: dayPredioBloom.r
+      value: 0.8018868
+      objectReference: {fileID: 0}
+    - target: {fileID: 4486988519327783631, guid: c0b3110d11aa02c44a30617f6987db6e,
+        type: 3}
+      propertyPath: dayColorHorizon.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4486988519327783631, guid: c0b3110d11aa02c44a30617f6987db6e,
+        type: 3}
+      propertyPath: dayColorHorizon.b
+      value: 0.24705878
+      objectReference: {fileID: 0}
+    - target: {fileID: 4486988519327783631, guid: c0b3110d11aa02c44a30617f6987db6e,
+        type: 3}
+      propertyPath: dayColorHorizon.g
+      value: 0.4246743
+      objectReference: {fileID: 0}
+    - target: {fileID: 4486988519327783631, guid: c0b3110d11aa02c44a30617f6987db6e,
+        type: 3}
+      propertyPath: dayColorHorizon.r
+      value: 0.96078426
+      objectReference: {fileID: 0}
+    - target: {fileID: 4486988519327783631, guid: c0b3110d11aa02c44a30617f6987db6e,
+        type: 3}
+      propertyPath: nightPredioBloom.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4486988519327783631, guid: c0b3110d11aa02c44a30617f6987db6e,
+        type: 3}
+      propertyPath: nightPredioBloom.b
+      value: 0.9897959
+      objectReference: {fileID: 0}
+    - target: {fileID: 4486988519327783631, guid: c0b3110d11aa02c44a30617f6987db6e,
+        type: 3}
+      propertyPath: nightPredioBloom.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4486988519327783631, guid: c0b3110d11aa02c44a30617f6987db6e,
+        type: 3}
+      propertyPath: nightPredioBloom.r
+      value: 0.89285713
+      objectReference: {fileID: 0}
+    - target: {fileID: 4486988519327783631, guid: c0b3110d11aa02c44a30617f6987db6e,
+        type: 3}
+      propertyPath: nightColorHorizon.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4486988519327783631, guid: c0b3110d11aa02c44a30617f6987db6e,
+        type: 3}
+      propertyPath: nightColorHorizon.b
+      value: 0.13333334
+      objectReference: {fileID: 0}
+    - target: {fileID: 4486988519327783631, guid: c0b3110d11aa02c44a30617f6987db6e,
+        type: 3}
+      propertyPath: nightColorHorizon.g
+      value: 0.003921569
+      objectReference: {fileID: 0}
+    - target: {fileID: 4486988519327783631, guid: c0b3110d11aa02c44a30617f6987db6e,
+        type: 3}
+      propertyPath: nightColorHorizon.r
+      value: 0.007843138
       objectReference: {fileID: 0}
     - target: {fileID: 5161887253953837568, guid: c0b3110d11aa02c44a30617f6987db6e,
         type: 3}

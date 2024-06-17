@@ -81,6 +81,8 @@ public class PlayerMovement : MonoBehaviour
             case < 0:
             case 0: //carro solto
                 SetBrakeLights(false);
+                ToggleVFX(tireSmokes, false);
+                ToggleTrails(tireMarks, false);
                 break;
 
             default: //acelerando
