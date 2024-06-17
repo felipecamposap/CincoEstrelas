@@ -13,7 +13,7 @@ public class ClientsSpawner : MonoBehaviour
     [SerializeField] private Text txtClient;
     [SerializeField] private Slider clientRating;
     [SerializeField] private Text txtClientPay;
-    float currentClientPay = 0;
+    private float currentClientPay = 0;
 
     private int indexName;
 
@@ -21,7 +21,7 @@ public class ClientsSpawner : MonoBehaviour
     {
         indexName = Random.Range(0, clientNames.Length);
         txtClient.text = clientNames[indexName];
-        int currentClientRating = Random.Range(2, 6);
+        var currentClientRating = Random.Range(2, 6);
         clientRating.value = currentClientRating;
         currentClientPay = Random.Range(5f, 10f) + (currentClientRating - 2);
         txtClientPay.text = $"R${currentClientPay:F2}";
@@ -35,8 +35,8 @@ public class ClientsSpawner : MonoBehaviour
 
     public void ShowClient(){
         Vector3 pos;
-        int rand = Random.Range(0, 2);
-        int i = Random.Range(0,locations.Length);
+        var rand = Random.Range(0, 2);
+        var i = Random.Range(0,locations.Length);
         pos = locations[i].position;
         //Debug.Log("Before: " + pos);
         if (Random.Range(0,2) == 0){
@@ -55,8 +55,8 @@ public class ClientsSpawner : MonoBehaviour
             ShowClientDestination(1, i);
         }
         //Debug.Log("After: " + pos);
-        GameObject clone = Instantiate(client, pos, Quaternion.identity);
-        Client scriptClient = clone.GetComponentInChildren<Client>();
+        var clone = Instantiate(client, pos, Quaternion.identity);
+        var scriptClient = clone.GetComponentInChildren<Client>();
         //scriptClient.payment = currentClientPay;
         //scriptClient.clientName = clientNames[indexName];
         GameController.controller.minimapaAlvo[0] = clone.transform;
@@ -66,7 +66,7 @@ public class ClientsSpawner : MonoBehaviour
     public void ShowClientDestination(int loc, int ind)
     {
         Vector3 pos;
-        int rand = Random.Range(0, 2);
+        var rand = Random.Range(0, 2);
         ind = Random.Range(0, locations.Length);
         pos = locations[ind].position;
         if (loc == 1)
@@ -83,7 +83,7 @@ public class ClientsSpawner : MonoBehaviour
             //Debug.Log("posX: " + pos.x);
             //Debug.Log("posZ: " + pos.z);
         }
-        GameObject clone = Instantiate(clientDestination, pos, Quaternion.identity);
+        var clone = Instantiate(clientDestination, pos, Quaternion.identity);
         GameController.controller.minimapaAlvo[1] = clone.transform;
         //CloseCellPhone();
     }

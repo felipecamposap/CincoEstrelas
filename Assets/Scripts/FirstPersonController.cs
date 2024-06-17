@@ -14,7 +14,7 @@ public class FirstPersonController : MonoBehaviour
     private Vector3 moveDirection = Vector3.zero;
     private float pitch = 0.0f;
 
-    void Start()
+    private void Start()
     {
         characterController = GetComponent<CharacterController>();
 
@@ -23,16 +23,16 @@ public class FirstPersonController : MonoBehaviour
         Cursor.visible = false;
     }
 
-    void Update()
+    private void Update()
     {
         // Check if the character is grounded
         if (characterController.isGrounded)
         {
             // Calculate movement direction based on input
-            float horizontalInput = Input.GetAxis("Horizontal");
-            float verticalInput = Input.GetAxis("Vertical");
-            Vector3 forwardMovement = transform.TransformDirection(Vector3.forward) * verticalInput * moveSpeed;
-            Vector3 strafeMovement = transform.TransformDirection(Vector3.right) * horizontalInput * moveSpeed;
+            var horizontalInput = Input.GetAxis("Horizontal");
+            var verticalInput = Input.GetAxis("Vertical");
+            var forwardMovement = transform.TransformDirection(Vector3.forward) * verticalInput * moveSpeed;
+            var strafeMovement = transform.TransformDirection(Vector3.right) * horizontalInput * moveSpeed;
             moveDirection = forwardMovement + strafeMovement;
 
             // Jump
@@ -46,8 +46,8 @@ public class FirstPersonController : MonoBehaviour
         moveDirection.y -= gravity * Time.deltaTime;
 
         // Rotate the player based on mouse input
-        float mouseX = Input.GetAxis("Mouse X") * rotationSpeed;
-        float mouseY = Input.GetAxis("Mouse Y") * pitchSpeed;
+        var mouseX = Input.GetAxis("Mouse X") * rotationSpeed;
+        var mouseY = Input.GetAxis("Mouse Y") * pitchSpeed;
         pitch -= mouseY;
         pitch = Mathf.Clamp(pitch, -90.0f, 90.0f);
 

@@ -8,13 +8,13 @@ public class CameraMovement : MonoBehaviour
     [SerializeField] private Transform targetRot;
     private float posY;
 
-    void Start()
+    private void Start()
     {
         posY = transform.position.y;
     }
 
     // Update is called once per frame
-    void FixedUpdate()
+    private void FixedUpdate()
     {
         transform.position = Vector3.Lerp(new Vector3(transform.position.x, posY, transform.position.z), pos.position, posSpeed * Time.deltaTime);
 

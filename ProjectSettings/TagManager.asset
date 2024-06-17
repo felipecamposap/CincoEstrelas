@@ -13,6 +13,7 @@ TagManager:
   - Sidewalk
   - Road
   - Npc
+  - DayNightCycle
   layers:
   - Default
   - TransparentFX

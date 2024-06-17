@@ -42,7 +42,7 @@ public class Client : MonoBehaviour
         }
         if (touchPlayer == 0 || touchPlayer == 3)
         {
-            Vector3 targetPos = target.position;
+            var targetPos = target.position;
             targetPos.y = 1.4f;
             transform.position = Vector3.Lerp(transform.position, targetPos, speed * Time.deltaTime);
             if (Vector3.Distance(transform.position, target.position) <= 2.5f)
@@ -91,13 +91,7 @@ public class Client : MonoBehaviour
     {
         if (touchPlayer == 2 && other.CompareTag("Destination"))
         {
-            GameController.controller.GetPaid(clientPayment, true);
-            transform.parent = null;
-            target = other.transform;
-            touchPlayer++;
-            GameController.controller.AddHistoryClient(new ClientsParameters(clientName, clientRating, clientPayment));
-            GameController.controller.alvoMinimapa.index++;
-            GameController.controller.uiController.EsconderEstrelaCorrida();
+            ArriveDestination(other.transform);
 
         }
         else if (other.CompareTag("Player") && touchPlayer == -1 && !playertouch)
@@ -112,6 +106,17 @@ public class Client : MonoBehaviour
 
         }
 
+    }
+
+    public void ArriveDestination(Transform _target)
+    {
+        GameController.controller.GetPaid(clientPayment, true);
+        transform.parent = null;
+        target = _target;
+        touchPlayer++;
+        GameController.controller.AddHistoryClient(new ClientsParameters(clientName, clientRating, clientPayment));
+        GameController.controller.alvoMinimapa.index++;
+        GameController.controller.uiController.EsconderEstrelaCorrida();
     }
 
     private void OnTriggerStay(Collider other)

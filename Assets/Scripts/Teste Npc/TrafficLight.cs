@@ -1,24 +1,41 @@
 using UnityEngine;
 
-public class TrafficLight : MonoBehaviour
+
+public interface IObserverTrafficLight
+{
+    public void Notify();
+}
+
+[DefaultExecutionOrder(99)]
+public class TrafficLight : MonoBehaviour, IObserverTrafficLight
 {
     public LinkedStreets[] streets;
     public bool[] isRed;
-    [SerializeField] bool isTraffic;
-    [SerializeField] float trafficTime;
-    [SerializeField] int index;
+    [SerializeField] private bool isTraffic;
+    //[SerializeField] float trafficTime;
+    [SerializeField] private int index;
 
-    private void Start()
+    private void OnEnable()
     {
-        if(isTraffic)
+        if (isTraffic)
         {
-            InvokeRepeating("ChangeTraffic", trafficTime, trafficTime);
+            Debug.Log(GameController.controller);
+            Debug.Log(GameController.controller.obsTrafficLight);
+            GameController.controller.obsTrafficLight.AddListTrafficLight(this);
+            //invokerepeating("changetraffic", traffictime, traffictime);
         }
+        
     }
 
-    private void ChangeTraffic()
+    //private void ChangeTraffic()
+    //{
+        
+        
+    //}
+
+    public void Notify()
     {
-        for (int i = 0; i < isRed.Length; i++)
+        for (var i = 0; i < isRed.Length; i++)
         {
             isRed[i] = true;
         }
@@ -26,7 +43,5 @@ public class TrafficLight : MonoBehaviour
             index = 0;
         isRed[index] = false;
         index++;
-        
     }
-
 }

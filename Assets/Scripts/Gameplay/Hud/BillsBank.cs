@@ -14,10 +14,10 @@ public class BillsBank : MonoBehaviour
 
 
     // Start is called before the first frame update
-    void OnEnable()
+    private void OnEnable()
     {
         currentMoney.text = $"R${GameController.controller.PlayerMoney:F2}";
-        waterText.text = $"¡gua = -R${GameController.controller.vwater:F2}";
+        waterText.text = $"√Ågua = -R${GameController.controller.vwater:F2}";
         lightText.text = $"Luz = -R${GameController.controller.vlight:F2}";
         internetText.text = $"Internet = -R${GameController.controller.internet:F2}";
         mobileText.text = $"3g = -R${GameController.controller.netMobile:F2}";

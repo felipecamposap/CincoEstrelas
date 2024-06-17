@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1331262252000518468}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Curva90
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -170,7 +170,7 @@ PrefabInstance:
     - target: {fileID: 1079115779047075150, guid: 5fcac37113f70e748baf74ef1a7f6066,
         type: 3}
       propertyPath: m_Layer
-      value: 0
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 1079115779047075150, guid: 5fcac37113f70e748baf74ef1a7f6066,
         type: 3}

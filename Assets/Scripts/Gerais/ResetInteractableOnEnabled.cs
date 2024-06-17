@@ -3,12 +3,12 @@ using UnityEngine.UI;
 
 public class ResetInteractableOnEnabled : MonoBehaviour
 {
-    [SerializeField] Slider[] slider;
+    [SerializeField] private Slider[] slider;
 
 
-    void OnEnable()
+    private void OnEnable()
     {
-        foreach(Slider slider in slider)
+        foreach(var slider in slider)
         {
             slider.value = 0;
         }

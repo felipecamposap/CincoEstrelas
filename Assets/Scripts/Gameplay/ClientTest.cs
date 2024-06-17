@@ -1,24 +1,39 @@
+using System.Threading;
 using UnityEngine;
 using UnityEngine.UI;
 
 
 public class ClientTest : MonoBehaviour
 {
-    [SerializeField] Database db;
-    [SerializeField] GameObject clientPrefab;
-    [SerializeField] GameObject destinyPrefab;
-    [SerializeField] Transform[] blockPos;
-    [SerializeField] int blocksVariation;
+    [SerializeField] private Database db;
+    [SerializeField] private GameObject clientPrefab;
+    [SerializeField] private GameObject destinyPrefab;
+    [SerializeField] private Transform[] blockParent;
+    [SerializeField] private Transform[] blockPos;
+    [SerializeField] private int blocksVariation;
     [Header("Propriedades da Hud: ")]
-    [SerializeField] Text txtClientName;
-    [SerializeField] Text txtClientPay;
-    [SerializeField] Slider sldClientRating;
+    [SerializeField]
+    private Text txtClientName;
+    [SerializeField] private Text txtClientPay;
+    [SerializeField] private Slider sldClientRating;
     
 
     //----
     private string clientName;
     private int rating;
     private float pay;
+
+    private void Start()
+    {
+        blockPos = new Transform[blockParent.Length * 2];
+        var countPos = 0;
+        for (var i = 0; i < blockParent.Length;i++)
+            for (var j = 0; j < 2; j++)
+            {
+                blockPos[countPos] = blockParent[i].GetChild(j);
+                countPos++;
+            }
+    }
 
     public void FindClient()
     {
@@ -34,8 +49,8 @@ public class ClientTest : MonoBehaviour
     [ContextMenu("Spawn Client")]
     public void SpawnClient()
     {
-        int indexClient = 0;
-        int indexDesty = 0;
+        var indexClient = 0;
+        var indexDesty = 0;
         SetIndex(out indexClient, out indexDesty);
         // -----  Instanciando client  ----->>
         InstanciateObject(clientPrefab, indexClient, 0);
@@ -47,14 +62,14 @@ public class ClientTest : MonoBehaviour
 
     private void InstanciateObject(GameObject _instObj, int _index, int gcIndex)
     {
-        Vector3 pos1 = blockPos[_index].position;
+        var pos1 = blockPos[_index].position;
         Vector3 pos2;
         if ((_index + 1) % blocksVariation == 0)
             pos2 = blockPos[_index - 1].position;
         else
             pos2 = blockPos[_index + 1].position;
-        float rangeSpawn = Random.Range(0.2f, 0.8f);
-        GameObject clone = Instantiate(_instObj, Vector3.Lerp(pos1, pos2, rangeSpawn), Quaternion.identity);
+        var rangeSpawn = Random.Range(0.2f, 0.8f);
+        var clone = Instantiate(_instObj, Vector3.Lerp(pos1, pos2, rangeSpawn), Quaternion.identity);
         GameController.controller.minimapaAlvo[gcIndex] = clone.transform;
         if(gcIndex == 0)
         {
@@ -64,7 +79,7 @@ public class ClientTest : MonoBehaviour
 
     private void SetIndex(out int _indexClient, out int _indexDesty)
     {
-        int numBlocks = Random.Range(0, blockPos.Length / blocksVariation);
+        var numBlocks = Random.Range(0, blockPos.Length / blocksVariation);
         _indexClient = Random.Range(0, blocksVariation) + numBlocks;
         _indexDesty = Random.Range(0, blockPos.Length / blocksVariation);
         if (_indexDesty == numBlocks || _indexDesty == _indexClient){

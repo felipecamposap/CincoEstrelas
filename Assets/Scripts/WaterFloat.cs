@@ -7,12 +7,12 @@ public class WaterFloat : MonoBehaviour {
 
 	public float WaterHeight = 15.5f;
 	// Use this for initialization
-	void Start () {
+	private void Start () {
 		
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	private void Update () {
 
 		if (transform.position.y < WaterHeight) {
 			//Vector3 newposition = Vector3 (transform.position.x, WaterHeight, transform.position.y);

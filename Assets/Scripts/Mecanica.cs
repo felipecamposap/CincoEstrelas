@@ -4,23 +4,40 @@ using UnityEngine;
 
 public class Mecanica : MonoBehaviour
 {
-    [Header("0 - atual | 1 - ApÛs conserto")]
-    [SerializeField] Image[] fillImages; // 0 - Atual | 1 - Conserto
-    [SerializeField] Slider sldIntegrity;
-    [SerializeField] Text txtPrice;
-    [SerializeField] Button btnPagar;
+    [Header("0 - atual | 1 - Ap√≥s conserto")] [SerializeField]
+    private Image[] fillImages; // 0 - Atual | 1 - Conserto
+
+    [SerializeField] private Slider sldIntegrity;
+    [SerializeField] private Text txtPrice;
+    [SerializeField] private Button btnPagar;
 
     private float price;
     private float brokenAmount, brokenAmountPerCent, maxLife, currentLife, repairPerCent;
+
+    [Header("Upgrades")] [SerializeField] private Button[] btnUpgrade; // 0 - Motor | 1 - Direcao
+    [SerializeField] private Text priceUpgradeMotor;
+
+    // ----- Variaveis de Controle ----- \\
+    private float playerMoney;
+    private float motorPower;
+    private float motorUpgradePrice;
 
 
     private void OnEnable()
     {
         UpdateUI();
-
+        SetControlVariables();
         GameController.controller.Interaction(true);
+    }
 
-        //AttUI();
+    public void SetControlVariables()
+    {
+        playerMoney = GameController.controller.PlayerMoney;
+        motorUpgradePrice = GameController.motorUpgradePrice;
+        motorPower = GameController.controller.player.motorPower;
+        priceUpgradeMotor.text = $"Pre√ßo: R${GameController.motorUpgradePrice}:R2";
+
+        btnUpgrade[0].interactable = motorPower < 2000 && playerMoney > motorUpgradePrice;
     }
 
     public void UpdateUI()
@@ -37,14 +54,19 @@ public class Mecanica : MonoBehaviour
 
     public void BuyIntegrity()
     {
+        var player = GameController.controller.player;
         GameController.controller.RecoverIntegrity(brokenAmount * repairPerCent, -price);
-        UpdateUI();
-
+        if (GameController.controller.carIntegrityCurrent > GameController.controller.carIntegrityMax / 4)
+        {
+            player.ToggleVFX(player.damageVFX, false);
+            
+        }
+            UpdateUI();
     }
 
     public void RepairSlider(float _value)
     {
-        price = (brokenAmount * _value) * 5f; // preÁo multiplier
+        price = (brokenAmount * _value) * 5f; // pre√ßo multiplier
         repairPerCent = _value;
         fillImages[1].fillAmount = brokenAmountPerCent + (1 - brokenAmountPerCent) * _value;
         txtPrice.text = $"R${price:F2}";
@@ -61,10 +83,17 @@ public class Mecanica : MonoBehaviour
 
     public void AttUI()
     {
-        for (int i = 0; i < fillImages.Length; i++)
+        for (var i = 0; i < fillImages.Length; i++)
             fillImages[i].fillAmount = maxLife;
 
         //sldIntegrity.maxValue = GameController.controller.carIntegrityMax - GameController.controller.carIntegrityCurrent;
         fillImages[0].fillAmount = GameController.controller.carIntegrityCurrent;
+    }
+
+    public void UpgradeMotor()
+    {
+        GameController.controller.GetPaid(motorUpgradePrice, false);
+        GameController.controller.player.UpgradeMotor();
+        SetControlVariables();
     }
 }

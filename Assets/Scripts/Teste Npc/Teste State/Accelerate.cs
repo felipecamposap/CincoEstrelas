@@ -2,18 +2,18 @@ using UnityEngine;
 
 public class Accelerate : MonoBehaviour, IState
 {
-    Npc npc;
-    float acceleration = 0.090f;
-    float steeringPower = 0.006f;
-    float maxSpeed = 8;
-    float bkSpeed;
+    private Npc npc;
+    private float acceleration = 0.090f;
+    private float steeringPower = 0.006f;
+    private float maxSpeed = 8;
+    private float bkSpeed;
 
     // ------
-    Vector3 steeringTotal = Vector3.zero;
-    float SteeringForce = 0;
-    Vector3 velocity = Vector3.zero;
-    float currentSpeed;
-    Vector3 desiredVelocity;
+    private Vector3 steeringTotal = Vector3.zero;
+    private float SteeringForce = 0;
+    private Vector3 velocity = Vector3.zero;
+    private float currentSpeed;
+    private Vector3 desiredVelocity;
 
 
 
@@ -45,7 +45,7 @@ public class Accelerate : MonoBehaviour, IState
         if ((npc.targetPosition - npc.transform.position).magnitude < 2f){
             npc.GetNextDestination();
         }
-        float modifierSteering = Mathf.Max(currentSpeed / (maxSpeed * 80), 0);
+        var modifierSteering = Mathf.Max(currentSpeed / (maxSpeed * 80), 0);
 
         currentSpeed += currentSpeed < maxSpeed ? acceleration : 0;
         SteeringForce += SteeringForce < maxSpeed ? steeringPower +  modifierSteering : 0;
@@ -58,9 +58,9 @@ public class Accelerate : MonoBehaviour, IState
     {
         try
         {
-            TrafficLight tl = _hit.transform.GetComponent<TrafficLight>();
-            int index = 0;
-            for (int i = 0; i < tl.streets.Length; i++)
+            var tl = _hit.transform.GetComponent<TrafficLight>();
+            var index = 0;
+            for (var i = 0; i < tl.streets.Length; i++)
             {
                 index = i;
                 if (npc.currentStreet == tl.streets[i])
@@ -79,13 +79,13 @@ public class Accelerate : MonoBehaviour, IState
         }
     }
 
-    void SteeringCalculate()
+    private void SteeringCalculate()
     {
 
-        // Calcula a direção desejada para o próximo destino
+        // Calcula a direï¿½ï¿½o desejada para o prï¿½ximo destino
         desiredVelocity = (npc.targetPosition - npc.transform.position).normalized;
 
-        // Calcula a força de direção
+        // Calcula a forï¿½a de direï¿½ï¿½o
         steeringTotal = (desiredVelocity - velocity) * SteeringForce;
 
 
@@ -93,8 +93,8 @@ public class Accelerate : MonoBehaviour, IState
         velocity = npc.transform.forward + steeringTotal * Time.deltaTime;
 
 
-        // Rotaciona para olhar na direção do movimento
-        if (velocity.magnitude > 0.1f) // Verifica se há movimento significativo
+        // Rotaciona para olhar na direï¿½ï¿½o do movimento
+        if (velocity.magnitude > 0.1f) // Verifica se hï¿½ movimento significativo
         {
             npc.transform.rotation = Quaternion.LookRotation(velocity);
         }

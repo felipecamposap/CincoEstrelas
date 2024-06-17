@@ -13,14 +13,14 @@ public class RaceScript : MonoBehaviour
     [SerializeField] private int index = 0;
     private NavMeshAgent nva;
 
-    void Start()
+    private void Start()
     {
         rb.GetComponent<Rigidbody>();
         nva = GetComponentInParent<NavMeshAgent>();
         nva.SetDestination(pos[index].position);
     }
 
-    void OnTriggerEnter(Collider col)
+    private void OnTriggerEnter(Collider col)
     {
         if(col.gameObject.CompareTag("Waypoint")) 
         {
@@ -29,7 +29,7 @@ public class RaceScript : MonoBehaviour
         }
     }
 
-    void OnCollisionEnter(Collision col)
+    private void OnCollisionEnter(Collision col)
     {
         if(col.collider.gameObject.CompareTag("Player") || col.collider.gameObject.CompareTag("NPC"))
         {
@@ -39,9 +39,9 @@ public class RaceScript : MonoBehaviour
         }
     }
 
-    void Resume()
+    private void Resume()
     {
-        Rigidbody rb = GetComponent<Rigidbody>();
+        var rb = GetComponent<Rigidbody>();
         rb.velocity = Vector3.zero;
         rb.angularVelocity = Vector3.zero;
         nva.isStopped = false;

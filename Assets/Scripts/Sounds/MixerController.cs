@@ -6,8 +6,8 @@ using UnityEngine.UI;
 public class MixerController : MonoBehaviour
 {
     [SerializeField] private AudioMixer audioMixer;
-    [SerializeField] Slider[] mixerSliders;
-    [SerializeField] bool startPlay;
+    [SerializeField] private Slider[] mixerSliders;
+    [SerializeField] private bool startPlay;
 
 
     public void Start()
@@ -82,7 +82,7 @@ public class MixerController : MonoBehaviour
 
     public void MasterVolume()
     {
-        int value = 0;
+        var value = 0;
         switch (mixerSliders[0].value)
         {
             case 0:
@@ -114,7 +114,7 @@ public class MixerController : MonoBehaviour
 
     public void MusicaVolume()
     {
-        int value = 0;
+        var value = 0;
         switch (mixerSliders[1].value)
         {
             case 0:
@@ -145,7 +145,7 @@ public class MixerController : MonoBehaviour
 
     public void EfeitoVolume()
     {
-        int value = 0;
+        var value = 0;
         switch (mixerSliders[2].value)
         {
             case 0:

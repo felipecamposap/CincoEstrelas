@@ -27,10 +27,11 @@ Material:
   m_ValidKeywords:
   - _ADDITIONAL_LIGHTS_ENABLED
   - _ADDITIONAL_LIGHTS_SPECULAR
+  - _ANISO_SPECULAR
   - _ENVIRONMENT_LIGHTING_ENABLED
   - _FOG
   - _FRESNEL
-  - _RAMP_TRIPLE
+  - _SPECULAR
   m_InvalidKeywords:
   - _ZWRITE_ON
   m_LightmapFlags: 4
@@ -109,7 +110,7 @@ Material:
     - _AdditionalLightsSpecular: 1
     - _AlphaClip: 0
     - _AlphaToMask: 0
-    - _AnisoSpecular: 0
+    - _AnisoSpecular: 1
     - _Blend: 0
     - _BlendModePreserveSpecular: 1
     - _BumpScale: 1
@@ -126,8 +127,8 @@ Material:
     - _EnvironmentReflections: 1
     - _Fog: 1
     - _Fresnel: 1
-    - _FresnelSmoothness: 0
-    - _FresnelThickness: 0.58
+    - _FresnelSmoothness: 0.156
+    - _FresnelThickness: 0.857
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
@@ -136,10 +137,10 @@ Material:
     - _Parallax: 0.005
     - _PureShadowColor: 0
     - _QueueOffset: 0
-    - _Ramp0: -0.07
+    - _Ramp0: -0.796
     - _Ramp1: 0.5
     - _RampSmoothness: 0
-    - _RampTriple: 1
+    - _RampTriple: 0
     - _ReceiveShadows: 1
     - _ReflectionBlend: 0.5
     - _ReflectionProbes: 0
@@ -148,7 +149,7 @@ Material:
     - _ShadowMask: 0
     - _Smoothness: 0.5
     - _SmoothnessTextureChannel: 0
-    - _Specular: 0
+    - _Specular: 1
     - _SpecularExponent: 200
     - _SpecularHighlights: 1
     - _SpecularSmoothness: 0.025
@@ -161,7 +162,7 @@ Material:
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
-    - _BaseColor: {r: 0.4061054, g: 0.47253096, b: 0.509434, a: 1}
+    - _BaseColor: {r: 0.6132076, g: 0.6132076, b: 0.6132076, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _FresnelColor: {r: 1, g: 1, b: 1, a: 1}

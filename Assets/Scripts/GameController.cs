@@ -1,20 +1,23 @@
+using System;
 using UnityEngine;
+using UnityEngine.Experimental.GlobalIllumination;
 using UnityEngine.SceneManagement;
+using Random = UnityEngine.Random;
+using RenderSettings = UnityEngine.RenderSettings;
 
-
+[DefaultExecutionOrder(-99)]
 public class GameController : MonoBehaviour
 {
-    [Header("Variables statics")]
-    public static GameController controller;
+    [Header("Variables statics")] public static GameController controller;
     public Interface uiController;
     [field: SerializeField] public ListClients listClients;
     public AudioSource audioSource;
     public AlvoMinimapa alvoMinimapa;
     public PlayerMovement player;
+    public ObserverTrafficLight obsTrafficLight;
 
 
-    [Header("Status jogador:")]
-    public float carIntegrityMax; // Integridade do carro
+    [Header("Status jogador:")] public float carIntegrityMax; // Integridade do carro
     public float carIntegrityCurrent; // Integridade do carro
     [SerializeField] private float playerFuel = 55; // quantidade atual de gasolina
     public readonly float maxPlayerFuel = 55; // Maximo do tanque de gasolina
@@ -24,57 +27,57 @@ public class GameController : MonoBehaviour
     public int penalty = 0;
     [SerializeField] private float playerMoney = 100f;
     public int playerStar = 0;
-    private float debt;
+    //public float lastMoney;
 
-    [SerializeField] public readonly float literPrice = 5.86f;
+    [SerializeField] public const float literPrice = 5.86f;
     private float ratingSum = 0;
     private bool isGamePaused = true;
 
     public int passwordClient { get; set; }
     [HideInInspector] public bool passwordCorrect;
 
+    // ----- Config Upgrades
+    [Header("Upgrades Config")] [SerializeField]
+    public const float motorUpgradePrice = 100f;
+
+
     // ----- Tempo Jogo
-    [Header("Tempo Jogo")]
-    [SerializeField] private int hour, minute;
+    [Header("Tempo Jogo")] [SerializeField]
+    private int hour, minute;
+
+    [SerializeField] private GameObject dayNightCycle;
+    private Light sun, moon;
+    [SerializeField] private Material skybox, predioBloom;
+    [SerializeField] private Color dayColorHorizon, nightColorHorizon, nightFogColor, dayFogColor, nightPredioBloom, dayPredioBloom;
+    private float sunIntensity, moonIntensity, lightTimer;
     private float timerMinute;
 
-    [Header("Gastos")]
-    public readonly float vwater = 80;
+    private float nightSizeDarknessUp = 2f,
+        daySizeDarknessUp = 1.5f,
+        nightBuildingEmission = 6,
+        dayBuildingEmission = 0.5f;
+
+    [Header("Gastos")] public readonly float vwater = 80;
     public readonly float vlight = 300;
     public readonly float internet = 100;
     public readonly float netMobile = 50;
     public readonly float iptu = 125;
     public readonly float food = 600;
+    public float debtDay = 0;
 
-    public float AvgRating
-    {
-        get { return (totalClients > 0 ? ratingSum / totalClients : 0); }
-    }
+    public float AvgRating => (totalClients > 0 ? ratingSum / totalClients : 0);
 
-    public float PlayerMoney
-    {
-        get { return playerMoney; }
-    }
+    public float PlayerMoney => playerMoney;
 
-    public float PlayerFuel
-    {
-        get { return playerFuel; }
-    }
+    public float PlayerFuel => playerFuel;
 
-    public float AvailableFuelSpace
-    {
-        get { return maxPlayerFuel - playerFuel; }
-    }
+    public float AvailableFuelSpace => maxPlayerFuel - playerFuel;
 
-    public float BuyableLiters
-    {
-        get { return (playerMoney / literPrice); }
-    }
+    public float BuyableLiters => (playerMoney / literPrice);
 
     public Transform[] minimapaAlvo = new Transform[2];
 
-    [Header("Trapa�as: ")]
-    public bool[] trapacas = new bool[3];
+    [Header("Trapa�as: ")] public bool[] trapacas = new bool[3];
 
 
     private void Awake()
@@ -82,42 +85,96 @@ public class GameController : MonoBehaviour
         listClients = new ListClients();
         DontDestroyOnLoad(this);
 
-        if (controller == null)
+        if (!controller)
             controller = this;
         else
             Destroy(gameObject);
 
-        if (SceneManager.GetActiveScene().name != "Menu")
-        {
-            ToggleCursor(false);
-        }
-        else
-        {
-            ToggleCursor(true);
-        }
+        ToggleCursor(SceneManager.GetActiveScene().name == "Menu");
     }
 
     public void Update()
     {
-        if(!isGamePaused)
-            if(timerMinute < Time.time)
-            {
-                minute++;
-                if(minute == 60)
-                {
-                    minute = 0;
-                    hour++;
-                }
-                timerMinute = Time.time + 2;
-                if (hour == 6)
-                {
-                    isGamePaused = true;
-                    player.inGame = false;
-                    uiController.NextDay();
-                }
+        if (isGamePaused) return;
+        if (!(timerMinute < Time.time)) return;
+        minute++;
+        if (minute == 60)
+        {
+            minute = 0;
+            hour++;
+        }
 
-                uiController.SetHour(hour, minute);
+        timerMinute = Time.time + 1.25f;
+        if (hour == 6)
+        {
+            isGamePaused = true;
+            player.inGame = false;
+            //Debug.Log(playerMoney - GetDailyBill());
+            if (playerMoney - GetDailyBill() <= 0)
+            {
+                uiController.GameOver(1);
+                Cursor.visible = true;
+                Cursor.lockState = CursorLockMode.None;
+                if (alvoMinimapa)
+                {
+                    foreach (var item in minimapaAlvo)
+                        Destroy(item);
+                    GetPaid(0, true);
+                }
             }
+            else
+                uiController.NextDay();
+        }
+
+        uiController.SetHour(hour, minute);
+    }
+
+    private void FixedUpdate()
+    {
+        if (SceneManager.GetActiveScene().name == "Luminopolis")
+            UpdateDayNightCycle();
+    }
+
+    private void UpdateDayNightCycle()
+    {
+        if (!dayNightCycle)
+        {
+            dayNightCycle = GameObject.FindWithTag("DayNightCycle");
+        }
+
+        if (!sun || !moon)
+        {
+            sun = dayNightCycle.transform.GetChild(0).GetChild(0).GetComponent<Light>();
+            sunIntensity = sun.intensity;
+            moon = dayNightCycle.transform.GetChild(1).GetChild(0).GetComponent<Light>();
+            moonIntensity = moon.intensity;
+        }
+
+        // Calculate the target angle based on the current time
+        var timeOfDay = ((hour * 60) + minute) / 60f; // Fractional hours
+        var targetAngle = Mathf.Lerp(0, 90, timeOfDay / 6f);
+
+
+        skybox.SetColor("_ColorHorizon", Color.Lerp(nightColorHorizon, dayColorHorizon, timeOfDay / 6));
+        skybox.SetFloat("_SizeDarknessUp", Mathf.Lerp(nightSizeDarknessUp, daySizeDarknessUp, timeOfDay / 6));
+        RenderSettings.fogColor = Color.Lerp(nightFogColor, dayFogColor, timeOfDay / 6);
+        predioBloom.SetColor("_EmissionColor", Color.Lerp(nightPredioBloom, dayPredioBloom, timeOfDay / 6));
+        if (hour >= 4)
+        {
+            sun.gameObject.SetActive(true);
+            lightTimer += Time.fixedDeltaTime;
+            sun.intensity = Mathf.Lerp(0f, sunIntensity, lightTimer);
+            moon.intensity = Mathf.Lerp(moonIntensity, 0f, lightTimer);
+            if (moon.intensity == 0)
+            {
+                moon.gameObject.SetActive(false);
+            }
+        }
+
+        // Apply the rotation
+        var currentRotation = dayNightCycle.transform.eulerAngles;
+        currentRotation.x = targetAngle;
+        dayNightCycle.transform.eulerAngles = currentRotation;
     }
 
     public void ToggleCursor(bool value)
@@ -139,7 +196,6 @@ public class GameController : MonoBehaviour
         carIntegrityCurrent += _integrity;
         GetPaid(_value, false);
         uiController?.ATTUI(); // Checar UI
-
     }
 
     public void FuelCar(float gasoline)
@@ -155,7 +211,7 @@ public class GameController : MonoBehaviour
         minute = 0;
         listClients = new ListClients();
         carIntegrityCurrent = carIntegrityMax;
-        playerMoney = 100f;
+        playerMoney = 10f;
         playerFuel = maxPlayerFuel;
         totalClients = 0;
         if (trapacas[1])
@@ -167,17 +223,38 @@ public class GameController : MonoBehaviour
             PlayerVitoria();
         isGamePaused = false;
 
+        skybox.SetColor("_ColorHorizon", nightColorHorizon);
+        skybox.SetFloat("_SizeDarknessUp", nightSizeDarknessUp);
+        RenderSettings.fogColor = nightFogColor;
+        sun.intensity = sunIntensity;
+        moon.intensity = moonIntensity;
+        sun.gameObject.SetActive(false);
+        moon.gameObject.SetActive(true);
+
+        var currentRotation = dayNightCycle.transform.eulerAngles;
+        currentRotation.x = 0f;
+        dayNightCycle.transform.eulerAngles = currentRotation;
+
+        sun.intensity = sunIntensity;
+        moon.intensity = moonIntensity;
+        sun.gameObject.SetActive(false);
+        moon.gameObject.SetActive(true);
     }
 
     public float GetDailyBill()
     {
-        return vwater + vlight + internet + netMobile + iptu + food;
+        var debtAll = (vwater + vlight + internet + netMobile + iptu + food + debtDay) / 30;
+        return debtAll;
     }
 
     public void NextDay()
     {
         hour = 0;
         minute = 0;
+        if (playerMoney < GetDailyBill())
+            GetPaid(debtDay = playerMoney - GetDailyBill(), false);
+        else
+            debtDay = 0;
         isGamePaused = false;
         player.inGame = true;
     }
@@ -196,13 +273,14 @@ public class GameController : MonoBehaviour
             uiController.ATTUI();
             uiController.Gasolina(playerFuel / maxPlayerFuel);
         }
+
         if (playerFuel <= 0)
             uiController.GameOver(1);
     }
 
-    public void NewRating()
+    private void NewRating()
     {
-        int rating = Mathf.Clamp(10 - (penalty * 2), 2, 10);
+        var rating = Mathf.Clamp(10 - (penalty * 2), 2, 10);
         ratingSum += rating;
         totalClients++;
         if (rating > playerStar)
@@ -213,10 +291,9 @@ public class GameController : MonoBehaviour
         if (playerStar >= 10)
             PlayerVitoria();
         penalty = 0;
-
     }
 
-    public void SetGamePaused(bool value)
+    private void SetGamePaused(bool value)
     {
         if (value == true)
         {
@@ -262,6 +339,7 @@ public class GameController : MonoBehaviour
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
         }
+
         uiController.DamageAnimation();
         uiController.ATTUI();
     }
@@ -271,5 +349,4 @@ public class GameController : MonoBehaviour
         ToggleCursor(value);
         SetGamePaused(value);
     }
-
 }

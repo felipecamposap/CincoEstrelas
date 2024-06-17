@@ -4,29 +4,31 @@ using UnityEngine.UI;
 
 public class EndDay : MonoBehaviour
 {
-    [SerializeField] Text dayBill;
-    [SerializeField] Text currentMoney;
-    float moneyCutscene;
-    [SerializeField] Animator animator;
+    [SerializeField] private Text dayBill;
+    [SerializeField] private Text currentMoney;
+    private float moneyCutscene;
+    [SerializeField] private Animator animator;
 
     public void OnEnable()
     {
-        animator.SetBool("FadeOut", false);
+        dayBill.text = $"Custo diÃ¡rio: R${GameController.controller.GetDailyBill():F2}";
         moneyCutscene = 0;
-        dayBill.text = $"Custo diário: {GameController.controller.GetDailyBill() / 30:F2}";
-        InvokeRepeating("MoneyCutscene", 0, 0.01f);
+        animator.SetBool("FadeOut", false);
+        InvokeRepeating("MoneyCutscene", 2, 0.01f);
     }
 
     public void MoneyCutscene()
     {
-        moneyCutscene += 0.1f;
-        if(moneyCutscene > GameController.controller.PlayerMoney)
+        //Debug.Log(GameController.controller.GetDailyBill() + GameController.controller.debtDay);
+        moneyCutscene += (GameController.controller.GetDailyBill() + GameController.controller.debtDay) * 0.01f;
+        //moneyCutscene += 0.01f;
+        if (moneyCutscene > GameController.controller.PlayerMoney)
         {
             moneyCutscene = GameController.controller.PlayerMoney;
             CancelInvoke();
             animator.SetBool("FadeOut", true);
         }
-        currentMoney.text = $"Ganho do dia: {moneyCutscene:F2}";
+        currentMoney.text = $"Ganho do dia: R${moneyCutscene:F2}";
     }
 
     public void Close() 

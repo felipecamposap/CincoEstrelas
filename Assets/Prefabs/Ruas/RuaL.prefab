@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1843219969450286435}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: RuaL
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -99,7 +99,7 @@ PrefabInstance:
     - target: {fileID: 7853319295831381647, guid: 50f9a4fbccb5e7a4ea59c6886ed74ade,
         type: 3}
       propertyPath: m_Layer
-      value: 0
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7853319295831381647, guid: 50f9a4fbccb5e7a4ea59c6886ed74ade,
         type: 3}
@@ -206,6 +206,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1843219969450286435}
     m_Modifications:
+    - target: {fileID: 2560074354348278894, guid: d7fc820b8ee214042a4eba263f18fce9,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 979e4f4618b384d4abfe2715c157fe25, type: 2}
     - target: {fileID: 4649264199507994845, guid: d7fc820b8ee214042a4eba263f18fce9,
         type: 3}
       propertyPath: m_Name
