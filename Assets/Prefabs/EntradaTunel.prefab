@@ -120,7 +120,7 @@ GameObject:
   - component: {fileID: 8747820301698720557}
   - component: {fileID: 8089711462078300168}
   - component: {fileID: 5267117188199927062}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: EntradaTunelRua
   m_TagString: Untagged
   m_Icon: {fileID: 0}

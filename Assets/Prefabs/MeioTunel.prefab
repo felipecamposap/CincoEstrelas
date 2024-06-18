@@ -49,7 +49,7 @@ GameObject:
   - component: {fileID: 2961184753390005025}
   - component: {fileID: 7913859540777571224}
   - component: {fileID: 3985300084611808136}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: MeioTunelRua
   m_TagString: Untagged
   m_Icon: {fileID: 0}

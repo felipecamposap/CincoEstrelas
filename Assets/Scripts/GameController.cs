@@ -32,6 +32,7 @@ public class GameController : MonoBehaviour
     [SerializeField] public const float literPrice = 5.86f;
     private float ratingSum = 0;
     private bool isGamePaused = true;
+    public bool isInteracting = false;
 
     public int passwordClient { get; set; }
     [HideInInspector] public bool passwordCorrect;
@@ -48,14 +49,19 @@ public class GameController : MonoBehaviour
     [SerializeField] private GameObject dayNightCycle;
     private Light sun, moon;
     [SerializeField] private Material skybox, predioBloom;
-    [SerializeField] private Color dayColorHorizon, nightColorHorizon, nightFogColor, dayFogColor, nightPredioBloom, dayPredioBloom;
+
+    [SerializeField] private Color dayColorHorizon,
+        nightColorHorizon,
+        nightFogColor,
+        dayFogColor,
+        nightPredioBloom,
+        dayPredioBloom;
+
     private float sunIntensity, moonIntensity, lightTimer;
     private float timerMinute;
 
     private float nightSizeDarknessUp = 2f,
-        daySizeDarknessUp = 1.5f,
-        nightBuildingEmission = 6,
-        dayBuildingEmission = 0.5f;
+        daySizeDarknessUp = 1.5f;
 
     [Header("Gastos")] public readonly float vwater = 80;
     public readonly float vlight = 300;
@@ -177,6 +183,26 @@ public class GameController : MonoBehaviour
         dayNightCycle.transform.eulerAngles = currentRotation;
     }
 
+    void ResetDayNightCycle()
+    {
+        skybox.SetColor("_ColorHorizon", nightColorHorizon);
+        skybox.SetFloat("_SizeDarknessUp", nightSizeDarknessUp);
+        RenderSettings.fogColor = nightFogColor;
+        sun.intensity = sunIntensity;
+        moon.intensity = moonIntensity;
+        sun.gameObject.SetActive(false);
+        moon.gameObject.SetActive(true);
+
+        var currentRotation = dayNightCycle.transform.eulerAngles;
+        currentRotation.x = 0f;
+        dayNightCycle.transform.eulerAngles = currentRotation;
+
+        sun.intensity = sunIntensity;
+        moon.intensity = moonIntensity;
+        sun.gameObject.SetActive(false);
+        moon.gameObject.SetActive(true);
+    }
+
     public void ToggleCursor(bool value)
     {
         if (value)
@@ -207,6 +233,7 @@ public class GameController : MonoBehaviour
 
     public void ResetGC()
     {
+        isInteracting = false;
         hour = 0;
         minute = 0;
         listClients = new ListClients();
@@ -222,23 +249,8 @@ public class GameController : MonoBehaviour
         if (playerStar >= 10)
             PlayerVitoria();
         isGamePaused = false;
-
-        skybox.SetColor("_ColorHorizon", nightColorHorizon);
-        skybox.SetFloat("_SizeDarknessUp", nightSizeDarknessUp);
-        RenderSettings.fogColor = nightFogColor;
-        sun.intensity = sunIntensity;
-        moon.intensity = moonIntensity;
-        sun.gameObject.SetActive(false);
-        moon.gameObject.SetActive(true);
-
-        var currentRotation = dayNightCycle.transform.eulerAngles;
-        currentRotation.x = 0f;
-        dayNightCycle.transform.eulerAngles = currentRotation;
-
-        sun.intensity = sunIntensity;
-        moon.intensity = moonIntensity;
-        sun.gameObject.SetActive(false);
-        moon.gameObject.SetActive(true);
+        
+        ResetDayNightCycle();
     }
 
     public float GetDailyBill()
@@ -257,6 +269,7 @@ public class GameController : MonoBehaviour
             debtDay = 0;
         isGamePaused = false;
         player.inGame = true;
+        ResetDayNightCycle();
     }
 
     public void PlayerVitoria()

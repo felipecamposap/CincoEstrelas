@@ -32,6 +32,7 @@ public class InterfaceInterativos : MonoBehaviour
         if(other.CompareTag("Player")){
             thisCanvas.SetActive(true);
             playerTouch = true;
+            GameController.controller.isInteracting = true;
         }
 
     }
@@ -41,6 +42,8 @@ public class InterfaceInterativos : MonoBehaviour
         if (other.CompareTag("Player")){
             thisCanvas.SetActive(false);
             playerTouch = false;
+            GameController.controller.isInteracting = false;
+
         }
     }
 

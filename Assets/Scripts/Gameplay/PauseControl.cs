@@ -5,6 +5,7 @@ public class PauseControl : MonoBehaviour
 {
     private void Update()
     {
+        if(GameController.controller.isInteracting) { return; }
         if (Input.GetButtonDown("Pause") && GameController.controller.player.inGame)
         {
             Debug.Log("pause");
