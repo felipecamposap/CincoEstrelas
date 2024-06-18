@@ -32,6 +32,7 @@ public class GameController : MonoBehaviour
     [SerializeField] public const float literPrice = 5.86f;
     private float ratingSum = 0;
     private bool isGamePaused = true;
+    public bool isInteracting = false;
 
     public int passwordClient { get; set; }
     [HideInInspector] public bool passwordCorrect;
@@ -207,6 +208,7 @@ public class GameController : MonoBehaviour
 
     public void ResetGC()
     {
+        isInteracting = false;
         hour = 0;
         minute = 0;
         listClients = new ListClients();

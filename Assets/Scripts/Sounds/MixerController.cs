@@ -38,7 +38,7 @@ public class MixerController : MonoBehaviour
             //audioMixer.SetFloat("EfeitosVolume", audioValue);
             audioMixer.SetFloat("Efeitos", -10);
             startPlay = false;
-            this.gameObject.SetActive(false);
+            //this.gameObject.SetActive(false);
         }
         
     }

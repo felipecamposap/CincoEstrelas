@@ -52,6 +52,7 @@ public class MouseLook : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.E) && Time.timeScale > 0)
         {
+            if (GameController.controller.isInteracting) { return; }
             GameController.controller.uiController.CellPhoneAnimation(cellPhoneLift ? 1 : 0);
         }
 
