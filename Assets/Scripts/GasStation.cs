@@ -26,7 +26,7 @@ public class GasStation : MonoBehaviour
         //    }
         //}
         GameController.controller.Interaction(true);
-        sldGas.maxValue = GameController.controller.AvailableFuelSpace;
+        sldGas.maxValue = GameController.controller.AvailableFuelSpace < GameController.controller.BuyableLiters ? GameController.controller.AvailableFuelSpace : GameController.controller.BuyableLiters;
         sldGas.value = 0;
         if(sldGas.maxValue > 0)
             UpdateUI(0);
