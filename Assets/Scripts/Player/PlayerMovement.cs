@@ -35,7 +35,6 @@ public class PlayerMovement : MonoBehaviour
         breakLights = materials[5];
         Debug.Log(breakLights.name);
         GameController.controller.player = this;
-        inGame = true;
     }
 
     private void Update()

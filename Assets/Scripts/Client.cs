@@ -18,7 +18,9 @@ public class Client : MonoBehaviour
     private Transform mainCamera;
     [SerializeField] private Canvas canvas;
     
-    private bool playertouch = false;
+    private bool isTouchingPlayer = false;
+
+    [SerializeField] private GameObject distanceParticle;
 
     private void Start()
     {
@@ -57,6 +59,7 @@ public class Client : MonoBehaviour
                     //transform.localRotation = new Quaternion(1, transform.localRotation.y, transform.localRotation.z, 1);
                     GetComponent<BoxCollider>().size = new Vector3(2, 2, 2);
                     transform.parent = target.transform;
+                    distanceParticle.SetActive(false);
                 }
                 else
                 {
@@ -68,7 +71,18 @@ public class Client : MonoBehaviour
 
         }
 
+        if (touchPlayer == -1 && isTouchingPlayer)
+            CheckDistance();
+
     }
+
+    private void CheckDistance()
+    {
+        if (Vector3.Distance(target.position, transform.position) >= 10f)
+            GameController.controller.ResetClient();
+    }
+
+
 
     public void SetAttributes(string _name, int _rating, float _pay)
     {
@@ -94,15 +108,16 @@ public class Client : MonoBehaviour
             ArriveDestination(other.transform);
 
         }
-        else if (other.CompareTag("Player") && touchPlayer == -1 && !playertouch)
+        else if (other.CompareTag("Player") && touchPlayer == -1 && !isTouchingPlayer)
         {
             canvas.gameObject.SetActive(true);
-            playertouch = true;
+            isTouchingPlayer = true;
             password.gameObject.SetActive(true);
             GameController.controller.PasswordClient();
             password.text = GameController.controller.passwordClient.ToString();
             GameController.controller.uiController.CellPhoneAnimation(6);
             target = other.transform;
+            distanceParticle?.SetActive(true);
 
         }
 

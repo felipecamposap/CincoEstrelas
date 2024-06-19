@@ -122,17 +122,20 @@ public class GameController : MonoBehaviour
                 Cursor.visible = true;
                 Cursor.lockState = CursorLockMode.None;
                 if (alvoMinimapa)
-                {
-                    foreach (var item in minimapaAlvo)
-                        Destroy(item);
-                    GetPaid(0, true);
-                }
+                    ResetClient();
             }
             else
                 uiController.NextDay();
         }
 
         uiController.SetHour(hour, minute);
+    }
+
+    public void ResetClient()
+    {
+        foreach (Transform item in minimapaAlvo)
+            Destroy(item.gameObject);
+        GetPaid(0, false);
     }
 
     private void FixedUpdate()
@@ -325,10 +328,13 @@ public class GameController : MonoBehaviour
     public void GetPaid(float pay, bool isJob)
     {
         playerMoney += pay;
-        if (!isJob)
+        if (!isJob) 
+        {
+            uiController.CellPhoneAnimation(2);
             return;
-        NewRating();
+        }
         uiController.CellPhoneAnimation(7);
+        NewRating();
         uiController.EsconderEstrelaCorrida();
         uiController.ATTUI();
     }
