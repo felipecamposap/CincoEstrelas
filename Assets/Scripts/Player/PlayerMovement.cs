@@ -71,7 +71,6 @@ public class PlayerMovement : MonoBehaviour
 
     private void ApplyVFX()
     {
-        Debug.Log(localVelocity);
         switch (gasInput)
         {
             case < 0 when localVelocity.z > brakeThreshold:
@@ -249,27 +248,31 @@ public class PlayerMovement : MonoBehaviour
         wheelMesh.transform.rotation = rot;
     }
 
+    private bool canDamage = true;
     public IEnumerator OnCollisionEnter(Collision collision)
     {
-        if (inGame)
+        if (inGame && canDamage)
         {
-            var damageValue = rb.velocity.magnitude * 1.5f;
-            yield return new WaitForSeconds(0.1f);
-            damageValue -= rb.velocity.magnitude;
             if (collision.gameObject.CompareTag("Damagable") || collision.gameObject.CompareTag("Npc"))
             {
+                canDamage = false;
+                float damageValue = rb.velocity.magnitude;
+                yield return new WaitForSeconds(0.1f);
+                damageValue -= rb.velocity.magnitude;
                 var contact = collision.contacts[0];
                 Instantiate(danoFaisca, contact.point, Quaternion.identity);
                 GameController.controller.penalty += 1;
                 if (!GameController.controller.trapacas[0])
                 {
-                    GameController.controller.Damage((damageValue * 10f));
+                    GameController.controller.Damage((damageValue * 5f));
                     if (GameController.controller.carIntegrityCurrent < GameController.controller.carIntegrityMax / 4)
                     {
                         ToggleVFX(damageVFX, true);
                     }
                 }
             }
+            yield return new WaitForSeconds(0.25f);
+            canDamage = true;
         }
     }
 

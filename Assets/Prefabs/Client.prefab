@@ -314,6 +314,8 @@ MonoBehaviour:
   coll: {fileID: 1079992197306294081}
   password: {fileID: 6036910168215635533}
   canvas: {fileID: 881680912957276716}
+  distanceParticle: {fileID: 8323531273634548101}
+  iconMinimap: {fileID: 6924296533594082201}
 --- !u!65 &7572030250609308343
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -435,7 +437,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &135425062979118280
 Transform:
   m_ObjectHideFlags: 0

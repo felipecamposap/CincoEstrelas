@@ -21,6 +21,7 @@ public class Client : MonoBehaviour
     private bool isTouchingPlayer = false;
 
     [SerializeField] private GameObject distanceParticle;
+    [SerializeField] private GameObject iconMinimap;
 
     private void Start()
     {
@@ -59,7 +60,9 @@ public class Client : MonoBehaviour
                     //transform.localRotation = new Quaternion(1, transform.localRotation.y, transform.localRotation.z, 1);
                     GetComponent<BoxCollider>().size = new Vector3(2, 2, 2);
                     transform.parent = target.transform;
-                    distanceParticle.SetActive(false);
+                    GameController.controller.player.inGame = true;
+                    distanceParticle?.SetActive(false);
+
                 }
                 else
                 {
@@ -117,6 +120,9 @@ public class Client : MonoBehaviour
             password.text = GameController.controller.passwordClient.ToString();
             GameController.controller.uiController.CellPhoneAnimation(6);
             target = other.transform;
+            GameController.controller.player.inGame = false;
+            GameController.controller.minimapaAlvo[1].gameObject.SetActive(true);
+            iconMinimap?.SetActive(false);
             distanceParticle?.SetActive(true);
 
         }

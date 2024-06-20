@@ -82,9 +82,16 @@ public class ClientTest : MonoBehaviour
         var numBlocks = Random.Range(0, blockPos.Length / blocksVariation);
         _indexClient = Random.Range(0, blocksVariation) + numBlocks;
         _indexDesty = Random.Range(0, blockPos.Length / blocksVariation);
-        if (_indexDesty == numBlocks || _indexDesty == _indexClient){
+        if ((_indexDesty == numBlocks || _indexDesty == _indexClient)){
             _indexDesty++;
             if (_indexDesty > (blockPos.Length / blocksVariation) - 1)
+                _indexDesty = 0;
+        }
+
+        while(Vector3.Distance(blockPos[_indexDesty].position, blockPos[_indexClient].position) <= 200){
+            //Debug.Log("Distancia curta!");
+            _indexDesty++;
+            if(_indexDesty >= blockPos.Length)
                 _indexDesty = 0;
         }
         _indexDesty = Random.Range(0, blocksVariation) + _indexDesty;
