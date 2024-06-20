@@ -62,7 +62,11 @@ public class PlayerMovement : MonoBehaviour
         if (inGame && Input.GetAxis("Vertical") != 0 && !GameController.controller.trapacas[1] &&
             GameController.controller.PlayerFuel > 0)
         {
-            GameController.controller.BurnFuel(gasInput);
+            float multiplier = 1;
+            if (rb.velocity.magnitude is < 15 or > 30)
+                multiplier += 1;
+            GameController.controller.BurnFuel(gasInput * multiplier);
+            Debug.Log(rb.velocity.magnitude);
         }
 
         ApplyVFX();
@@ -259,6 +263,7 @@ public class PlayerMovement : MonoBehaviour
                 float damageValue = rb.velocity.magnitude;
                 yield return new WaitForSeconds(0.1f);
                 damageValue -= rb.velocity.magnitude;
+                damageValue = Math.Max(1, damageValue);
                 var contact = collision.contacts[0];
                 Instantiate(danoFaisca, contact.point, Quaternion.identity);
                 GameController.controller.penalty += 1;

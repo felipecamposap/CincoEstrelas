@@ -56,8 +56,7 @@ public class ClientTest : MonoBehaviour
         InstanciateObject(clientPrefab, indexClient, 0);
         // -----  Instanciando Destino ----->>
         InstanciateObject(destinyPrefab, indexDesty, 1);
-
-
+        GameController.controller.StartClientTime();
     }
 
     private void InstanciateObject(GameObject _instObj, int _index, int gcIndex)
@@ -88,7 +87,7 @@ public class ClientTest : MonoBehaviour
                 _indexDesty = 0;
         }
 
-        while(Vector3.Distance(blockPos[_indexDesty].position, blockPos[_indexClient].position) <= 200){
+        while(Vector3.Distance(blockPos[_indexDesty].position, blockPos[_indexClient].position) <= 350){
             //Debug.Log("Distancia curta!");
             _indexDesty++;
             if(_indexDesty >= blockPos.Length)

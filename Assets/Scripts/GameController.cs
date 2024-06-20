@@ -1,6 +1,5 @@
-using System;
+using System.Collections;
 using UnityEngine;
-using UnityEngine.Experimental.GlobalIllumination;
 using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
 using RenderSettings = UnityEngine.RenderSettings;
@@ -20,7 +19,7 @@ public class GameController : MonoBehaviour
     [Header("Status jogador:")] public float carIntegrityMax; // Integridade do carro
     public float carIntegrityCurrent; // Integridade do carro
     [SerializeField] private float playerFuel = 55; // quantidade atual de gasolina
-    public readonly float maxPlayerFuel = 55; // Maximo do tanque de gasolina
+    public float maxPlayerFuel = 55; // Maximo do tanque de gasolina
     [SerializeField] private const float fuelBurn = 0.001f; // 
     [SerializeField] private float fuelBurnMultiplier = 1f;
     [SerializeField] private short totalClients = 0;
@@ -242,6 +241,7 @@ public class GameController : MonoBehaviour
         listClients = new ListClients();
         carIntegrityCurrent = carIntegrityMax;
         playerMoney = 10f;
+        maxPlayerFuel = 55f;
         playerFuel = maxPlayerFuel;
         totalClients = 0;
         if (trapacas[1])
@@ -293,6 +293,32 @@ public class GameController : MonoBehaviour
         if (playerFuel <= 0)
             uiController.GameOver(1);
     }
+
+    // --------- Sistema tempo cliente --------- \\
+    int timeClient;
+    //Coroutine b;
+    public void StartClientTime()
+    {
+        timeClient = Mathf.Max(10, (int)(Vector3.Distance(player.transform.position, minimapaAlvo[0].position) * 0.075f));
+        StartCoroutine("ClientTime");
+    }
+
+    private IEnumerator ClientTime()
+    {
+        yield return new WaitForSeconds(1);
+        uiController.AttClientTime(timeClient);
+        timeClient--;
+        if (timeClient > 0)
+            StartCoroutine("ClientTime");
+        else
+            ResetClient();
+    }
+
+    public void StopClientTime()
+    {
+        StopCoroutine("ClientTime");
+    }
+    // --------- Fim Sistema tempo cliente --------- \\
 
     private void NewRating()
     {

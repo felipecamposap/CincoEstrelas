@@ -74,18 +74,7 @@ public class Client : MonoBehaviour
 
         }
 
-        if (touchPlayer == -1 && isTouchingPlayer)
-            CheckDistance();
-
     }
-
-    private void CheckDistance()
-    {
-        if (Vector3.Distance(target.position, transform.position) >= 10f)
-            GameController.controller.ResetClient();
-    }
-
-
 
     public void SetAttributes(string _name, int _rating, float _pay)
     {
@@ -124,6 +113,8 @@ public class Client : MonoBehaviour
             GameController.controller.minimapaAlvo[1].gameObject.SetActive(true);
             iconMinimap?.SetActive(false);
             distanceParticle?.SetActive(true);
+            GameController.controller.StopClientTime();
+            
 
         }
 

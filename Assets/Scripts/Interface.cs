@@ -20,6 +20,7 @@ public class Interface : MonoBehaviour
     [SerializeField] private RectTransform gasPointer;
     public ListClients interfaceListClients = new ListClients(); // Lista de clientes customizada
     //private MouseLook camMovement;
+    [SerializeField] private Text timeClientText;
 
     [Header("EndGames")]
     [SerializeField] private GameObject gameOverObj;
@@ -74,8 +75,7 @@ public class Interface : MonoBehaviour
 
     public void ATTUI()
     {
-        carIntegritySlider.maxValue = GameController.controller.carIntegrityMax; // Declarando o maximo da integridade do carro possivel no slider
-        carIntegritySlider.value = GameController.controller.carIntegrityCurrent; // Declarando o valor atual da integridade do carro possivel no slider
+        carIntegritySlider.value = GameController.controller.carIntegrityCurrent / GameController.controller.carIntegrityMax; // Declarando o valor atual da integridade do carro possivel no slider
         clientRatingPlayerSlider.value = GameController.controller.AvgRating;
         playerCurrentRating.value = GameController.controller.playerStar;
         Gasolina(GameController.controller.PlayerFuel / GameController.controller.maxPlayerFuel);
@@ -129,6 +129,11 @@ public class Interface : MonoBehaviour
         }
         gameOverObj.SetActive(true);
 
+    }
+
+    public void AttClientTime(int _value)
+    {
+        timeClientText.text = _value.ToString();
     }
 
     public void NextDay()
