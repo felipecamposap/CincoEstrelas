@@ -87,8 +87,7 @@ public class ClientTest : MonoBehaviour
                 _indexDesty = 0;
         }
 
-        while(Vector3.Distance(blockPos[_indexDesty].position, blockPos[_indexClient].position) <= 350){
-            //Debug.Log("Distancia curta!");
+        while(Vector3.Distance(blockPos[_indexDesty].position, blockPos[_indexClient].position) <= 450){
             _indexDesty++;
             if(_indexDesty >= blockPos.Length)
                 _indexDesty = 0;
