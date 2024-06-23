@@ -5,4 +5,5 @@ using UnityEngine;
 public class Database : ScriptableObject
 {
     public string[] nameClients;
+    public Material[] lightMaterials;
 }

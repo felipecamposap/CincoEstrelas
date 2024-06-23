@@ -66,7 +66,7 @@ public class PlayerMovement : MonoBehaviour
             if (rb.velocity.magnitude is < 15 or > 30)
                 multiplier += 1;
             GameController.controller.BurnFuel(gasInput * multiplier);
-            Debug.Log(rb.velocity.magnitude);
+            //Debug.Log(rb.velocity.magnitude);
         }
 
         ApplyVFX();

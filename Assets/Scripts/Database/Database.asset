@@ -40,3 +40,7 @@ MonoBehaviour:
   - Xayane
   - Yuri
   - "Za\xEDra"
+  lightMaterials:
+  - {fileID: 2100000, guid: 1f49d430ab9fba948ae860122d992b67, type: 2}
+  - {fileID: 2100000, guid: 92782305988af1e419c3ee1a63e18b59, type: 2}
+  - {fileID: 2100000, guid: b6d809abc194b554095bc09a7abc607e, type: 2}

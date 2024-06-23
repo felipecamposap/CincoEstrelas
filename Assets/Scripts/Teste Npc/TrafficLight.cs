@@ -14,6 +14,9 @@ public class TrafficLight : MonoBehaviour, IObserverTrafficLight
     [SerializeField] private bool isTraffic;
     //[SerializeField] float trafficTime;
     [SerializeField] private int index;
+    [SerializeField] Renderer[] meshs;
+    [SerializeField] Database dataBase;
+    //[SerializeField] Material[] material; // 0 - red | 1 - Yellow | 2 - Green
 
     private void OnEnable()
     {
@@ -27,21 +30,22 @@ public class TrafficLight : MonoBehaviour, IObserverTrafficLight
         
     }
 
-    //private void ChangeTraffic()
-    //{
-        
-        
-    //}
-
     public void Notify()
     {
+        Material[] currentMaterials = meshs[0].materials;
+        currentMaterials[2] = dataBase.lightMaterials[0];
+
         for (var i = 0; i < isRed.Length; i++)
         {
             isRed[i] = true;
+            meshs[i].materials = currentMaterials;
+            
         }
         if (index >= isRed.Length)
             index = 0;
         isRed[index] = false;
+        currentMaterials[2] = dataBase.lightMaterials[2];
+        meshs[index].materials = currentMaterials;
         index++;
     }
 }
