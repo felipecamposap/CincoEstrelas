@@ -81,6 +81,7 @@ public class ClientTest : MonoBehaviour
         var numBlocks = Random.Range(0, blockPos.Length / blocksVariation);
         _indexClient = Random.Range(0, blocksVariation) + numBlocks;
         _indexDesty = Random.Range(0, blockPos.Length / blocksVariation);
+        int newDestiny = Random.Range(0, 2) * 2 - 1;
         if ((_indexDesty == numBlocks || _indexDesty == _indexClient)){
             _indexDesty++;
             if (_indexDesty > (blockPos.Length / blocksVariation) - 1)
@@ -88,7 +89,7 @@ public class ClientTest : MonoBehaviour
         }
 
         while(Vector3.Distance(blockPos[_indexDesty].position, blockPos[_indexClient].position) <= 450){
-            _indexDesty++;
+            _indexDesty += newDestiny;
             if(_indexDesty >= blockPos.Length)
                 _indexDesty = 0;
         }

@@ -299,14 +299,14 @@ public class GameController : MonoBehaviour
     //Coroutine b;
     public void StartClientTime()
     {
-        timeClient = Mathf.Max(10, (int)(Vector3.Distance(player.transform.position, minimapaAlvo[0].position) * 0.075f));
+        timeClient = Mathf.Max(30, (int)(Vector3.Distance(player.transform.position, minimapaAlvo[0].position) * 0.075f));
         StartCoroutine("ClientTime");
     }
 
     private IEnumerator ClientTime()
     {
-        yield return new WaitForSeconds(1);
         uiController.AttClientTime(timeClient);
+        yield return new WaitForSeconds(1);
         timeClient--;
         if (timeClient > 0)
             StartCoroutine("ClientTime");

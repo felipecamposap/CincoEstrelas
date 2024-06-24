@@ -41,7 +41,8 @@ public class PlayerMovement : MonoBehaviour
     {
         if (!inGame)
         {
-            rb.drag = 100;
+            //rb.drag = 100;
+            brakeInput = rb.drag * 10;
             ApplyBrake();
             return;
         }
