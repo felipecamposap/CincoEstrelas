@@ -99,10 +99,12 @@ public class Client : MonoBehaviour
             yield return new WaitForSeconds(2);
         transform.GetChild(0).GetComponent<Animator>().SetInteger("State", (value+1) * 2);
         GameController.controller.player.OpenDoor((value + 1));
-        yield return new WaitForSeconds(4.2f);
+        yield return new WaitForSeconds(5.2f);
         GameController.controller.player.inGame = true;
-        if(value == 2)
-            Destroy(gameObject);
+        if (value == 2)
+        {
+            GameController.controller.ResetClient(); // Deletar Cliente e destino
+        }
     }
 
     private void Walking()

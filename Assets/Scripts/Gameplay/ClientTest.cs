@@ -61,12 +61,12 @@ public class ClientTest : MonoBehaviour
 
     private void InstanciateObject(GameObject _instObj, int _index, int gcIndex)
     {
-        var pos1 = blockPos[_index].position;
-        Vector3 pos2;
-        if ((_index + 1) % blocksVariation == 0)
-            pos2 = blockPos[_index - 1].position;
-        else
-            pos2 = blockPos[_index + 1].position;
+        Vector3 pos1 = blockPos[_index*2].position;
+        Vector3 pos2 = blockPos[_index * 2 + 1].position;
+        //if ((_index + 1) % blocksVariation == 0)
+        //    pos2 = blockPos[_index - 1].position;
+        //else
+        //    pos2 = blockPos[_index + 1].position;
         var rangeSpawn = Random.Range(0.2f, 0.8f);
         var clone = Instantiate(_instObj, Vector3.Lerp(pos1, pos2, rangeSpawn), Quaternion.identity);
         GameController.controller.minimapaAlvo[gcIndex] = clone.transform;
@@ -79,8 +79,8 @@ public class ClientTest : MonoBehaviour
     private void SetIndex(out int _indexClient, out int _indexDesty)
     {
         //var numBlocks = Random.Range(0, blockPos.Length / blocksVariation);
-        _indexClient = Random.Range(0, blockPos.Length);
-        _indexDesty = Random.Range(0, blockPos.Length);
+        _indexClient = Random.Range(0, blockParent.Length);
+        _indexDesty = Random.Range(0, blockParent.Length);
         int newDestiny = Random.Range(0, 2) * 2 - 1;
         //if ((_indexDesty == blockPos.Length || _indexDesty == _indexClient)){
         //    _indexDesty++;
