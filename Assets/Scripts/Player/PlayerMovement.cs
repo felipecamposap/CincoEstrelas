@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -16,7 +15,6 @@ public class PlayerMovement : MonoBehaviour
     public float motorPower = 5000.0f; // Adjust the value as needed
     [SerializeField] private float brakePower = 10000.0f; // Adjust the value as needed
     [SerializeField] private float gasDrag = 0.005f, idleDrag = 0.5f, brakeDrag = 1.5f, brakeThreshold = 2f;
-    private float regularStiffness;
     private float speed;
     public AnimationCurve steeringCurve;
     private Vector3 localVelocity;
@@ -28,6 +26,9 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private ParticleSystem[] wheelSpins, tireSmokes;
     [SerializeField] private TrailRenderer[] tireMarks, backlightTrails, edgeTrails;
     [SerializeField] private ParticleSystem speedLines;
+    public Transform[] carDoorPos;
+
+    [SerializeField] private Animator animatorDoor;
 
     private void Start()
     {
@@ -300,6 +301,12 @@ public class PlayerMovement : MonoBehaviour
         if (GameController.controller.playerStar >= 10)
             vitoriaEfeito.SetActive(true);
         inGame = false;
+    }
+
+    public void OpenDoor(int value)
+    {
+        Debug.Log(value);
+        animatorDoor.SetInteger("State", value);
     }
 }
 

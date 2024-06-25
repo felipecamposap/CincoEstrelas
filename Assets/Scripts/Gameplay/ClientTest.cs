@@ -78,20 +78,22 @@ public class ClientTest : MonoBehaviour
 
     private void SetIndex(out int _indexClient, out int _indexDesty)
     {
-        var numBlocks = Random.Range(0, blockPos.Length / blocksVariation);
-        _indexClient = Random.Range(0, blocksVariation) + numBlocks;
-        _indexDesty = Random.Range(0, blockPos.Length / blocksVariation);
+        //var numBlocks = Random.Range(0, blockPos.Length / blocksVariation);
+        _indexClient = Random.Range(0, blockPos.Length);
+        _indexDesty = Random.Range(0, blockPos.Length);
         int newDestiny = Random.Range(0, 2) * 2 - 1;
-        if ((_indexDesty == numBlocks || _indexDesty == _indexClient)){
-            _indexDesty++;
-            if (_indexDesty > (blockPos.Length / blocksVariation) - 1)
-                _indexDesty = 0;
-        }
+        //if ((_indexDesty == blockPos.Length || _indexDesty == _indexClient)){
+        //    _indexDesty++;
+        //    if (_indexDesty > (blockPos.Length / blocksVariation) - 1)
+        //        _indexDesty = 0;
+        //}
 
-        while(Vector3.Distance(blockPos[_indexDesty].position, blockPos[_indexClient].position) <= 450){
+        while (Vector3.Distance(blockPos[_indexDesty].position, blockPos[_indexClient].position) <= 450){
             _indexDesty += newDestiny;
             if(_indexDesty >= blockPos.Length)
                 _indexDesty = 0;
+            else if(_indexDesty < 0)
+                _indexDesty = blockPos.Length-1;
         }
         _indexDesty = Random.Range(0, blocksVariation) + _indexDesty;
 
