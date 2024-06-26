@@ -101,7 +101,7 @@ public class Interface : MonoBehaviour
 
     public void Velocity(float _value)
     {
-        speedometerPointer.eulerAngles = new Vector3(0, 0, Mathf.Lerp(4, -190, Math.Abs(_value)));
+        speedometerPointer.eulerAngles = new Vector3(0, 0, Mathf.Lerp(4, -190, Math.Abs(_value * 0.6f)));
     }
 
     public void Gasolina(float _value)

@@ -37,15 +37,15 @@ public class MouseLook : MonoBehaviour
         gameObject.transform.position = player.transform.position;
         //transform.position = Vector3.Lerp(new Vector3(transform.position.x, player.transform.position.y, transform.position.z), pos.position, camSpeed * Time.deltaTime);  
 
-        if (Input.GetKeyDown(KeyCode.Mouse1))
-        {
-            mainCamera.fieldOfView = 25;
-        }
-
-        if (Input.GetKeyUp(KeyCode.Mouse1))
-        {
-            mainCamera.fieldOfView = 60;
-        }
+        // if (Input.GetKeyDown(KeyCode.Mouse1))
+        // {
+        //     mainCamera.fieldOfView = 25;
+        // }
+        //
+        // if (Input.GetKeyUp(KeyCode.Mouse1))
+        // {
+        //     mainCamera.fieldOfView = 60;
+        // }
 
 
         var cellPhoneLift = GameController.controller.uiController.CellPhoneLift();

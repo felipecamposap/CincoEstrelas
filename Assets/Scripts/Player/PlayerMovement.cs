@@ -10,12 +10,13 @@ public class PlayerMovement : MonoBehaviour
     public WheelColliders colliders;
     public WheelMeshes wheelMeshes;
     public float gasInput;
-    private float brakeInput;
-    private float steeringInput;
+    private float brakeInput, steeringInput, speed, initialCameraFOV;
     public float motorPower = 5000.0f; // Adjust the value as needed
     [SerializeField] private float brakePower = 10000.0f; // Adjust the value as needed
-    [SerializeField] private float gasDrag = 0.005f, idleDrag = 0.5f, brakeDrag = 1.5f, brakeThreshold = 2f;
-    private float speed;
+
+    [SerializeField]
+    private float gasDrag = 0.005f, idleDrag = 0.5f, brakeDrag = 1.5f, brakeThreshold = 2f, fovTimer = 0f;
+
     public AnimationCurve steeringCurve;
     private Vector3 localVelocity;
     [SerializeField] private GameObject danoFaisca, luzesFreio;
@@ -26,6 +27,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private ParticleSystem[] wheelSpins, tireSmokes;
     [SerializeField] private TrailRenderer[] tireMarks, backlightTrails, edgeTrails;
     [SerializeField] private ParticleSystem speedLines;
+    private Camera mainCamera;
     public Transform[] carDoorPos;
 
     [SerializeField] private Animator animatorDoor;
@@ -36,6 +38,8 @@ public class PlayerMovement : MonoBehaviour
         breakLights = materials[5];
         Debug.Log(breakLights.name);
         GameController.controller.player = this;
+        mainCamera = Camera.main;
+        initialCameraFOV = mainCamera.fieldOfView;
     }
 
     private void Update()
@@ -45,11 +49,11 @@ public class PlayerMovement : MonoBehaviour
             //rb.drag = 100;
             brakeInput = rb.drag * 10;
             ApplyBrake();
+            ToggleVFX(tireSmokes, false);
             return;
         }
 
         CheckInput();
-        localVelocity = transform.InverseTransformDirection(rb.velocity);
         speed = rb.velocity.magnitude * 0.65f;
         GameController.controller.uiController.Velocity(speed / 30);
         ApplyMovement();
@@ -61,6 +65,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
+        localVelocity = transform.InverseTransformDirection(rb.velocity);
         if (inGame && Input.GetAxis("Vertical") != 0 && !GameController.controller.trapacas[1] &&
             GameController.controller.PlayerFuel > 0)
         {
@@ -97,7 +102,8 @@ public class PlayerMovement : MonoBehaviour
                 }
                 else // acelerando com o carro indo para frente
                 {
-                    if ((localVelocity.z is > 0 and < 8) || localVelocity is { z: > 10, x: > 2 } || localVelocity is { z: < 8, x: > 3 })
+                    if ((localVelocity.z is > 0 and < 8) || localVelocity is { z: > 10, x: > 2 } ||
+                        localVelocity is { z: < 8, x: > 3 })
                     {
                         ToggleVFX(tireSmokes, true);
                         ToggleTrails(tireMarks, true);
@@ -116,12 +122,13 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
-        if (localVelocity.z > 30)
+        if (localVelocity.z > 35)
         {
             if (!speedLines.isPlaying) speedLines.Play();
             ToggleVFX(wheelSpins, true);
             ToggleTrails(backlightTrails, true);
             ToggleTrails(edgeTrails, true);
+            ApplyFOV(true);
         }
         else
         {
@@ -129,7 +136,22 @@ public class PlayerMovement : MonoBehaviour
             if (speedLines.isPlaying) speedLines.Stop();
             ToggleTrails(backlightTrails, false);
             ToggleTrails(edgeTrails, false);
+            ApplyFOV(false);
         }
+    }
+
+    private void ApplyFOV(bool value)
+    {
+        if (value)
+        {
+            fovTimer += Time.fixedDeltaTime / 1.5f;
+        }
+        else
+        {
+            fovTimer -= Time.fixedDeltaTime;
+        }
+        fovTimer = Mathf.Clamp(fovTimer, 0, 1);
+        mainCamera.fieldOfView = Mathf.SmoothStep(initialCameraFOV, 80, fovTimer);
     }
 
     private void CheckInput()
@@ -255,6 +277,7 @@ public class PlayerMovement : MonoBehaviour
     }
 
     private bool canDamage = true;
+
     public IEnumerator OnCollisionEnter(Collision collision)
     {
         if (inGame && canDamage)
@@ -278,6 +301,7 @@ public class PlayerMovement : MonoBehaviour
                     }
                 }
             }
+
             yield return new WaitForSeconds(0.25f);
             canDamage = true;
         }

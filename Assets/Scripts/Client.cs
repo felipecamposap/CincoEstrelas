@@ -4,23 +4,22 @@ using UnityEngine.UI;
 
 public class Client : MonoBehaviour
 {
-    [Header("Client Parameters: ")]
-    [SerializeField] private string clientName;
+    [Header("Client Parameters: ")] [SerializeField]
+    private string clientName;
+
     [SerializeField] private int clientRating;
     [SerializeField] private float clientPayment;
 
-    [Header("Others: ")]
-    [SerializeField] private int touchPlayer;
+    [Header("Others: ")] [SerializeField] private int touchPlayer;
     [SerializeField] private Transform target;
     [SerializeField] private float speed;
     [SerializeField] private Collider coll;
     [SerializeField] private Text password;
     private Transform mainCamera;
     [SerializeField] private Canvas canvas;
-    
+
     private bool isTouchingPlayer = false;
 
-    [SerializeField] private GameObject distanceParticle;
     [SerializeField] private GameObject iconMinimap;
 
     private int indexTarget;
@@ -30,7 +29,6 @@ public class Client : MonoBehaviour
         mainCamera = Camera.main.transform;
         target = GameController.controller.player.carDoorPos[0];
         indexTarget = 0;
-
     }
 
     private void Update()
@@ -39,6 +37,7 @@ public class Client : MonoBehaviour
         {
             canvas.transform.LookAt(mainCamera.position);
         }
+
         if (GameController.controller.passwordCorrect)
         {
             GameController.controller.passwordCorrect = false;
@@ -48,8 +47,8 @@ public class Client : MonoBehaviour
             GameController.controller.alvoMinimapa.index++;
             transform.GetChild(0).GetComponent<Animator>().SetInteger("State", 1);
             CheckDoorDistance();
-
         }
+
         if (touchPlayer == 0 || touchPlayer == 3)
         {
             var targetPos = target.position;
@@ -63,41 +62,39 @@ public class Client : MonoBehaviour
                     GameController.controller.uiController.MostrarEstrelaCorrida();
                     GameController.controller.penalty = 0;
                     touchPlayer = 2;
-                    transform.position = new Vector3(target.transform.position.x, target.transform.position.y, target.transform.position.z);
+                    transform.position = new Vector3(target.transform.position.x, target.transform.position.y,
+                        target.transform.position.z);
                     transform.rotation = target.transform.rotation;
                     //transform.localRotation = new Quaternion(1, transform.localRotation.y, transform.localRotation.z, 1);
                     GetComponent<BoxCollider>().size = new Vector3(2, 2, 2);
                     transform.parent = target.transform;
-                    distanceParticle?.SetActive(false);
                     StartCoroutine("OpenDoorCar", indexTarget);
-
                 }
                 else
                 {
                     Destroy(gameObject);
                     Destroy(target.gameObject);
                 }
-
             }
-
         }
-
     }
 
     private void CheckDoorDistance()
     {
-        float newDistance = Vector3.Distance(transform.position, GameController.controller.player.carDoorPos[1].position);
+        float newDistance =
+            Vector3.Distance(transform.position, GameController.controller.player.carDoorPos[1].position);
         if (Vector3.Distance(transform.position, target.position) > newDistance)
         {
             target = GameController.controller.player.carDoorPos[1];
             indexTarget = 1;
         }
     }
+
     private System.Collections.IEnumerator OpenDoorCar(int value)
     {
-        if(value == 2)
+        if (value == 2)
             yield return new WaitForSeconds(2);
-        transform.GetChild(0).GetComponent<Animator>().SetInteger("State", (value+1) * 2);
+        transform.GetChild(0).GetComponent<Animator>().SetInteger("State", (value + 1) * 2);
         GameController.controller.player.OpenDoor((value + 1));
         yield return new WaitForSeconds(5.2f);
         GameController.controller.player.inGame = true;
@@ -112,18 +109,15 @@ public class Client : MonoBehaviour
         Vector3 dir = target.position;
         dir.y = transform.position.y;
         transform.LookAt(dir);
-        
     }
-
 
 
     public void SetAttributes(string _name, int _rating, float _pay)
     {
         clientName = _name;
-        clientRating = _rating;      
+        clientRating = _rating;
         clientPayment = _pay;
         GameController.controller.PasswordClient();
-        
     }
 
     public void GetAttributes(string _clientName, int _clientRating, float _clientPayment)
@@ -131,7 +125,6 @@ public class Client : MonoBehaviour
         _clientName = clientName;
         _clientRating = clientRating;
         _clientPayment = clientPayment;
-
     }
 
     private void OnTriggerEnter(Collider other)
@@ -139,7 +132,6 @@ public class Client : MonoBehaviour
         if (touchPlayer == 2 && other.CompareTag("Destination"))
         {
             ArriveDestination();
-
         }
         else if (other.CompareTag("Player") && touchPlayer == -1 && !isTouchingPlayer)
         {
@@ -152,14 +144,9 @@ public class Client : MonoBehaviour
             //target = other.transform;
             GameController.controller.player.inGame = false;
             GameController.controller.minimapaAlvo[1].gameObject.SetActive(true);
-            iconMinimap?.SetActive(false);
-            distanceParticle?.SetActive(true);
+            iconMinimap.SetActive(false);
             GameController.controller.StopClientTime();
-            
-            
-
         }
-
     }
 
     public void ArriveDestination()
@@ -181,7 +168,5 @@ public class Client : MonoBehaviour
         {
             coll.enabled = false;
         }
-
     }
-
 }
