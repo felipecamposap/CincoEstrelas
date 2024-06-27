@@ -132,6 +132,7 @@ public class Client : MonoBehaviour
         if (touchPlayer == 2 && other.CompareTag("Destination"))
         {
             ArriveDestination();
+            other.gameObject.SetActive(false);
         }
         else if (other.CompareTag("Player") && touchPlayer == -1 && !isTouchingPlayer)
         {
@@ -159,7 +160,7 @@ public class Client : MonoBehaviour
         //transform.parent = null;
         //target = _target;
         //touchPlayer++;
-        //GameController.controller.alvoMinimapa.index++;
+        GameController.controller.alvoMinimapa.index++;
     }
 
     private void OnTriggerStay(Collider other)

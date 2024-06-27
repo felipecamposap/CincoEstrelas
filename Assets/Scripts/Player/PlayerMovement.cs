@@ -46,8 +46,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (!inGame)
         {
-            //rb.drag = 100;
-            brakeInput = rb.drag * 10;
+            brakeInput = rb.drag * 20;
             ApplyBrake();
             ToggleVFX(tireSmokes, false);
             return;
@@ -314,6 +313,7 @@ public class PlayerMovement : MonoBehaviour
             GameController.controller.penalty += 1;
         }
     }
+
 
     public void UpgradeMotor()
     {

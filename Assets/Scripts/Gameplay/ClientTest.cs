@@ -88,12 +88,12 @@ public class ClientTest : MonoBehaviour
         //        _indexDesty = 0;
         //}
 
-        while (Vector3.Distance(blockPos[_indexDesty].position, blockPos[_indexClient].position) <= 450){
+        while (Vector3.Distance(blockParent[_indexDesty].position, blockParent[_indexClient].position) <= 450){
             _indexDesty += newDestiny;
-            if(_indexDesty >= blockPos.Length)
+            if(_indexDesty >= blockParent.Length)
                 _indexDesty = 0;
             else if(_indexDesty < 0)
-                _indexDesty = blockPos.Length-1;
+                _indexDesty = blockParent.Length-1;
         }
         _indexDesty = Random.Range(0, blocksVariation) + _indexDesty;
 

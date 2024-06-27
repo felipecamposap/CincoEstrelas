@@ -132,8 +132,8 @@ public class GameController : MonoBehaviour
 
     public void ResetClient()
     {
-        foreach (Transform item in minimapaAlvo)
-            Destroy(item.gameObject);
+        for (int i = 0; i < minimapaAlvo.Length;i++)
+            Destroy(minimapaAlvo[i].gameObject);
         GetPaid(0, false);
     }
 
