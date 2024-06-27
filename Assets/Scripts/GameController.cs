@@ -26,7 +26,6 @@ public class GameController : MonoBehaviour
     public int penalty = 0;
     [SerializeField] private float playerMoney = 100f;
     public int playerStar = 0;
-    //public float lastMoney;
 
     [SerializeField] public const float literPrice = 5.86f;
     private float ratingSum = 0;
@@ -114,14 +113,17 @@ public class GameController : MonoBehaviour
         {
             isGamePaused = true;
             player.inGame = false;
-            //Debug.Log(playerMoney - GetDailyBill());
             if (playerMoney - GetDailyBill() <= 0)
             {
                 uiController.GameOver(1);
                 Cursor.visible = true;
                 Cursor.lockState = CursorLockMode.None;
                 if (alvoMinimapa)
+                {
                     ResetClient();
+                    GetPaid(0, false);
+                }
+
             }
             else
                 uiController.NextDay();
@@ -134,7 +136,6 @@ public class GameController : MonoBehaviour
     {
         for (int i = 0; i < minimapaAlvo.Length;i++)
             Destroy(minimapaAlvo[i].gameObject);
-        GetPaid(0, false);
     }
 
     private void FixedUpdate()
@@ -252,7 +253,6 @@ public class GameController : MonoBehaviour
         if (playerStar >= 10)
             PlayerVitoria();
         isGamePaused = false;
-        
         ResetDayNightCycle();
     }
 
@@ -273,12 +273,16 @@ public class GameController : MonoBehaviour
         isGamePaused = false;
         player.inGame = true;
         ResetDayNightCycle();
+        ResetClient();
+        GetPaid(0, false);
+
     }
 
     public void PlayerVitoria()
     {
         uiController.PlayerVitoria();
         player.PlayerVictory();
+        isGamePaused = true;
     }
 
     public void BurnFuel(float gasInput)
@@ -296,7 +300,6 @@ public class GameController : MonoBehaviour
 
     // --------- Sistema tempo cliente --------- \\
     int timeClient;
-    //Coroutine b;
     public void StartClientTime()
     {
         timeClient = Mathf.Max(35, (int)(Vector3.Distance(player.transform.position, minimapaAlvo[0].position) * 0.075f));
@@ -311,7 +314,10 @@ public class GameController : MonoBehaviour
         if (timeClient > 0)
             StartCoroutine("ClientTime");
         else
+        {
             ResetClient();
+            GetPaid(0, false);
+        }
     }
 
     public void StopClientTime()
@@ -320,7 +326,7 @@ public class GameController : MonoBehaviour
     }
     // --------- Fim Sistema tempo cliente --------- \\
 
-    private void NewRating()
+    private int NewRating()
     {
         var rating = Mathf.Clamp(10 - (penalty * 2), 2, 10);
         ratingSum += rating;
@@ -333,6 +339,7 @@ public class GameController : MonoBehaviour
         if (playerStar >= 10)
             PlayerVitoria();
         penalty = 0;
+        return rating;
     }
 
     private void SetGamePaused(bool value)
@@ -351,18 +358,19 @@ public class GameController : MonoBehaviour
         }
     }
 
-    public void GetPaid(float pay, bool isJob)
+    public int GetPaid(float pay, bool isJob)
     {
         playerMoney += pay;
         if (!isJob) 
         {
             uiController.CellPhoneAnimation(2);
-            return;
+            return 0;
         }
         uiController.CellPhoneAnimation(7);
-        NewRating();
+        int rating = NewRating();
         uiController.EsconderEstrelaCorrida();
         uiController.ATTUI();
+        return rating;
     }
 
     public void AddHistoryClient(ClientsParameters client)

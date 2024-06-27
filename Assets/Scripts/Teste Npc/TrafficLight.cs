@@ -12,20 +12,15 @@ public class TrafficLight : MonoBehaviour, IObserverTrafficLight
     public LinkedStreets[] streets;
     public bool[] isRed;
     [SerializeField] private bool isTraffic;
-    //[SerializeField] float trafficTime;
     [SerializeField] private int index;
     [SerializeField] Renderer[] meshs;
     [SerializeField] Database dataBase;
-    //[SerializeField] Material[] material; // 0 - red | 1 - Yellow | 2 - Green
 
     private void OnEnable()
     {
         if (isTraffic)
         {
-            Debug.Log(GameController.controller);
-            Debug.Log(GameController.controller.obsTrafficLight);
             GameController.controller.obsTrafficLight.AddListTrafficLight(this);
-            //invokerepeating("changetraffic", traffictime, traffictime);
         }
         
     }

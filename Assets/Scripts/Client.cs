@@ -12,6 +12,8 @@ public class Client : MonoBehaviour
 
     [Header("Others: ")] [SerializeField] private int touchPlayer;
     [SerializeField] private Transform target;
+    private Vector3 startPosition;
+    private float lerpPosValue;
     [SerializeField] private float speed;
     [SerializeField] private Collider coll;
     [SerializeField] private Text password;
@@ -23,12 +25,15 @@ public class Client : MonoBehaviour
     [SerializeField] private GameObject iconMinimap;
 
     private int indexTarget;
+    float divider = 1;
 
     private void Start()
     {
         mainCamera = Camera.main.transform;
         target = GameController.controller.player.carDoorPos[0];
         indexTarget = 0;
+        startPosition = transform.position;
+        lerpPosValue = 0;
     }
 
     private void Update()
@@ -41,21 +46,27 @@ public class Client : MonoBehaviour
         if (GameController.controller.passwordCorrect)
         {
             GameController.controller.passwordCorrect = false;
+            CheckDoorDistance();
+            divider = 2.5f / Vector3.Distance(transform.position, target.position);
             touchPlayer = 0;
             canvas.gameObject.SetActive(false);
             GameController.controller.uiController.CellPhoneAnimation(3);
             GameController.controller.alvoMinimapa.index++;
             transform.GetChild(0).GetComponent<Animator>().SetInteger("State", 1);
-            CheckDoorDistance();
         }
+    }
 
-        if (touchPlayer == 0 || touchPlayer == 3)
+    private void FixedUpdate()
+    {
+        if (touchPlayer == 0)
         {
             var targetPos = target.position;
             targetPos.y = 1.4f;
-            transform.position = Vector3.Lerp(transform.position, targetPos, speed * Time.deltaTime);
+            transform.position = Vector3.Lerp(startPosition, targetPos, lerpPosValue);
+            lerpPosValue += Mathf.Min(1, speed * divider);
             Walking();
-            if (Vector3.Distance(transform.position, target.position) <= 0.5f)
+            Debug.Log(Vector3.Distance(transform.position, target.position));
+            if (Vector3.Distance(transform.position, target.position) <= 0.35f)
             {
                 if (target.CompareTag("Player"))
                 {
@@ -65,7 +76,6 @@ public class Client : MonoBehaviour
                     transform.position = new Vector3(target.transform.position.x, target.transform.position.y,
                         target.transform.position.z);
                     transform.rotation = target.transform.rotation;
-                    //transform.localRotation = new Quaternion(1, transform.localRotation.y, transform.localRotation.z, 1);
                     GetComponent<BoxCollider>().size = new Vector3(2, 2, 2);
                     transform.parent = target.transform;
                     StartCoroutine("OpenDoorCar", indexTarget);
@@ -100,6 +110,8 @@ public class Client : MonoBehaviour
         GameController.controller.player.inGame = true;
         if (value == 2)
         {
+            int rating = GameController.controller.GetPaid(clientPayment, true);
+            GameController.controller.AddHistoryClient(new ClientsParameters(clientName, rating, clientPayment));
             GameController.controller.ResetClient(); // Deletar Cliente e destino
         }
     }
@@ -120,12 +132,12 @@ public class Client : MonoBehaviour
         GameController.controller.PasswordClient();
     }
 
-    public void GetAttributes(string _clientName, int _clientRating, float _clientPayment)
-    {
-        _clientName = clientName;
-        _clientRating = clientRating;
-        _clientPayment = clientPayment;
-    }
+    //public void GetAttributes(string _clientName, int _clientRating, float _clientPayment)
+    //{
+    //    _clientName = clientName;
+    //    _clientRating = clientRating;
+    //    _clientPayment = clientPayment;
+    //}
 
     private void OnTriggerEnter(Collider other)
     {
@@ -142,7 +154,6 @@ public class Client : MonoBehaviour
             GameController.controller.PasswordClient();
             password.text = GameController.controller.passwordClient.ToString();
             GameController.controller.uiController.CellPhoneAnimation(6);
-            //target = other.transform;
             GameController.controller.player.inGame = false;
             GameController.controller.minimapaAlvo[1].gameObject.SetActive(true);
             iconMinimap.SetActive(false);
@@ -153,13 +164,8 @@ public class Client : MonoBehaviour
     public void ArriveDestination()
     {
         GameController.controller.player.inGame = false;
-        GameController.controller.GetPaid(clientPayment, true);
-        GameController.controller.AddHistoryClient(new ClientsParameters(clientName, clientRating, clientPayment));
         GameController.controller.uiController.EsconderEstrelaCorrida();
         StartCoroutine("OpenDoorCar", 2);
-        //transform.parent = null;
-        //target = _target;
-        //touchPlayer++;
         GameController.controller.alvoMinimapa.index++;
     }
 

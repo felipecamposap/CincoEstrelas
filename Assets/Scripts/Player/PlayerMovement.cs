@@ -329,7 +329,6 @@ public class PlayerMovement : MonoBehaviour
 
     public void OpenDoor(int value)
     {
-        Debug.Log(value);
         animatorDoor.SetInteger("State", value);
     }
 }
