@@ -315,6 +315,8 @@ public class GameController : MonoBehaviour
             StartCoroutine("ClientTime");
         else
         {
+            minimapaAlvo[0].GetComponent<Client>().LoseClient(2);
+            yield return new WaitForSeconds(2.2f);
             ResetClient();
             GetPaid(0, false);
         }

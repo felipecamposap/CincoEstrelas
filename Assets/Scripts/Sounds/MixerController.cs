@@ -18,38 +18,52 @@ public class MixerController : MonoBehaviour
         if (SceneManager.GetActiveScene().buildIndex == 0 && startPlay)
         {
             // ----- Declarar volume Geral ----- \\
-            //CheckPrefs("MasterVolume", out audioValue, out sliderValue);
-            //mixerSliders[0].value = sliderValue;
             mixerSliders[0].value = 3;
-            //audioMixer.SetFloat("MasterVolume", audioValue);
             audioMixer.SetFloat("Master", -10);
 
             // ----- Declarar volume Musica ----- \\
-            //CheckPrefs("MusicaVolume", out audioValue, out sliderValue);
-            //mixerSliders[1].value = sliderValue;
             mixerSliders[1].value = 3;
-            //audioMixer.SetFloat("MusicaVolume", audioValue);
             audioMixer.SetFloat("Musica", -10);
 
             // ----- Declarar volume Efeito ----- \\
-            //CheckPrefs("EfeitosVolume", out audioValue, out sliderValue);
-            //mixerSliders[2].value = sliderValue;
             mixerSliders[2].value = 3;
-            //audioMixer.SetFloat("EfeitosVolume", audioValue);
             audioMixer.SetFloat("Efeitos", -10);
+
             startPlay = false;
-            //this.gameObject.SetActive(false);
+            this.gameObject.SetActive(false);
+        } 
+        else
+        {
+            float audioValue;
+            int sliderValue;
+            // ----- Declarar volume Geral ----- \\
+            CheckPrefs("Master", out audioValue, out sliderValue);
+            mixerSliders[0].value = sliderValue;
+            audioMixer.SetFloat("Master", audioValue);
+
+            // ----- Declarar volume Musica ----- \\
+            CheckPrefs("Musica", out audioValue, out sliderValue);
+            mixerSliders[1].value = sliderValue;
+            audioMixer.SetFloat("Musica", audioValue);
+
+            // ----- Declarar volume Efeito ----- \\
+            CheckPrefs("Efeitos", out audioValue, out sliderValue);
+            mixerSliders[2].value = sliderValue;
+            audioMixer.SetFloat("Efeitos", audioValue);
         }
-        
+
     }
 
-    private void CheckPrefs(string _name, out int audioValue, out int sliderValue)
+    private void CheckPrefs(string _name, out float audioValue, out int sliderValue)
     {
         sliderValue = 0;
-        Debug.Log(_name + " - " + PlayerPrefs.GetInt(_name));
-        if (PlayerPrefs.HasKey(_name))
-        {
-            audioValue = PlayerPrefs.GetInt(_name);
+        audioMixer.GetFloat(_name, out audioValue);
+        Debug.Log(_name + " : " + audioValue);//+ " - " + PlayerPrefs.GetInt(_name));
+
+        //if (PlayerPrefs.HasKey(_name))
+        //{
+        //    Debug.Log("Find: " + _name);
+        //    audioValue = PlayerPrefs.GetInt(_name);
             switch (audioValue)
             {
                 case -88:
@@ -57,27 +71,27 @@ public class MixerController : MonoBehaviour
                     break;
 
                 case -40:
-                    audioValue = 1;
+                    sliderValue = 1;
                     break;
 
                 case -20:
-                    audioValue = 2;
+                    sliderValue = 2;
                     break;
 
                 case -10:
-                    audioValue = 3;
+                    sliderValue = 3;
                     break;
 
                 case 5:
-                    audioValue = 4;
+                    sliderValue = 4;
                     break;
             }
-        }
-        else
-        {
-            audioValue = -20;
-            sliderValue = 2;
-        }
+        //}
+        //else
+        //{
+        //    audioValue = -20;
+        //    sliderValue = 2;
+        //}
     }
 
     public void MasterVolume()
@@ -107,9 +121,6 @@ public class MixerController : MonoBehaviour
         }
 
         audioMixer.SetFloat("Master", value);
-        //PlayerPrefs.SetInt("MasterVolume", value);
-        //PlayerPrefs.Save();
-
     }
 
     public void MusicaVolume()
@@ -139,8 +150,6 @@ public class MixerController : MonoBehaviour
         }
 
         audioMixer.SetFloat("Musica", value);
-        //PlayerPrefs.SetInt("MusicaVolume", value);
-        //PlayerPrefs.Save();
     }
 
     public void EfeitoVolume()
@@ -170,8 +179,6 @@ public class MixerController : MonoBehaviour
         }
 
         audioMixer.SetFloat("Efeitos", value);
-        //PlayerPrefs.SetInt("EfeitosVolume", value);
-        //PlayerPrefs.Save();
     }
 
 }

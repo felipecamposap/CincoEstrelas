@@ -46,7 +46,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (!inGame)
         {
-            brakeInput = rb.drag * 20;
+            brakeInput = rb.drag * 30;
             ApplyBrake();
             ToggleVFX(tireSmokes, false);
             return;
@@ -247,8 +247,9 @@ public class PlayerMovement : MonoBehaviour
 
     private void ApplyMotor()
     {
-        colliders.BRWheel.motorTorque = motorPower * gasInput; // Adjust the value as needed
-        colliders.BLWheel.motorTorque = motorPower * gasInput; // Adjust the value as needed
+        
+        colliders.BRWheel.motorTorque = gasInput > 0 ? motorPower * gasInput : motorPower * gasInput / 2; // Adjust the value as needed
+        colliders.BLWheel.motorTorque = gasInput > 0 ? motorPower * gasInput : motorPower * gasInput / 2; // Adjust the value as needed
     }
 
     private void ApplySteering()

@@ -70,14 +70,27 @@ public class MouseLook : MonoBehaviour
         else
             idleCamTimer = 0;
 
-        if (idleCamTimer >= maxIdleCamTimer || cellPhoneLift)
+        if (idleCamTimer >= maxIdleCamTimer || cellPhoneLift )
         {
             LockCam(true, mouseX, mouseY);
         }
 
-        if (locked)
+        if(!player.GetComponent<PlayerMovement>().inGame)
+        {
+            LockCam(true, mouseX, mouseY);
+            //lookTarget = GameController.controller.minimapaAlvo[0].transform.rotation;
+            lookTarget = Quaternion.LookRotation(GameController.controller.minimapaAlvo[0].transform.position - player.transform.position);
+            //lookTarget.x = -lookTarget.x;
+            
+        }
+        else
         {
             lookTarget = player.transform.rotation;
+        }
+
+        if (locked)
+        {
+            
             lookTarget = new Quaternion(0f, -lookTarget.y, 0f, -lookTarget.w); // evitar que a camera automatica rotacione em eixos errados
             transform.rotation = Quaternion.Slerp(transform.rotation, lookTarget, rotSpeed * Time.deltaTime);
         }

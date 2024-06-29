@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using static UnityEngine.Rendering.DebugUI;
 
 
 public class Client : MonoBehaviour
@@ -47,7 +48,7 @@ public class Client : MonoBehaviour
         {
             GameController.controller.passwordCorrect = false;
             CheckDoorDistance();
-            divider = 2.5f / Vector3.Distance(transform.position, target.position);
+            divider = 3.2f / Vector3.Distance(transform.position, target.position);
             touchPlayer = 0;
             canvas.gameObject.SetActive(false);
             GameController.controller.uiController.CellPhoneAnimation(3);
@@ -63,10 +64,10 @@ public class Client : MonoBehaviour
             var targetPos = target.position;
             targetPos.y = 1.4f;
             transform.position = Vector3.Lerp(startPosition, targetPos, lerpPosValue);
-            lerpPosValue += Mathf.Min(1, speed * divider);
+            lerpPosValue = Mathf.Min(1, lerpPosValue + speed * divider);
             Walking();
             Debug.Log(Vector3.Distance(transform.position, target.position));
-            if (Vector3.Distance(transform.position, target.position) <= 0.35f)
+            if (lerpPosValue == 1)
             {
                 if (target.CompareTag("Player"))
                 {
@@ -80,11 +81,11 @@ public class Client : MonoBehaviour
                     transform.parent = target.transform;
                     StartCoroutine("OpenDoorCar", indexTarget);
                 }
-                else
-                {
-                    Destroy(gameObject);
-                    Destroy(target.gameObject);
-                }
+                //else
+                //{
+                //    Destroy(gameObject);
+                //    Destroy(target.gameObject);
+                //}
             }
         }
     }
@@ -167,6 +168,13 @@ public class Client : MonoBehaviour
         GameController.controller.uiController.EsconderEstrelaCorrida();
         StartCoroutine("OpenDoorCar", 2);
         GameController.controller.alvoMinimapa.index++;
+    }
+
+    public void LoseClient(int value)
+    {
+        coll.enabled = false;
+        transform.GetChild(0).GetComponent<Animator>().SetInteger("State", (value + 1) * 2);
+        iconMinimap.SetActive(false);
     }
 
     private void OnTriggerStay(Collider other)
