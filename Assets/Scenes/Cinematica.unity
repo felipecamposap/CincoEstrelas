@@ -2180,7 +2180,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 905565341}
+      - m_Target: {fileID: 644615038}
         m_TargetAssemblyTypeName: SceneAsyncLoader, Assembly-CSharp
         m_MethodName: LoadScene
         m_Mode: 1

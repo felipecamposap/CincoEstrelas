@@ -208,7 +208,7 @@ public class Interface : MonoBehaviour
     // 5 - Aceitar corrida
     // 6 - Rejeitar corrida
     // ?? - Sair Aplicativo Cinco Estrelas
-    public void CellPhoneAnimation(int _value)// 
+    public void CellPhoneAnimation(int _value)
     {
         switch (_value)
         {

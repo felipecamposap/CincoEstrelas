@@ -11,6 +11,7 @@ public class InterfaceInterativos : MonoBehaviour
     [SerializeField] private bool playerTouch = false;
     [Header("Coloque o gameObject da interface da contru��o: ")]
     [SerializeField] private GameObject uiObject;
+    private int isCellphoneLift;
 
 
     private void Update()
@@ -33,6 +34,10 @@ public class InterfaceInterativos : MonoBehaviour
             thisCanvas.SetActive(true);
             playerTouch = true;
             GameController.controller.isInteracting = true;
+            isCellphoneLift = GameController.controller.uiController.CellPhoneLift() ? 0 : 1;
+            if(isCellphoneLift == 0)
+                GameController.controller.uiController.CellPhoneAnimation(1);
+
         }
 
     }
@@ -43,7 +48,8 @@ public class InterfaceInterativos : MonoBehaviour
             thisCanvas.SetActive(false);
             playerTouch = false;
             GameController.controller.isInteracting = false;
-
+            if(isCellphoneLift == 0)
+                GameController.controller.uiController.CellPhoneAnimation(isCellphoneLift);
         }
     }
 
