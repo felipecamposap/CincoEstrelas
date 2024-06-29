@@ -18,7 +18,7 @@ GameObject:
   m_TagString: Damagable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &3219159786418007867
 Transform:
@@ -28,7 +28,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5410986136632886413}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -36.41298, y: 0.39999962, z: 442.8448}
   m_LocalScale: {x: 3, y: 3, z: 3}
   m_ConstrainProportionsScale: 0
@@ -63,7 +63,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: e3ed45336d3d1944caa6300d57823da3, type: 2}
+  - {fileID: 2100000, guid: a86f0e5905db1f0409e621e7935af42f, type: 2}
   - {fileID: 2100000, guid: 187c58c17158876468124977781e22b0, type: 2}
   - {fileID: 2100000, guid: cf2cc521c2b696840b17e0a12ca56985, type: 2}
   - {fileID: 2100000, guid: cf2cc521c2b696840b17e0a12ca56985, type: 2}
