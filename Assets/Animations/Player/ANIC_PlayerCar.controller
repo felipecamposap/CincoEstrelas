@@ -8,7 +8,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: ANI_PlayerCarCloseDoorL
-  m_Speed: -1.3
+  m_Speed: -2
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: 8822185600969375056}
@@ -141,7 +141,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: ANI_PlayerCarCloseDoorR
-  m_Speed: -1.3
+  m_Speed: -2
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: 3178545130916141854}
@@ -168,7 +168,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: ANI_PlayerCarOpenDoorR
-  m_Speed: 1
+  m_Speed: 2
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: 6585708981184523268}
@@ -301,7 +301,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: ANI_PlayerCarOpenDoorL
-  m_Speed: 1
+  m_Speed: 2
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: 4401844569085589516}

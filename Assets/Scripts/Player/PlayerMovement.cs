@@ -101,8 +101,9 @@ public class PlayerMovement : MonoBehaviour
                 }
                 else // acelerando com o carro indo para frente
                 {
-                    if ((localVelocity.z is > 0 and < 8) || localVelocity is { z: > 10, x: > 2 } ||
-                        localVelocity is { z: < 8, x: > 3 })
+                    if (((localVelocity.z is > 0 and < 8) || localVelocity is { z: > 10, x: > 2 } ||
+                         localVelocity is { z: < 8, x: > 3 }) &&
+                        (colliders.BLWheel.isGrounded && colliders.BRWheel.isGrounded))
                     {
                         ToggleVFX(tireSmokes, true);
                         ToggleTrails(tireMarks, true);
@@ -149,6 +150,7 @@ public class PlayerMovement : MonoBehaviour
         {
             fovTimer -= Time.fixedDeltaTime;
         }
+
         fovTimer = Mathf.Clamp(fovTimer, 0, 1);
         mainCamera.fieldOfView = Mathf.SmoothStep(initialCameraFOV, 80, fovTimer);
     }
@@ -219,7 +221,7 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    public void ToggleTrails(TrailRenderer[] trailRenderers, bool value)
+    private static void ToggleTrails(TrailRenderer[] trailRenderers, bool value)
     {
         if (value)
         {
@@ -247,9 +249,10 @@ public class PlayerMovement : MonoBehaviour
 
     private void ApplyMotor()
     {
-        
-        colliders.BRWheel.motorTorque = gasInput > 0 ? motorPower * gasInput : motorPower * gasInput / 2; // Adjust the value as needed
-        colliders.BLWheel.motorTorque = gasInput > 0 ? motorPower * gasInput : motorPower * gasInput / 2; // Adjust the value as needed
+        colliders.BRWheel.motorTorque =
+            gasInput > 0 ? motorPower * gasInput : motorPower * gasInput / 1.75f; // Adjust the value as needed
+        colliders.BLWheel.motorTorque =
+            gasInput > 0 ? motorPower * gasInput : motorPower * gasInput / 1.75f; // Adjust the value as needed
     }
 
     private void ApplySteering()
@@ -267,11 +270,9 @@ public class PlayerMovement : MonoBehaviour
         UpdateWheel(colliders.BLWheel, wheelMeshes.BLWheel);
     }
 
-    private void UpdateWheel(WheelCollider coll, MeshRenderer wheelMesh)
+    private static void UpdateWheel(WheelCollider coll, MeshRenderer wheelMesh)
     {
-        Quaternion rot;
-        Vector3 pos;
-        coll.GetWorldPose(out pos, out rot);
+        coll.GetWorldPose(out var pos, out var rot);
         wheelMesh.transform.position = pos;
         wheelMesh.transform.rotation = rot;
     }
@@ -280,31 +281,29 @@ public class PlayerMovement : MonoBehaviour
 
     public IEnumerator OnCollisionEnter(Collision collision)
     {
-        if (inGame && canDamage)
+        if (!inGame || !canDamage) yield break;
+        if (collision.gameObject.CompareTag("Damagable") || collision.gameObject.CompareTag("Npc"))
         {
-            if (collision.gameObject.CompareTag("Damagable") || collision.gameObject.CompareTag("Npc"))
+            canDamage = false;
+            var damageValue = rb.velocity.magnitude;
+            yield return new WaitForSeconds(0.1f);
+            damageValue -= rb.velocity.magnitude;
+            damageValue = Math.Max(1, damageValue);
+            var contact = collision.contacts[0];
+            Instantiate(danoFaisca, contact.point, Quaternion.identity);
+            GameController.controller.penalty += 1;
+            if (!GameController.controller.trapacas[0])
             {
-                canDamage = false;
-                float damageValue = rb.velocity.magnitude;
-                yield return new WaitForSeconds(0.1f);
-                damageValue -= rb.velocity.magnitude;
-                damageValue = Math.Max(1, damageValue);
-                var contact = collision.contacts[0];
-                Instantiate(danoFaisca, contact.point, Quaternion.identity);
-                GameController.controller.penalty += 1;
-                if (!GameController.controller.trapacas[0])
+                GameController.controller.Damage((damageValue * 5f));
+                if (GameController.controller.carIntegrityCurrent < GameController.controller.carIntegrityMax / 4)
                 {
-                    GameController.controller.Damage((damageValue * 5f));
-                    if (GameController.controller.carIntegrityCurrent < GameController.controller.carIntegrityMax / 4)
-                    {
-                        ToggleVFX(damageVFX, true);
-                    }
+                    ToggleVFX(damageVFX, true);
                 }
             }
-
-            yield return new WaitForSeconds(0.25f);
-            canDamage = true;
         }
+
+        yield return new WaitForSeconds(0.25f);
+        canDamage = true;
     }
 
     private void OnTriggerEnter(Collider col)

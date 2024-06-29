@@ -66,7 +66,7 @@ public class Mecanica : MonoBehaviour
 
     public void RepairSlider(float _value)
     {
-        price = (brokenAmount * _value) * 5f; // preço multiplier
+        price = (brokenAmount * _value) * 2f; // preço multiplier
         repairPerCent = _value;
         fillImages[1].fillAmount = brokenAmountPerCent + (1 - brokenAmountPerCent) * _value;
         txtPrice.text = $"R${price:F2}";

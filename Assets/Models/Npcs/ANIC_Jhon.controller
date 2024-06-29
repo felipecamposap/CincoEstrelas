@@ -8,7 +8,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: JhonRig|OpeningCarDoorEsquerda
-  m_Speed: 1
+  m_Speed: 2
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: -5092418939217643635}
@@ -36,7 +36,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: JhonRig|CloseCarDoorEsquerda
-  m_Speed: -1
+  m_Speed: -1.75
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: -1574367015354644529}
@@ -348,7 +348,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: JhonRig|CloseCarDoorRight
-  m_Speed: -1
+  m_Speed: -1.75
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: 5563363516174677504}
@@ -404,7 +404,7 @@ AnimatorStateMachine:
     m_Position: {x: 0, y: 80, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 2539871022437055466}
-    m_Position: {x: 30, y: 210, z: 0}
+    m_Position: {x: 0, y: 210, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 8574588735626987112}
     m_Position: {x: -150, y: 300, z: 0}
@@ -438,7 +438,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: JhonRig|OpeningCarDoor
-  m_Speed: 1
+  m_Speed: 2
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: -1239321930073574180}
