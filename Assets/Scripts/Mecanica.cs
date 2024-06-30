@@ -10,17 +10,20 @@ public class Mecanica : MonoBehaviour
     [SerializeField] private Slider sldIntegrity;
     [SerializeField] private Text txtPrice;
     [SerializeField] private Button btnPagar;
+    [SerializeField] private Text txtPagar;
 
     private float price;
     private float brokenAmount, brokenAmountPerCent, maxLife, currentLife, repairPerCent;
 
-    [Header("Upgrades")] [SerializeField] private Button[] btnUpgrade; // 0 - Motor | 1 - Direcao
-    [SerializeField] private Text priceUpgradeMotor;
+    [Header("Upgrades")] [SerializeField] private Button[] btnUpgrade; // 0 - Motor | 1 - Freio
+    [SerializeField] private Text[] txtUpgrade;
+    [SerializeField] private Text[] priceUpgrade;
 
     // ----- Variaveis de Controle ----- \\
     private float playerMoney;
     private float motorPower;
-    private float motorUpgradePrice;
+    private float upgradePrice;
+    private float brakePower;
 
 
     private void OnEnable()
@@ -33,11 +36,25 @@ public class Mecanica : MonoBehaviour
     public void SetControlVariables()
     {
         playerMoney = GameController.controller.PlayerMoney;
-        motorUpgradePrice = GameController.motorUpgradePrice;
+        upgradePrice = GameController.upgradePrice;
         motorPower = GameController.controller.player.motorPower;
-        priceUpgradeMotor.text = $"Preço: R${GameController.motorUpgradePrice}:R2";
-
-        btnUpgrade[0].interactable = motorPower < 2000 && playerMoney > motorUpgradePrice;
+        // ------ Motor upgrade
+        bool canUpgrade = motorPower < 2000 && playerMoney >= upgradePrice;
+        if (canUpgrade)
+                txtUpgrade[0].color = Color.white;
+            else
+                txtUpgrade[0].color = Color.black;
+            btnUpgrade[0].interactable = canUpgrade;
+        priceUpgrade[0].text = $"Preço: R${GameController.upgradePrice:R2}";
+        // ------ brake upgrade
+        brakePower = GameController.controller.player.brakePower;
+        canUpgrade = brakePower < 0.7f && playerMoney >= upgradePrice / 2;
+        if (canUpgrade)
+            txtUpgrade[1].color = Color.white;
+        else
+            txtUpgrade[1].color = Color.black;
+        btnUpgrade[1].interactable = canUpgrade;
+        priceUpgrade[1].text = $"Preço: R${GameController.upgradePrice/2:R2}";
     }
 
     public void UpdateUI()
@@ -70,10 +87,17 @@ public class Mecanica : MonoBehaviour
         repairPerCent = _value;
         fillImages[1].fillAmount = brokenAmountPerCent + (1 - brokenAmountPerCent) * _value;
         txtPrice.text = $"R${price:F2}";
-        if (price > GameController.controller.PlayerMoney)
+        if (price > playerMoney)
+        {
             btnPagar.interactable = false;
+            txtPagar.color = Color.black;
+            Debug.Log("AAAAAAAAAAAAAAAA");
+        }
         else
+        {
             btnPagar.interactable = true;
+            txtPagar.color = Color.white;
+        }
     }
 
     public void CloseUI()
@@ -92,8 +116,17 @@ public class Mecanica : MonoBehaviour
 
     public void UpgradeMotor()
     {
-        GameController.controller.GetPaid(motorUpgradePrice, false);
+        //GameController.controller.GetPaid(-upgradePrice, false);
+        GameController.controller.ChangeMoney(-upgradePrice);
         GameController.controller.player.UpgradeMotor();
+        SetControlVariables();
+    }
+    
+    public void UpgradeBrake()
+    {
+        //GameController.controller.GetPaid(-upgradePrice / 2, false);
+        GameController.controller.ChangeMoney(-upgradePrice/2);
+        GameController.controller.player.UpgradeBrake();
         SetControlVariables();
     }
 }

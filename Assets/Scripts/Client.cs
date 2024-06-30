@@ -92,8 +92,7 @@ public class Client : MonoBehaviour
 
     private void CheckDoorDistance()
     {
-        float newDistance =
-            Vector3.Distance(transform.position, GameController.controller.player.carDoorPos[1].position);
+        float newDistance = Vector3.Distance(transform.position, GameController.controller.player.carDoorPos[1].position);
         if (Vector3.Distance(transform.position, target.position) > newDistance)
         {
             target = GameController.controller.player.carDoorPos[1];
@@ -107,10 +106,11 @@ public class Client : MonoBehaviour
             yield return new WaitForSeconds(2);
         transform.GetChild(0).GetComponent<Animator>().SetInteger("State", (value + 1) * 2);
         GameController.controller.player.OpenDoor((value + 1));
-        yield return new WaitForSeconds(5.2f);
+        yield return new WaitForSeconds(2.2f);
         GameController.controller.player.inGame = true;
         if (value == 2)
         {
+            yield return new WaitForSeconds(1);
             int rating = GameController.controller.GetPaid(clientPayment, true);
             GameController.controller.AddHistoryClient(new ClientsParameters(clientName, rating, clientPayment));
             GameController.controller.ResetClient(); // Deletar Cliente e destino

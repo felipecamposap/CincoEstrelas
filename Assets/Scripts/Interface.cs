@@ -80,8 +80,6 @@ public class Interface : MonoBehaviour
         playerCurrentRating.value = GameController.controller.playerStar;
         Gasolina(GameController.controller.PlayerFuel / GameController.controller.maxPlayerFuel);
         estrelasCorrida.value = 10 - (GameController.controller.penalty * 2);
-
-
     }
 
     public void SetHour(int _hour, int _minute)

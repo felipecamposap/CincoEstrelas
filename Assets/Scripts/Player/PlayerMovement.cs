@@ -12,7 +12,7 @@ public class PlayerMovement : MonoBehaviour
     public float gasInput;
     private float brakeInput, steeringInput, speed, initialCameraFOV;
     public float motorPower = 5000.0f; // Adjust the value as needed
-    [SerializeField] private float brakePower = 10000.0f; // Adjust the value as needed
+    [SerializeField] public float brakePower; // Adjust the value as needed
 
     [SerializeField]
     private float gasDrag = 0.005f, idleDrag = 0.5f, brakeDrag = 1.5f, brakeThreshold = 2f, fovTimer = 0f;
@@ -318,6 +318,11 @@ public class PlayerMovement : MonoBehaviour
     public void UpgradeMotor()
     {
         motorPower += 200;
+    }
+
+    public void UpgradeBrake()
+    {
+        brakePower += 0.1f;
     }
 
     public void PlayerVictory()

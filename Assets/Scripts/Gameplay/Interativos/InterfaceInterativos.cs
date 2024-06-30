@@ -30,7 +30,7 @@ public class InterfaceInterativos : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.CompareTag("Player")){
+        if(other.CompareTag("Player") && !GameController.controller.minimapaAlvo[0]){
             thisCanvas.SetActive(true);
             playerTouch = true;
             GameController.controller.isInteracting = true;
@@ -44,7 +44,8 @@ public class InterfaceInterativos : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Player")){
+        if (other.CompareTag("Player") && !GameController.controller.minimapaAlvo[0])
+        {
             thisCanvas.SetActive(false);
             playerTouch = false;
             GameController.controller.isInteracting = false;

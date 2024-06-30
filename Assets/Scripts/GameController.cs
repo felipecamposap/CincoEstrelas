@@ -37,7 +37,7 @@ public class GameController : MonoBehaviour
 
     // ----- Config Upgrades
     [Header("Upgrades Config")] [SerializeField]
-    public const float motorUpgradePrice = 100f;
+    public const float upgradePrice = 100f;
 
 
     // ----- Tempo Jogo
@@ -223,7 +223,7 @@ public class GameController : MonoBehaviour
     public void RecoverIntegrity(float _integrity, float _value)
     {
         carIntegrityCurrent += _integrity;
-        GetPaid(_value, false);
+        //GetPaid(_value, false);
         uiController?.ATTUI(); // Checar UI
     }
 
@@ -373,6 +373,11 @@ public class GameController : MonoBehaviour
         uiController.EsconderEstrelaCorrida();
         uiController.ATTUI();
         return rating;
+    }
+
+    public void ChangeMoney(float value)
+    {
+        playerMoney += value;
     }
 
     public void AddHistoryClient(ClientsParameters client)

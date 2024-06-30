@@ -24,6 +24,7 @@ public class MusicController : MonoBehaviour
             if (canChangeMusic)
             {
                 canChangeMusic = false;
+                
                 audioSource.clip = clips[clipIndex];
                 audioSource.Play();
                 clipIndex++;
