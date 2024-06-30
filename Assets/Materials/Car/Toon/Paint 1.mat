@@ -30,7 +30,6 @@ Material:
   - _ENVIRONMENT_LIGHTING_ENABLED
   - _FOG
   - _FRESNEL
-  - _RAMP_TRIPLE
   - _SPECULAR
   m_InvalidKeywords:
   - _ZWRITE_ON
@@ -140,7 +139,7 @@ Material:
     - _Ramp0: -0.07
     - _Ramp1: 0.5
     - _RampSmoothness: 0
-    - _RampTriple: 1
+    - _RampTriple: 0
     - _ReceiveShadows: 1
     - _ReflectionBlend: 0.5
     - _ReflectionProbes: 0
@@ -162,7 +161,7 @@ Material:
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
-    - _BaseColor: {r: 0.18039216, g: 0.76862746, b: 0.7137255, a: 1}
+    - _BaseColor: {r: 0.6037736, g: 0.3692984, b: 0, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _FresnelColor: {r: 1, g: 1, b: 1, a: 1}

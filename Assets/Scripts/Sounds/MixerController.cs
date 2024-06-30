@@ -34,10 +34,8 @@ public class MixerController : MonoBehaviour
         } 
         else
         {
-            float audioValue;
-            int sliderValue;
             // ----- Declarar volume Geral ----- \\
-            CheckPrefs("Master", out audioValue, out sliderValue);
+            CheckPrefs("Master", out var audioValue, out var sliderValue);
             mixerSliders[0].value = sliderValue;
             audioMixer.SetFloat("Master", audioValue);
 
@@ -64,28 +62,15 @@ public class MixerController : MonoBehaviour
         //{
         //    Debug.Log("Find: " + _name);
         //    audioValue = PlayerPrefs.GetInt(_name);
-            switch (audioValue)
-            {
-                case -88:
-                    sliderValue = 0;
-                    break;
-
-                case -40:
-                    sliderValue = 1;
-                    break;
-
-                case -20:
-                    sliderValue = 2;
-                    break;
-
-                case -10:
-                    sliderValue = 3;
-                    break;
-
-                case 5:
-                    sliderValue = 4;
-                    break;
-            }
+        sliderValue = audioValue switch
+        {
+            -88 => 0,
+            -40 => 1,
+            -20 => 2,
+            -10 => 3,
+            5 => 4,
+            _ => sliderValue
+        };
         //}
         //else
         //{
@@ -96,87 +81,45 @@ public class MixerController : MonoBehaviour
 
     public void MasterVolume()
     {
-        var value = 0;
-        switch (mixerSliders[0].value)
+        var value = mixerSliders[0].value switch
         {
-            case 0:
-                value = -88;
-                break;
-
-            case 1:
-                value = -40;
-                break;
-
-            case 2:
-                value = -20;
-                break;
-
-            case 3:
-                value = -10;
-                break;
-
-            case 4:
-                value = 5;
-                break;
-        }
+            0 => -88,
+            1 => -40,
+            2 => -20,
+            3 => -10,
+            4 => 5,
+            _ => 0
+        };
 
         audioMixer.SetFloat("Master", value);
     }
 
     public void MusicaVolume()
     {
-        var value = 0;
-        switch (mixerSliders[1].value)
+        var value = mixerSliders[1].value switch
         {
-            case 0:
-                value = -88;
-                break;
-
-            case 1:
-                value = -40;
-                break;
-
-            case 2:
-                value = -20;
-                break;
-
-            case 3:
-                value = -10;
-                break;
-
-            case 4:
-                value = 5;
-                break;
-        }
+            0 => -88,
+            1 => -40,
+            2 => -20,
+            3 => -10,
+            4 => 5,
+            _ => 0
+        };
 
         audioMixer.SetFloat("Musica", value);
     }
 
     public void EfeitoVolume()
     {
-        var value = 0;
-        switch (mixerSliders[2].value)
+        var value = mixerSliders[2].value switch
         {
-            case 0:
-                value = -88;
-                break;
-
-            case 1:
-                value = -40;
-                break;
-
-            case 2:
-                value = -20;
-                break;
-
-            case 3:
-                value = -10;
-                break;
-
-            case 4:
-                value = 5;
-                break;
-        }
+            0 => -88,
+            1 => -40,
+            2 => -20,
+            3 => -10,
+            4 => 5,
+            _ => 0
+        };
 
         audioMixer.SetFloat("Efeitos", value);
     }
