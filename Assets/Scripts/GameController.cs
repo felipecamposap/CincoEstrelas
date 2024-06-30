@@ -86,6 +86,7 @@ public class GameController : MonoBehaviour
     [Header("Trapa�as: ")] public bool[] trapacas = new bool[3];
 
     [HideInInspector] public int[] soundValues = new int[3] ;
+    [HideInInspector] public bool startSound = true;
 
 
     private void Awake()

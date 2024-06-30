@@ -14,7 +14,7 @@ public class MixerController : MonoBehaviour
     public void Start()
     {
 
-        if (SceneManager.GetActiveScene().buildIndex == 0 && startPlay)
+        if (GameController.controller.startSound)
         {
             // ----- Declarar volume Geral ----- \\
             mixerSliders[0].value = 3;
@@ -31,8 +31,8 @@ public class MixerController : MonoBehaviour
             audioMixer.SetFloat("Efeitos", -10);
             GameController.controller.soundValues[2] = 3;
 
-            startPlay = false;
-            this.gameObject.SetActive(false);
+            GameController.controller.startSound = false;
+            
         } 
         else
         {
@@ -48,7 +48,8 @@ public class MixerController : MonoBehaviour
             mixerSliders[2].value = GameController.controller.soundValues[2];
             EfeitoVolume();
         }
-
+        if(startPlay)
+            this.gameObject.SetActive(false);
     }
 
     public void MasterVolume()
@@ -64,6 +65,7 @@ public class MixerController : MonoBehaviour
         };
 
         audioMixer.SetFloat("Master", value);
+        GameController.controller.soundValues[0] = (int)mixerSliders[0].value;
     }
 
     public void MusicaVolume()
@@ -79,6 +81,7 @@ public class MixerController : MonoBehaviour
         };
 
         audioMixer.SetFloat("Musica", value);
+        GameController.controller.soundValues[1] = (int)mixerSliders[1].value;
     }
 
     public void EfeitoVolume()
@@ -94,6 +97,7 @@ public class MixerController : MonoBehaviour
         };
 
         audioMixer.SetFloat("Efeitos", value);
+        GameController.controller.soundValues[2] = (int)mixerSliders[2].value;
     }
 
 }
