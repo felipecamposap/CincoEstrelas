@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
@@ -14,7 +15,6 @@ public class GameController : MonoBehaviour
     public AlvoMinimapa alvoMinimapa;
     public PlayerMovement player;
     public ObserverTrafficLight obsTrafficLight;
-
 
     [Header("Status jogador:")] public float carIntegrityMax; // Integridade do carro
     public float carIntegrityCurrent; // Integridade do carro
@@ -46,17 +46,19 @@ public class GameController : MonoBehaviour
 
     [SerializeField] private GameObject dayNightCycle;
     private Light sun, moon;
-    [SerializeField] private Material skybox, predioBloom;
+    [SerializeField] private Material skybox, predioBloom, neonDetail;
 
     [SerializeField] private Color dayColorHorizon,
         nightColorHorizon,
         nightFogColor,
         dayFogColor,
         nightPredioBloom,
-        dayPredioBloom;
+        dayPredioBloom,
+        nightNeonDetail,
+        dayNeonDetail;
 
     private float sunIntensity, moonIntensity, lightTimer;
-    private float timerMinute;
+    private float timerMinute, dayNightTimer;
 
     private float nightSizeDarknessUp = 2f,
         daySizeDarknessUp = 1.5f;
@@ -83,6 +85,8 @@ public class GameController : MonoBehaviour
 
     [Header("Trapa�as: ")] public bool[] trapacas = new bool[3];
 
+    [HideInInspector] public int[] soundValues = new int[3] ;
+
 
     private void Awake()
     {
@@ -95,14 +99,21 @@ public class GameController : MonoBehaviour
             Destroy(gameObject);
 
         ToggleCursor(SceneManager.GetActiveScene().name == "Menu");
+        nightNeonDetail *= Mathf.Pow(2, 6.5f);
+        dayNeonDetail *= Mathf.Pow(2, 3f);
+        nightPredioBloom *= Mathf.Pow(2, 3f);
+        //dayPredioBloom *= 1f;
+        ResetColors();
     }
+    
+    
 
     public void Update()
     {
         if (isGamePaused) return;
         if (!(timerMinute < Time.time)) return;
         minute++;
-        if (minute == 60)
+        if (minute >= 60)
         {
             minute = 0;
             hour++;
@@ -123,7 +134,6 @@ public class GameController : MonoBehaviour
                     ResetClient();
                     GetPaid(0, false);
                 }
-
             }
             else
                 uiController.NextDay();
@@ -134,8 +144,9 @@ public class GameController : MonoBehaviour
 
     public void ResetClient()
     {
-        for (int i = 0; i < minimapaAlvo.Length;i++)
-            Destroy(minimapaAlvo[i].gameObject);
+        if (minimapaAlvo.IsUnityNull()) return;
+        foreach (var t in minimapaAlvo)
+            Destroy(t.gameObject);
     }
 
     private void FixedUpdate()
@@ -159,25 +170,35 @@ public class GameController : MonoBehaviour
             moonIntensity = moon.intensity;
         }
 
-        // Calculate the target angle based on the current time
-        var timeOfDay = ((hour * 60) + minute) / 60f; // Fractional hours
-        var targetAngle = Mathf.Lerp(0, 90, timeOfDay / 6f);
+        if (hour < 6)
+        {
+            // Calculate the target angle based on the current time
+            dayNightTimer += ((Time.fixedDeltaTime * 0.75f) / 360f); // Fractional hours
+        }
+        else
+        {
+            dayNightTimer = 0f;
+        }
+        
+        var targetAngle = Mathf.Lerp(0, 90, dayNightTimer);
+        Debug.Log(dayNightTimer);
 
-
-        skybox.SetColor("_ColorHorizon", Color.Lerp(nightColorHorizon, dayColorHorizon, timeOfDay / 6));
-        skybox.SetFloat("_SizeDarknessUp", Mathf.Lerp(nightSizeDarknessUp, daySizeDarknessUp, timeOfDay / 6));
-        RenderSettings.fogColor = Color.Lerp(nightFogColor, dayFogColor, timeOfDay / 6);
-        predioBloom.SetColor("_EmissionColor", Color.Lerp(nightPredioBloom, dayPredioBloom, timeOfDay / 6));
-        if (hour >= 4)
+        if (hour >= 4 && minute >= 50)
         {
             sun.gameObject.SetActive(true);
-            lightTimer += Time.fixedDeltaTime;
+            lightTimer += Time.fixedDeltaTime / 6;
             sun.intensity = Mathf.Lerp(0f, sunIntensity, lightTimer);
             moon.intensity = Mathf.Lerp(moonIntensity, 0f, lightTimer);
             if (moon.intensity == 0)
             {
                 moon.gameObject.SetActive(false);
             }
+
+            skybox.SetColor(ColorHorizon, Color.Lerp(nightColorHorizon, dayColorHorizon, lightTimer));
+            skybox.SetFloat(SizeDarknessUp, Mathf.Lerp(nightSizeDarknessUp, daySizeDarknessUp, lightTimer));
+            RenderSettings.fogColor = Color.Lerp(nightFogColor, dayFogColor, lightTimer / 3);
+            predioBloom.SetColor(EmissionColor, Color.Lerp(nightPredioBloom, dayPredioBloom, lightTimer));
+            neonDetail.SetColor(EmissionColor, Color.Lerp(nightNeonDetail, dayNeonDetail, lightTimer));
         }
 
         // Apply the rotation
@@ -186,15 +207,24 @@ public class GameController : MonoBehaviour
         dayNightCycle.transform.eulerAngles = currentRotation;
     }
 
-    void ResetDayNightCycle()
+    private void ResetColors()
     {
-        skybox.SetColor("_ColorHorizon", nightColorHorizon);
-        skybox.SetFloat("_SizeDarknessUp", nightSizeDarknessUp);
+        skybox.SetColor(ColorHorizon, nightColorHorizon);
+        skybox.SetFloat(SizeDarknessUp, nightSizeDarknessUp);
+        predioBloom.SetColor(EmissionColor, nightPredioBloom);
+        neonDetail.SetColor(EmissionColor, nightNeonDetail);
         RenderSettings.fogColor = nightFogColor;
+    }
+
+    private void ResetDayNightCycle()
+    {
+        ResetColors();
         sun.intensity = sunIntensity;
         moon.intensity = moonIntensity;
         sun.gameObject.SetActive(false);
         moon.gameObject.SetActive(true);
+        lightTimer = 0f;
+        dayNightTimer = 0f;
 
         var currentRotation = dayNightCycle.transform.eulerAngles;
         currentRotation.x = 0f;
@@ -275,7 +305,6 @@ public class GameController : MonoBehaviour
         ResetDayNightCycle();
         ResetClient();
         GetPaid(0, false);
-
     }
 
     public void PlayerVitoria()
@@ -300,9 +329,14 @@ public class GameController : MonoBehaviour
 
     // --------- Sistema tempo cliente --------- \\
     int timeClient;
+    private static readonly int EmissionColor = Shader.PropertyToID("_EmissionColor");
+    private static readonly int SizeDarknessUp = Shader.PropertyToID("_SizeDarknessUp");
+    private static readonly int ColorHorizon = Shader.PropertyToID("_ColorHorizon");
+
     public void StartClientTime()
     {
-        timeClient = Mathf.Max(35, (int)(Vector3.Distance(player.transform.position, minimapaAlvo[0].position) * 0.075f));
+        timeClient = Mathf.Max(35,
+            (int)(Vector3.Distance(player.transform.position, minimapaAlvo[0].position) * 0.075f));
         StartCoroutine("ClientTime");
     }
 
@@ -363,11 +397,12 @@ public class GameController : MonoBehaviour
     public int GetPaid(float pay, bool isJob)
     {
         playerMoney += pay;
-        if (!isJob) 
+        if (!isJob)
         {
             uiController.CellPhoneAnimation(2);
             return 0;
         }
+
         uiController.CellPhoneAnimation(7);
         int rating = NewRating();
         uiController.EsconderEstrelaCorrida();

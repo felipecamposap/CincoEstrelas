@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.13242036, g: 0.02580943, b: 0.03546368, a: 1}
+  m_IndirectSpecularColor: {r: 0.05706608, g: 0.16170666, b: 0.15228654, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -13355,6 +13355,11 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 42615741e4fb41f4b84a6cccdc96bd3e, type: 2}
     - target: {fileID: 4486988519327783631, guid: c0b3110d11aa02c44a30617f6987db6e,
         type: 3}
+      propertyPath: neonDetail
+      value: 
+      objectReference: {fileID: 2100000, guid: 187c58c17158876468124977781e22b0, type: 2}
+    - target: {fileID: 4486988519327783631, guid: c0b3110d11aa02c44a30617f6987db6e,
+        type: 3}
       propertyPath: playerMoney
       value: 0
       objectReference: {fileID: 0}
@@ -13382,6 +13387,26 @@ PrefabInstance:
         type: 3}
       propertyPath: dayFogColor.r
       value: 0.48900002
+      objectReference: {fileID: 0}
+    - target: {fileID: 4486988519327783631, guid: c0b3110d11aa02c44a30617f6987db6e,
+        type: 3}
+      propertyPath: dayNeonDetail.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4486988519327783631, guid: c0b3110d11aa02c44a30617f6987db6e,
+        type: 3}
+      propertyPath: dayNeonDetail.b
+      value: 0.90588236
+      objectReference: {fileID: 0}
+    - target: {fileID: 4486988519327783631, guid: c0b3110d11aa02c44a30617f6987db6e,
+        type: 3}
+      propertyPath: dayNeonDetail.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4486988519327783631, guid: c0b3110d11aa02c44a30617f6987db6e,
+        type: 3}
+      propertyPath: dayNeonDetail.r
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4486988519327783631, guid: c0b3110d11aa02c44a30617f6987db6e,
         type: 3}
@@ -13437,6 +13462,26 @@ PrefabInstance:
         type: 3}
       propertyPath: dayColorHorizon.r
       value: 0.96078426
+      objectReference: {fileID: 0}
+    - target: {fileID: 4486988519327783631, guid: c0b3110d11aa02c44a30617f6987db6e,
+        type: 3}
+      propertyPath: nightNeonDetail.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4486988519327783631, guid: c0b3110d11aa02c44a30617f6987db6e,
+        type: 3}
+      propertyPath: nightNeonDetail.b
+      value: 0.28402376
+      objectReference: {fileID: 0}
+    - target: {fileID: 4486988519327783631, guid: c0b3110d11aa02c44a30617f6987db6e,
+        type: 3}
+      propertyPath: nightNeonDetail.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4486988519327783631, guid: c0b3110d11aa02c44a30617f6987db6e,
+        type: 3}
+      propertyPath: nightNeonDetail.r
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4486988519327783631, guid: c0b3110d11aa02c44a30617f6987db6e,
         type: 3}
