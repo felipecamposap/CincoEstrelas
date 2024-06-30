@@ -259,7 +259,7 @@ MonoBehaviour:
   touchPlayer: -1
   target: {fileID: 0}
   speed: 0.01
-  coll: {fileID: 1079992197306294081}
+  coll: {fileID: 7572030250609308343}
   password: {fileID: 6036910168215635533}
   canvas: {fileID: 881680912957276716}
   iconMinimap: {fileID: 6924296533594082201}

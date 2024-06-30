@@ -7,6 +7,7 @@ public class SceneAsyncLoader : MonoBehaviour
 {
     private AsyncOperation asyncLoad;
     [SerializeField] private Button skipButtom;
+    [SerializeField] private Text txtSkip;
 
 
     // Start is called before the first frame update
@@ -24,7 +25,10 @@ public class SceneAsyncLoader : MonoBehaviour
     {
         yield return new WaitForSeconds(1);
         if (asyncLoad.progress >= 0.9f)
-            skipButtom.gameObject.SetActive(true);
+        {
+            skipButtom.interactable = true;
+            txtSkip.color = Color.white;
+        }
         else
             StartCoroutine(SceneIsDone());
         //Debug.Log("Load Progress " + asyncLoad.progress);
