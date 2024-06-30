@@ -260,6 +260,10 @@ public class Interface : MonoBehaviour
             case 10:
                 app.Play("CincoEstrelasHistoryBack");
                 break;
+
+            case 11:
+                app.Play("CincoEstrelasMinimapaPosCliente");
+                break;
         }
     }
 

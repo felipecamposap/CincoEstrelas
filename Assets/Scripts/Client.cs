@@ -51,7 +51,7 @@ public class Client : MonoBehaviour
             divider = 3.2f / Vector3.Distance(transform.position, target.position);
             touchPlayer = 0;
             canvas.gameObject.SetActive(false);
-            GameController.controller.uiController.CellPhoneAnimation(3);
+            GameController.controller.uiController.CellPhoneAnimation(11);
             GameController.controller.alvoMinimapa.index++;
             transform.GetChild(0).GetComponent<Animator>().SetInteger("State", 1);
         }
@@ -81,11 +81,6 @@ public class Client : MonoBehaviour
                     transform.parent = target.transform;
                     StartCoroutine("OpenDoorCar", indexTarget);
                 }
-                //else
-                //{
-                //    Destroy(gameObject);
-                //    Destroy(target.gameObject);
-                //}
             }
         }
     }
@@ -132,13 +127,6 @@ public class Client : MonoBehaviour
         clientPayment = _pay;
         GameController.controller.PasswordClient();
     }
-
-    //public void GetAttributes(string _clientName, int _clientRating, float _clientPayment)
-    //{
-    //    _clientName = clientName;
-    //    _clientRating = clientRating;
-    //    _clientPayment = clientPayment;
-    //}
 
     private void OnTriggerEnter(Collider other)
     {

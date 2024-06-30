@@ -12,10 +12,9 @@ public class ClientTest : MonoBehaviour
     [SerializeField] private Transform[] blockPos;
     [SerializeField] private int blocksVariation;
     [Header("Propriedades da Hud: ")]
-    [SerializeField]
-    private Text txtClientName;
     [SerializeField] private Text txtClientPay;
-    [SerializeField] private Slider sldClientRating;
+    [SerializeField] private Text[] txtClientName;
+    [SerializeField] private Slider[] sldClientRating;
     
 
     //----
@@ -41,9 +40,12 @@ public class ClientTest : MonoBehaviour
         rating = Random.Range(2, 6);
         pay = Random.Range(5f, 10f) + (rating - 2f);
         Debug.Log("name: " + clientName + "| rating : " + rating + "| pay: " + pay);
-        txtClientName.text = clientName;
         txtClientPay.text = $"R${pay:F2}";
-        sldClientRating.value = rating;
+        for (int i = 0; i < txtClientName.Length; i++)
+        {
+            txtClientName[i].text = clientName;
+            sldClientRating[i].value = rating;
+        }
     }
 
     [ContextMenu("Spawn Client")]

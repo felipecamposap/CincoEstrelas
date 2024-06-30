@@ -4,12 +4,11 @@ using UnityEngine.UIElements;
 
 public class PauseControl : MonoBehaviour
 {
+    bool cursorEnabled = false;
     private void Update()
     {
         if (GameController.controller.isInteracting)
-        {
             return;
-        }
 
         if (Input.GetButtonDown("Pause") && GameController.controller.player.inGame)
         {
@@ -27,10 +26,11 @@ public class PauseControl : MonoBehaviour
             GameController.controller.audioSource.reverbZoneMix = 0;
             GameController.controller.audioSource.volume += GameController.controller.audioSource.volume;
             GameController.controller.audioSource.pitch = 1;
-            GameController.controller.ToggleCursor(false);
+            GameController.controller.ToggleCursor(cursorEnabled);
         }
         else
         {
+            cursorEnabled = UnityEngine.Cursor.visible;
             GameController.controller.uiController.pauseUI.SetActive(true);
             Time.timeScale = 0;
             GameController.controller.audioSource.reverbZoneMix = 1;
