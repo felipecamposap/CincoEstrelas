@@ -147,7 +147,7 @@ Material:
     - _QueueOffset: 0
     - _ReceiveShadows: 1
     - _SizeDarknessDown: 0.01
-    - _SizeDarknessUp: 1.8458333
+    - _SizeDarknessUp: 1.5
     - _SizeDown: 1
     - _SizeHorizon: 3.1
     - _SizeUp: 1
@@ -168,7 +168,7 @@ Material:
     - _CloudSpeed: {r: 3, g: 3, b: 0, a: 0}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _ColorDown: {r: 0.5011451, g: 0.76862746, b: 0.7436625, a: 1}
-    - _ColorHorizon: {r: 0.30166665, g: 0.13365367, b: 0.16839868, a: 1}
+    - _ColorHorizon: {r: 0.96078426, g: 0.4246743, b: 0.24705878, a: 1}
     - _ColorUp: {r: 0.18039216, g: 0.76862746, b: 0.7137255, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _OffsetCloud: {r: 2.15, g: 0, b: 0, a: 0}

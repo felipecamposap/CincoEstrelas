@@ -162,13 +162,13 @@ Material:
     - _AlphaTiling: {r: 1, g: 9.73, b: 0, a: 0}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 0, g: 0, b: 0, a: 1}
-    - _DownColor: {r: 5.5908804, g: 4.9550548, b: 1.9294018, a: 1}
+    - _DownColor: {r: 9.734287, g: 8.627251, b: 3.3592834, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _LineScale: {r: 1, g: 10, b: 0, a: 0}
     - _MainColor: {r: 1, g: 0.05699998, b: 0.05699998, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
     - _UpCOlor: {r: 47.93727, g: 0, b: 0, a: 1}
-    - _UpColor: {r: 9.082411, g: 4.9304523, b: 2.335477, a: 1}
+    - _UpColor: {r: 38.937145, g: 21.13731, b: 10.012409, a: 1}
   m_BuildTextureStacks: []
 --- !u!114 &2145465818222044519
 MonoBehaviour:
