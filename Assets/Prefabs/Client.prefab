@@ -190,12 +190,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2363111379298537260}
-  - component: {fileID: 1079992197306294081}
   - component: {fileID: 4325677089557974314}
-  - component: {fileID: 7572030250609308343}
+  - component: {fileID: 4100051115294342232}
+  - component: {fileID: 4834009988267378046}
   m_Layer: 0
   m_Name: Client
-  m_TagString: Untagged
+  m_TagString: Cliente
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -218,29 +218,6 @@ Transform:
   - {fileID: 7698796428013691571}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!136 &1079992197306294081
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5232508215217854830}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &4325677089557974314
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -259,13 +236,13 @@ MonoBehaviour:
   touchPlayer: -1
   target: {fileID: 0}
   speed: 0.01
-  coll: {fileID: 7572030250609308343}
+  coll: {fileID: 4100051115294342232}
   password: {fileID: 6036910168215635533}
   canvas: {fileID: 881680912957276716}
   clientMesh: {fileID: 4569227819162696403}
   iconMinimap: {fileID: 6924296533594082201}
---- !u!65 &7572030250609308343
-BoxCollider:
+--- !u!135 &4100051115294342232
+SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -283,8 +260,31 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 8, y: 1, z: 8}
-  m_Center: {x: 0, y: -0.43, z: 0}
+  m_Radius: 4.45
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!136 &4834009988267378046
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5232508215217854830}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.35
+  m_Height: 2.8
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.34, z: 0}
 --- !u!1 &5571835503104758114
 GameObject:
   m_ObjectHideFlags: 0
@@ -5462,7 +5462,7 @@ PrefabInstance:
     - target: {fileID: 5775971100716065153, guid: 2ceb577edad2e64409e419555ff21323,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.42
+      value: -31.09
       objectReference: {fileID: 0}
     - target: {fileID: 5775971100716065153, guid: 2ceb577edad2e64409e419555ff21323,
         type: 3}
@@ -5592,6 +5592,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Jhon
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 6016eaacfa82a014bb9f9269810a602a,
+        type: 3}
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

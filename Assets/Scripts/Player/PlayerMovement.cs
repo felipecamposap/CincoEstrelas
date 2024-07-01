@@ -280,6 +280,13 @@ public class PlayerMovement : MonoBehaviour
 
     public IEnumerator OnCollisionEnter(Collision collision)
     {
+        Debug.Log(collision.gameObject.name);
+        if (collision.gameObject.CompareTag("Cliente"))
+        {
+            GameController.controller.uiController.GameOver(2);
+            Debug.Log("Atropelamento");
+        }
+
         if (!inGame || !canDamage) yield break;
         if (collision.gameObject.CompareTag("Damagable") || collision.gameObject.CompareTag("Npc"))
         {
@@ -300,6 +307,7 @@ public class PlayerMovement : MonoBehaviour
                 }
             }
         }
+
 
         yield return new WaitForSeconds(0.25f);
         canDamage = true;

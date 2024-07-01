@@ -123,7 +123,12 @@ public class Interface : MonoBehaviour
             case 1:
                 gameOverText.text = "Você não conseguiu pagar pela noite!";
                 break;
-
+            case 2:
+                gameOverText.text = "Você atropelou um cliente!";
+                break;
+            case 3:
+                gameOverText.text = "A gasolina do seu carro acabou!";
+                break;
         }
         gameOverObj.SetActive(true);
 

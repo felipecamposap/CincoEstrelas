@@ -69,18 +69,16 @@ public class Client : MonoBehaviour
             transform.position = Vector3.Lerp(startPosition, targetPos, lerpPosValue);
             lerpPosValue = Mathf.Min(1, lerpPosValue + speed * divider);
             Walking();
-            Debug.Log(Vector3.Distance(transform.position, target.position));
             if (lerpPosValue == 1)
             {
                 if (target.CompareTag("Player"))
                 {
-                    GameController.controller.uiController.MostrarEstrelaCorrida();
                     GameController.controller.penalty = 0;
                     touchPlayer = 2;
                     transform.position = new Vector3(target.transform.position.x, target.transform.position.y,
                         target.transform.position.z);
                     transform.rotation = target.transform.rotation;
-                    GetComponent<BoxCollider>().size = new Vector3(2, 2, 2);
+                    //GetComponent<SphereCollider>().radius = new Vector3(2, 2, 2);
                     transform.parent = target.transform;
                     StartCoroutine("OpenDoorCar", indexTarget);
                 }
@@ -100,6 +98,7 @@ public class Client : MonoBehaviour
 
     private System.Collections.IEnumerator OpenDoorCar(int value)
     {
+        GetComponent<CapsuleCollider>().isTrigger = true;
         if (value == 2)
             yield return new WaitForSeconds(2);
         transform.GetChild(0).GetComponent<Animator>().SetInteger("State", (value + 1) * 2);
@@ -113,8 +112,9 @@ public class Client : MonoBehaviour
             GameController.controller.AddHistoryClient(new ClientsParameters(clientName, rating, clientPayment));
             GameController.controller.ResetClient(); // Deletar Cliente e destino
         }
-
         clientMesh.enabled = false;
+        if (touchPlayer == 1)
+            GameController.controller.uiController.MostrarEstrelaCorrida();
     }
 
     private void Walking()

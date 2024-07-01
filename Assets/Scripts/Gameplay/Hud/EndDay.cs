@@ -11,6 +11,7 @@ public class EndDay : MonoBehaviour
 
     public void OnEnable()
     {
+        StartCoroutine(GameController.controller.ResetDayNightCycle());
         dayBill.text = $"Custo diário: R${GameController.controller.GetDailyBill():F2}";
         moneyCutscene = 0;
         animator.SetBool("FadeOut", false);

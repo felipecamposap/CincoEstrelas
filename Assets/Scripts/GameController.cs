@@ -216,8 +216,9 @@ public class GameController : MonoBehaviour
         RenderSettings.fogColor = nightFogColor;
     }
 
-    private void ResetDayNightCycle()
+    public IEnumerator ResetDayNightCycle()
     {
+        yield return new WaitForSeconds(1.5f);
         ResetColors();
         sun.intensity = sunIntensity;
         moon.intensity = moonIntensity;
@@ -302,7 +303,6 @@ public class GameController : MonoBehaviour
             debtDay = 0;
         isGamePaused = false;
         player.inGame = true;
-        ResetDayNightCycle();
         ResetClient();
         GetPaid(0, false);
     }
@@ -324,7 +324,7 @@ public class GameController : MonoBehaviour
         }
 
         if (playerFuel <= 0)
-            uiController.GameOver(1);
+            uiController.GameOver(3);
     }
 
     // --------- Sistema tempo cliente --------- \\
