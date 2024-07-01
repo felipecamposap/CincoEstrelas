@@ -182,7 +182,6 @@ public class GameController : MonoBehaviour
         }
         
         var targetAngle = Mathf.Lerp(0, 90, dayNightTimer);
-        Debug.Log(dayNightTimer);
 
         if (hour >= 4 && minute >= 50)
         {

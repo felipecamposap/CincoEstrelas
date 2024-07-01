@@ -21,6 +21,9 @@ public class Client : MonoBehaviour
     private Transform mainCamera;
     [SerializeField] private Canvas canvas;
 
+    [SerializeField]
+    private SkinnedMeshRenderer clientMesh;
+
     private bool isTouchingPlayer = false;
 
     [SerializeField] private GameObject iconMinimap;
@@ -105,11 +108,13 @@ public class Client : MonoBehaviour
         GameController.controller.player.inGame = true;
         if (value == 2)
         {
-            yield return new WaitForSeconds(1);
+            yield return new WaitForSeconds(1.2f);
             int rating = GameController.controller.GetPaid(clientPayment, true);
             GameController.controller.AddHistoryClient(new ClientsParameters(clientName, rating, clientPayment));
             GameController.controller.ResetClient(); // Deletar Cliente e destino
         }
+
+        clientMesh.enabled = false;
     }
 
     private void Walking()
@@ -152,6 +157,7 @@ public class Client : MonoBehaviour
 
     public void ArriveDestination()
     {
+        clientMesh.enabled = true;
         GameController.controller.player.inGame = false;
         GameController.controller.uiController.EsconderEstrelaCorrida();
         StartCoroutine("OpenDoorCar", 2);

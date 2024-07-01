@@ -18,7 +18,7 @@ public class InterfaceInterativos : MonoBehaviour
     {
         if (playerTouch)
             if (Input.GetKey(KeyCode.E) && thisCanvas){
-                slider.value += Time.deltaTime;
+                slider.value += Time.deltaTime * 2;
                 imgSlider.color = Color.Lerp(colorVar[0], colorVar[1], slider.value);
                 if (slider.value >= 1) { 
                     //thisCanvas.SetActive(false);

@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -13,6 +14,8 @@ public class PlayerMovement : MonoBehaviour
     private float brakeInput, steeringInput, speed, initialCameraFOV;
     public float motorPower = 5000.0f; // Adjust the value as needed
     [SerializeField] public float brakePower; // Adjust the value as needed
+    private bool naCalcada;
+    private int calcadas;
 
     [SerializeField]
     private float gasDrag = 0.005f, idleDrag = 0.5f, brakeDrag = 1.5f, brakeThreshold = 2f, fovTimer = 0f;
@@ -36,7 +39,6 @@ public class PlayerMovement : MonoBehaviour
     {
         var materials = GetComponentInChildren<Renderer>().materials.ToList();
         breakLights = materials[5];
-        Debug.Log(breakLights.name);
         GameController.controller.player = this;
         mainCamera = Camera.main;
         initialCameraFOV = mainCamera.fieldOfView;
@@ -59,7 +61,6 @@ public class PlayerMovement : MonoBehaviour
         ApplyMotor();
         ApplyBrake();
         ApplySteering();
-        //Debug.Log(brakeInput);
     }
 
     private void FixedUpdate()
@@ -72,7 +73,6 @@ public class PlayerMovement : MonoBehaviour
             if (rb.velocity.magnitude is < 15 or > 30)
                 multiplier += 1;
             GameController.controller.BurnFuel(gasInput * multiplier);
-            //Debug.Log(rb.velocity.magnitude);
         }
 
         ApplyVFX();
@@ -183,7 +183,6 @@ public class PlayerMovement : MonoBehaviour
             {
                 if (localVelocity.z < -brakeThreshold) // frear com o carro acelerando
                 {
-                    //Debug.Log("Frear");
                     brakeInput = 1;
                     rb.drag = brakeDrag;
                 }
@@ -308,10 +307,20 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnTriggerEnter(Collider col)
     {
-        if (col.gameObject.CompareTag("Calcada"))
+        if (col.gameObject.CompareTag("Calcada") && calcadas == 0)
         {
             GameController.controller.penalty += 1;
+            Debug.Log("Calcada");
         }
+
+        if (col.gameObject.CompareTag("Calcada"))
+            calcadas++;
+    }
+
+    private void OnTriggerExit(Collider col)
+    {
+        if (col.gameObject.CompareTag("Calcada"))
+            calcadas--;
     }
 
 
