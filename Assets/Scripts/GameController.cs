@@ -130,14 +130,17 @@ public class GameController : MonoBehaviour
                 uiController.GameOver(1);
                 Cursor.visible = true;
                 Cursor.lockState = CursorLockMode.None;
+            }
+            else
+            {
+                uiController.NextDay();
                 if (alvoMinimapa)
                 {
                     ResetClient();
                     GetPaid(0, false);
+                    alvoMinimapa.index = 0;
                 }
             }
-            else
-                uiController.NextDay();
         }
 
         uiController.SetHour(hour, minute);
@@ -345,14 +348,14 @@ public class GameController : MonoBehaviour
         uiController.AttClientTime(timeClient);
         yield return new WaitForSeconds(1);
         timeClient--;
-        if (timeClient > 0)
+        if (timeClient >= 0)
             StartCoroutine("ClientTime");
         else
         {
+            GetPaid(0, false);
             minimapaAlvo[0].GetComponent<Client>().LoseClient(2);
             yield return new WaitForSeconds(2.2f);
             ResetClient();
-            GetPaid(0, false);
         }
     }
 

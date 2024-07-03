@@ -8,6 +8,8 @@ public class Npc : MonoBehaviour
     public float speed;
     public LinkedStreets currentStreet;
     public Vector3 targetPosition; // Você precisa implementar essa função para obter a próxima posição de destino
+    public Animator animator;
+    
 
     [Header("Raycast Properties:")]
     public Transform frontRay;

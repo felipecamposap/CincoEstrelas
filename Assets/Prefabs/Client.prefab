@@ -236,7 +236,9 @@ MonoBehaviour:
   touchPlayer: -1
   target: {fileID: 0}
   speed: 0.01
-  coll: {fileID: 4100051115294342232}
+  coll:
+  - {fileID: 4100051115294342232}
+  - {fileID: 4834009988267378046}
   password: {fileID: 6036910168215635533}
   canvas: {fileID: 881680912957276716}
   clientMesh: {fileID: 4569227819162696403}

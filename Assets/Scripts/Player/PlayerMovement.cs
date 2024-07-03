@@ -46,6 +46,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
+        speed = rb.velocity.magnitude * 0.65f;
+        GameController.controller.uiController.Velocity(speed / 30);
         if (!inGame)
         {
             brakeInput = rb.drag * 30;
@@ -55,8 +57,6 @@ public class PlayerMovement : MonoBehaviour
         }
 
         CheckInput();
-        speed = rb.velocity.magnitude * 0.65f;
-        GameController.controller.uiController.Velocity(speed / 30);
         ApplyMovement();
         ApplyMotor();
         ApplyBrake();

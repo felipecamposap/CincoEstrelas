@@ -24,6 +24,7 @@ public class Accelerate : MonoBehaviour, IState
         bkSpeed = maxSpeed;
         currentSpeed = 0;
         SteeringForce = 0;
+        _npc.animator.Play("Moving");
         //throw new System.NotImplementedException();
     }
 

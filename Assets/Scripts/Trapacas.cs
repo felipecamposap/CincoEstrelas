@@ -13,6 +13,7 @@ public class Trapacas : MonoBehaviour
         yield return new WaitForSeconds(0.1f);
         toggles[0].isOn = GameController.controller.trapacas[0];
         toggles[1].isOn = GameController.controller.trapacas[1];
+
     }
 
     public void Indestrutivel(bool _value)
@@ -32,7 +33,9 @@ public class Trapacas : MonoBehaviour
             GameController.controller.playerStar = _newValue * 2;
             GameController.controller.trapacas[2] = true;
             GameController.controller.uiController.ATTUI();
-            if (GameController.controller.playerStar == 10 && SceneManager.GetActiveScene().buildIndex == 1){
+            Debug.Log(_value + " | " + GameController.controller.playerStar);
+            if (GameController.controller.playerStar == 10 && SceneManager.GetActiveScene().buildIndex == 2){
+                Debug.Log(_value + " | " + GameController.controller.playerStar);
                 GameController.controller.PlayerVitoria();
                 GameController.controller.uiController.pauseUI.SetActive(false);
                 Time.timeScale = 1;

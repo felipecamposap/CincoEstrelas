@@ -31,7 +31,7 @@ public class AlvoMinimapa : MonoBehaviour
         if (check)
             return;
 #endif
-        if (index == 2)
+        if (index >= 2)
             index = 0;
 
         if (GameController.controller.minimapaAlvo[index] != null)

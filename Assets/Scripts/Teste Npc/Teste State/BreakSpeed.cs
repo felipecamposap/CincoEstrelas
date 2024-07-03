@@ -19,6 +19,7 @@ public class BreakSpeed : IState
         npc = _npc;
         maxSpeed = npc.rb.velocity.magnitude;
         currentSpeed = maxSpeed;
+        _npc.animator.Play("Stop");
         //Debug.Log("Break");
         //throw new System.NotImplementedException();
     }

@@ -16,7 +16,7 @@ public class Client : MonoBehaviour
     private Vector3 startPosition;
     private float lerpPosValue;
     [SerializeField] private float speed;
-    [SerializeField] private Collider coll;
+    [SerializeField] private Collider[] coll;
     [SerializeField] private Text password;
     private Transform mainCamera;
     [SerializeField] private Canvas canvas;
@@ -166,8 +166,9 @@ public class Client : MonoBehaviour
 
     public void LoseClient(int value)
     {
-        coll.enabled = false;
         transform.GetChild(0).GetComponent<Animator>().SetInteger("State", (value + 1) * 2);
+        for(int i = 0; i < coll.Length; i++)
+            coll[i].enabled = false;
         iconMinimap.SetActive(false);
     }
 
@@ -175,7 +176,7 @@ public class Client : MonoBehaviour
     {
         if (touchPlayer == 0 && other.CompareTag("Player"))
         {
-            coll.enabled = false;
+            coll[0].enabled = false;// retira trigger do cliente
         }
     }
 }
