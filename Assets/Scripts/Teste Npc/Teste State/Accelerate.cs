@@ -52,7 +52,7 @@ public class Accelerate : MonoBehaviour, IState
         SteeringForce += SteeringForce < maxSpeed ? steeringPower +  modifierSteering : 0;
 
         // Define a velocidade do Rigidbody
-        npc.rb.velocity = npc.transform.forward * currentSpeed;
+        npc.rb.linearVelocity = npc.transform.forward * currentSpeed;
     }
 
     private void RaycastBehaviour(RaycastHit _hit)

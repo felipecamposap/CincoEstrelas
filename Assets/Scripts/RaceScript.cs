@@ -42,7 +42,7 @@ public class RaceScript : MonoBehaviour
     private void Resume()
     {
         var rb = GetComponent<Rigidbody>();
-        rb.velocity = Vector3.zero;
+        rb.linearVelocity = Vector3.zero;
         rb.angularVelocity = Vector3.zero;
         nva.isStopped = false;
         rb.freezeRotation = true;

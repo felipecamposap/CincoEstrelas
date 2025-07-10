@@ -7,11 +7,12 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    private static readonly int EmissionColor = Shader.PropertyToID("_EmissionColor");
     [SerializeField] private Rigidbody rb;
     public WheelColliders colliders;
     public WheelMeshes wheelMeshes;
     public float gasInput;
-    private float brakeInput, steeringInput, speed, initialCameraFOV;
+    private float brakeInput, steeringInput, speed, initialCameraFOV, steeringAngle;
     public float motorPower = 5000.0f; // Adjust the value as needed
     [SerializeField] public float brakePower; // Adjust the value as needed
     private bool naCalcada;
@@ -46,11 +47,11 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        speed = rb.velocity.magnitude * 0.65f;
+        speed = rb.linearVelocity.magnitude * 0.65f;
         GameController.controller.uiController.Velocity(speed / 30);
         if (!inGame)
         {
-            brakeInput = rb.drag * 30;
+            brakeInput = rb.linearDamping * 30;
             ApplyBrake();
             ToggleVFX(tireSmokes, false);
             return;
@@ -65,12 +66,12 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        localVelocity = transform.InverseTransformDirection(rb.velocity);
+        localVelocity = transform.InverseTransformDirection(rb.linearVelocity);
         if (inGame && Input.GetAxis("Vertical") != 0 && !GameController.controller.trapacas[1] &&
             GameController.controller.PlayerFuel > 0)
         {
             float multiplier = 1;
-            if (rb.velocity.magnitude is < 15 or > 30)
+            if (rb.linearVelocity.magnitude is < 15 or > 30)
                 multiplier += 1;
             GameController.controller.BurnFuel(gasInput * multiplier);
         }
@@ -167,16 +168,16 @@ public class PlayerMovement : MonoBehaviour
         {
             case < 0 when localVelocity.z > brakeThreshold:
                 brakeInput = 1;
-                rb.drag = brakeDrag;
+                rb.linearDamping = brakeDrag;
                 break;
             //dar ré
             case < 0:
                 brakeInput = 0;
-                rb.drag = gasDrag;
+                rb.linearDamping = gasDrag/2;
                 break;
             //carro solto
             case 0:
-                rb.drag = idleDrag;
+                rb.linearDamping = idleDrag;
                 break;
             //acelerando
             default:
@@ -184,12 +185,12 @@ public class PlayerMovement : MonoBehaviour
                 if (localVelocity.z < -brakeThreshold) // frear com o carro acelerando
                 {
                     brakeInput = 1;
-                    rb.drag = brakeDrag;
+                    rb.linearDamping = brakeDrag;
                 }
                 else // acelerar
                 {
                     brakeInput = 0;
-                    rb.drag = gasDrag;
+                    rb.linearDamping = gasDrag;
                 }
 
                 break;
@@ -199,7 +200,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void SetBrakeLights(bool value)
     {
-        breakLights.SetColor("_EmissionColor", (value ? Color.red : Color.black));
+        breakLights.SetColor(EmissionColor, (value ? Color.red : Color.black));
     }
 
     public void ToggleVFX(ParticleSystem[] particleSystems, bool value)
@@ -256,7 +257,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void ApplySteering()
     {
-        var steeringAngle = steeringInput * steeringCurve.Evaluate(speed);
+        steeringAngle = steeringInput * steeringCurve.Evaluate(speed);
         colliders.FRWheel.steerAngle = steeringAngle;
         colliders.FLWheel.steerAngle = steeringAngle;
     }
@@ -291,9 +292,9 @@ public class PlayerMovement : MonoBehaviour
         if (collision.gameObject.CompareTag("Damagable") || collision.gameObject.CompareTag("Npc"))
         {
             canDamage = false;
-            var damageValue = rb.velocity.magnitude;
+            var damageValue = rb.linearVelocity.magnitude;
             yield return new WaitForSeconds(0.1f);
-            damageValue -= rb.velocity.magnitude;
+            damageValue -= rb.linearVelocity.magnitude;
             damageValue = Math.Max(1, damageValue);
             var contact = collision.contacts[0];
             Instantiate(danoFaisca, contact.point, Quaternion.identity);

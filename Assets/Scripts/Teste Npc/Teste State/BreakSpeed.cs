@@ -17,7 +17,7 @@ public class BreakSpeed : IState
     public void Enter(Npc _npc)
     {
         npc = _npc;
-        maxSpeed = npc.rb.velocity.magnitude;
+        maxSpeed = npc.rb.linearVelocity.magnitude;
         currentSpeed = maxSpeed;
         _npc.animator.Play("Stop");
         //Debug.Log("Break");
@@ -53,7 +53,7 @@ public class BreakSpeed : IState
         SteeringForce -= SteeringForce > 0 ? steeringPower : 0;
 
         // Define a velocidade do Rigidbody
-        npc.rb.velocity = npc.transform.forward * currentSpeed;
+        npc.rb.linearVelocity = npc.transform.forward * currentSpeed;
     }
 
     private void RaycastBehaviour(RaycastHit _hit)
