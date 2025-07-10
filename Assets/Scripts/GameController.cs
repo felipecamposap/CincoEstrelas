@@ -100,7 +100,7 @@ public class GameController : MonoBehaviour
             Destroy(gameObject);
 
         ToggleCursor(SceneManager.GetActiveScene().name == "Menu");
-        nightNeonDetail *= Mathf.Pow(2, 6.5f);
+        nightNeonDetail *= Mathf.Pow(2, 5.75f);
         dayNeonDetail *= Mathf.Pow(2, 3f);
         nightPredioBloom *= Mathf.Pow(2, 3f);
         //dayPredioBloom *= 1f;

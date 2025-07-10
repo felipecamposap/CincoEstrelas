@@ -115,7 +115,7 @@ Material:
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
-    - _GrainPower: 1
+    - _GrainPower: 1.45
     - _Metallic: 0
     - _NoiseForce: 13.55
     - _NoiseSize: 5000

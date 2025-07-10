@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 3e2225f319b046e46af358f9a5904397
+guid: eec44bfabc78675489db646da70afd48
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
@@ -7,8 +7,13 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: Details
-    second: {fileID: 2100000, guid: 187c58c17158876468124977781e22b0, type: 2}
+      name: Leaf
+    second: {fileID: 2100000, guid: 691b5ffb481957645abb1cd04e9fdb98, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: LeafDown
+    second: {fileID: 2100000, guid: 459287681562c644893a13e77e72e192, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -36,7 +41,36 @@ ModelImporter:
     animationWrapMode: 0
     extraExposedTransformPaths: []
     extraUserProperties: []
-    clipAnimations: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Armature|TreeWind
+      takeName: Armature|TreeWind
+      internalID: -1035201247574261187
+      firstFrame: 0
+      lastFrame: 61
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
     isReadable: 0
   meshes:
     lODScreenPercentages: []
